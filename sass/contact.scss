@@ -1,0 +1,282 @@
+/* SINGLE SIGNUP */
+.wg-ss__input {
+    height: 60px;
+    position: relative;
+    overflow: hidden;
+    min-width: 260px;
+    border-radius: 50px;
+    border: solid 1px white;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    animation-delay: 300ms;
+    transform: scale(2.4);
+    transition: width 0.3s cubic-bezier(0.07, 0.27, 0.15, 0.95);
+
+    >input {
+        width: 0.1px;
+        height: 0.1px;
+        opacity: 0;
+    }
+}
+
+.wg-ss__holder {
+    width: 100%;
+    padding-right: 50px;
+    padding-left: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.wg-ss__icon_holder {
+    background: green;
+    width: 15px;
+
+    >.wg-ss__icon {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        z-index: 0;
+    }
+}
+
+.wg-ss__icon {
+    width: 60px;
+    height: 60px;
+    margin-left: -2px;
+    z-index: 4;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    flex: 0 0 60px;
+    line-height: 60px;
+    border-radius: 40px;
+    border: solid 1px white;
+    background-color: var(--w-ss-background, #555);
+    transition: all 0.3s cubic-bezier(0.7, 0.1, 0.27, 0.99);
+}
+
+.wg-ss__text_holder {
+    position: absolute;
+    white-space: nowrap;
+
+    #enter,
+    input {
+        border: none;
+        position: relative;
+        height: 30px;
+        color: white;
+        font-size: 1.2rem;
+        background-color: transparent;
+    }
+
+    #enter::after {
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        right: -2px;
+        content: "";
+        opacity: 0;
+        position: absolute;
+        background-color: white;
+    }
+}
+
+.wg-ss__input.focused #enter::after {
+    animation: blink 1s linear 1s infinite normal both;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+
+.wg-ss__text_holder {
+    #enter {
+        margin-left: 10px;
+
+        .dots {
+            width: 15px;
+            height: 15px;
+            background: white;
+            display: inline-block;
+            margin-right: 3px;
+            border-radius: 50px;
+        }
+    }
+
+    input {
+        width: 1px;
+
+        &:focus {
+            outline: none !important;
+        }
+    }
+
+    label {
+        display: block;
+        color: #f1f1f1;
+        text-transform: capitalize;
+        font-size: 0.8rem;
+        text-indent: 10px;
+        margin-top: -5px;
+    }
+}
+
+.wg-ss__submit {
+    width: 35px;
+    height: 35px;
+    margin: 0 10px 0 0px;
+    flex: 0 0 35px;
+    border: none;
+    display: block;
+    box-sizing: border-box;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    line-height: 1.5;
+    border-radius: 40px;
+    background-color: #2a2a2a;
+    transition: .3s;
+    animation-delay: 300ms;
+
+    &:focus {
+        transform: scale(0.8);
+    }
+}
+
+.shake {
+    animation-name: hr-shaking;
+    animation-iteration-count: 1;
+    animation-duration: 300ms;
+    animation-timing-function: ease-out;
+}
+
+.wg-ss__input {
+    &.wiggle {
+        animation-name: wg-ss_wiggle;
+        animation-iteration-count: 1;
+        animation-duration: 300ms;
+        animation-direction: alternate;
+        animation-timing-function: cubic-bezier(0.01, 0.14, 0.56, 1.74);
+    }
+
+    .wg-ss__finished {
+        color: white;
+        position: absolute;
+        z-index: 100;
+        opacity: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        pointer-events: none;
+    }
+
+    &.finishd {
+        transition: all 1s ease-out;
+    }
+}
+
+@keyframes hr-shaking {
+    0% {
+        transform: rotate(0);
+    }
+
+    50% {
+        transform: rotate(-35deg);
+    }
+
+    100% {
+        transform: rotate(0deg);
+    }
+}
+
+
+@keyframes wg-ss_wiggle {
+    0% {
+        transform: scale(2.4) translateX(0);
+    }
+
+    25% {
+        transform: scale(2.4) translateX(-15px);
+    }
+
+    100% {
+        transform: scale(2.4) translateX(0px);
+    }
+    
+    75% {
+        transform: scale(2.4) translateX(15px);
+    }
+
+    100% {
+        transform: scale(2.4) translateX(0px);
+    }
+}
+
+.wg-ss__finished {
+    transition: all 1s ease-out;
+}
+
+.wg-ss__input.finished {
+    border-width: 0;
+
+    .wg-ss__finished {
+        opacity: 1;
+    }
+}
+
+
+.wg-light-theme {
+    &.wg-ss__input {
+        font-family: 'Didot';
+        border: solid 1px #555;
+        transform-origin: top center;
+    }
+
+    #enter {
+        color: #111;
+
+        &::after {
+            background-color: blue;
+        }
+    }
+    
+    .wg-ss__icon_holder {
+
+        .wg-ss__icon {
+            top: 5px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            transform: translateX(5px);
+            border-color: black !important;
+        }
+    }
+
+    .wg-ss__text_holder label {
+        color: rgba(black, .67);
+    }
+
+    .wg-ss__submit {
+        width: 45px;
+        height: 45px;
+        margin-right: 0;
+        background: white;
+        // border: solid 1px rgba(black, .78);
+        border-color: transparent;
+    }
+    .wg-ss__text_holder #enter .dots {
+        background-color: #333;
+    }
+}

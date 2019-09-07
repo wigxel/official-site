@@ -1,0 +1,22 @@
+{
+  "name": "wigxel-website",
+  "version": "1.0.0",
+  "description": "The Official Website for the Wigxel Corp.",
+  "main": "index.js",
+  "scripts": {
+    "serve": "parcel -p 3009 serve index.html",
+    "build": "parcel build index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joseph Julius Owonvwon",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/plugin-transform-async-to-generator": "^7.5.0",
+    "@babel/preset-react": "^7.0.0",
+    "sass": "^1.23.0-module.beta.1"
+  },
+  "dependencies": {
+    "anime.min.js": "^1.2.3-0"
+  }
+}

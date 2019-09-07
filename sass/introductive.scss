@@ -1,0 +1,472 @@
+@import './tailwind.min.css';
+
+:root {
+    --blue: blue;
+    --lightblue: orchid;
+    --blue-lighter: rgb(65, 65, 253);
+    --beige: #f5f5dc;
+    --primary-color: #006EFF;
+    --paragraph: #6A6A6A;
+    --purple: #DD95DD;
+}
+
+body {
+    background: var(--purple);
+    margin: 0 auto;
+    overflow-x: hidden;
+    font-size: 1.1rem;
+}
+* {
+    cursor: none !important;
+}
+
+.container {
+    padding: 30px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.bg {
+    &-beige {
+        background: linear-gradient(180deg, blue, var(--purple)); //var(--beige);
+    }
+}
+
+.text {
+    &-right {
+        text-align: right;
+    }
+
+    &-center {
+        text-align: center;
+    }
+
+    &-left {
+        text-align: left;
+    }
+
+    &-blue {
+        color: var(--primary-color);
+    }
+
+    &-dark {
+        color: #333;
+    }
+
+    &-p {
+        color: var(--paragraph);
+        font-weight: 300;
+    }
+}
+
+.font- {
+    &serif {
+        font-family: 'Didot', 'Cormorant', 'Playfair Display', serif;
+    }
+
+    &sans {
+        font-family: 'Avenr Next', 'Lato', sans-serif;
+        line-height: 1.5;
+    }
+}
+
+.type {
+    &-1 {
+        margin: 0 0 15px;
+        font-size: 6vw;
+    }
+
+    &-2 {
+        font-size: 4vw;
+    }
+
+    &-p {
+        margin: 0 0 30px;
+        font-size: 1em;
+    }
+
+    &-5 {
+        font-size: 3vw;
+    }
+
+    &-phrase {
+        display: flex;
+        line-height: 1;
+        // font-family: 'Helvetica Neue' !important;
+        flex-flow: column;
+        align-items: flex-start;
+    }
+
+    &-word {
+        display: flex;
+        font-size: 2em !important;
+        color: rgba(white, .50);
+        transform: translateX(2rem);
+        letter-spacing: -2px;
+        
+        .typeface-large & {
+            color: white;
+            text-shadow: -12px 3px 3px rgba(black, .3);
+        }
+        
+        &.fx-effect {
+            .type-char {
+                opacity: 1;
+                transform: perspective(900px) translate(0, 0) rotateY(0deg) rotateX(0deg)
+            }
+        }
+    }
+
+    &-char {
+        // border: solid 1px blue;
+        transform-origin: 0 100%;
+        display: inline-block;
+        transform-style: preserve-3d;
+        transition-duration: .5s;
+        opacity: 0;
+        will-change: transform, opacity;
+        transform: perspective(900px) translate(-40px, -40px) rotateY(-30deg) rotateX(90deg);
+    }
+}
+
+.min-h {
+    height: 100vh;
+}
+
+.jumbotron {
+    width: 100%;
+    display: flex;
+    min-height: 100vh;
+    align-items: center;
+    justify-content: center;
+    -webkit-user-select: none;
+
+    .typeface-large {
+        @extend .font-serif;
+
+        top: 30vh;
+        left: 14vw;
+        opacity: 1;
+        z-index: 13;
+        color: orange;
+        position: absolute;
+        // text-shadow: 0 2px 4px rgba(0, 0, 0, .3);
+        letter-spacing: -3px;
+        transition: all .3s ease-in 1s;
+
+        &.fade-in {
+            opacity: 1;
+        }
+    }
+
+    .stretch-out {
+        width: 400px;
+        height: 1px;
+        // overflow: hidden;
+        background: #333;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.07);
+        position: relative; //this should prevent the .single-line from leaving the parent
+        transition: all .3s cubic-bezier(0.86, -0.01, 0.16, 0.99) .3s; // makes it go in slow.
+
+        // now for the first transition on the stretch-out
+        &.expand {
+            width: 95vw;
+            height: 65vh;
+            box-shadow: 0 18px 23px 6px rgba(0, 0, 0, 0.54);
+        }
+
+        .circle {
+            width: 0px;
+            height: 0px;
+            position: relative;
+            // z-index works when the position is absolute, fixed or relative
+            background: blue;
+            border-radius: 30px;
+            margin: 50px auto;
+            z-index: 4; //taking the circle in front of the single-line
+            box-shadow: 0 2px 18px 2px blue;
+            transition: all .3s cubic-bezier(0.86, -0.01, 0.16, 0.99) 1s; // makes it go in slow.
+
+            //now for the circle
+            &.shrink {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        .single-line {
+            background: white;
+            height: auto;
+            mix-blend-mode: overlay;
+            width: 2px;
+            position: absolute;
+            left: calc(50% - 1px); //properly align the single-line
+            bottom: 0;
+            top: 100%;
+            z-index: 3; // sending the single-line behind the circle;
+            margin: 0 auto;
+            transition: all .4s cubic-bezier(0.86, -0.01, 0.16, 0.99) .6s;
+            // this will have a larger delay
+
+            //now for the single-line
+            &.widen {
+                top: 50px;
+            }
+        }
+    }
+}
+
+.wg-services {
+    @extend .container;
+
+    display: grid;
+    grid-gap: 10px;
+    justify-content: space-between;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 350px));
+
+    >* {
+        position: relative;
+    }
+}
+
+*[u-visible] {
+    display: none;
+}
+
+.scroll-remote {
+    width: 40px * 5;
+    top: 50vh;
+    right: 40px;
+    position: fixed;
+    display: flex;
+    z-index: 200;
+    height: 40px;
+    justify-content: flex-start;
+    transform: rotate(90deg) translateY(100%);
+    transform-origin: bottom right;
+    align-items: center;
+
+    .menu-bar {
+        display: flex;
+        cursor: pointer;
+        pointer-events: auto;
+
+        >span {
+            width: 3px;
+            height: 30px;
+            margin-right: 5px;
+            display: inline-block;
+            background-color: rgba(black, .6);
+        }
+    }
+
+    &.animate {
+        .menu-bar>span {
+            margin-right: 3px;
+        }
+    }
+
+    li {
+        @extend .font-serif;
+
+        width: 30px;
+        height: 30px;
+        display: inline-block;
+        pointer-events: auto;
+        text-align: center;
+        font-size: 1.2rem;
+        line-height: 30px;
+        margin-left: 10px;
+        transform: rotate(-90deg);
+        color: rgba(black, .78);
+        position: relative;
+        text-shadow: -2px 2px 3px rgba(black, .12);
+        mix-blend-mode: difference;
+
+        &,
+        &:after {
+            transition: all .1s ease-out;
+        }
+
+        &:hover {
+            color: var(--primary-color);
+        }
+
+        &.active {
+            color: var(--blue);
+        }
+    }
+}
+
+.project-carousel {
+    display: flex;
+    padding: 10vh 0;
+    justify-content: center;
+
+    @for $index from 1 to 4 {
+        @debug $index * 5%;
+
+        .project-card:nth-child(#{$index}) {
+            background-color: lighten(black, $index * 15%);
+            // transform: scale(0.7 + ($index / 4));
+            z-index: $index + 1;
+        }
+    }
+}
+
+.project-card {
+    width: 400px;
+    height: 300px;
+    padding: 15px;
+    color: white;
+    display: inline-flex;
+    background: #656565;
+    box-shadow: 0 0 3px rgba(black, .38);
+
+    figure {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #969696;
+        flex: 0 0 150px;
+        margin-left: -75px;
+        transform: translate(0px, 30px);
+        box-shadow: -6px 6px 12px 6px rgba(black, .07);
+        margin-right: 20px;
+    }
+}
+
+.blinder {
+    background: var(--primary-color);
+    position: fixed;
+    top: 0;
+    left: 100%;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+body>footer {
+    min-height: 300px;
+    display: flex;
+    align-items: flex-end;
+    background: url('../assets/footer-3d-box.png') no-repeat bottom right / auto 300px;
+}
+
+.sharp-edger {
+    clip-path: polygon(0px 0px, 100% 200px, 100% 100%, 0% 100%);
+
+    &-reverse {
+        z-index: -1;
+        background-color: var(--beige);
+        clip-path: polygon(1px 68px, 100% 0px, 100% 100%, 0% 100%);
+    }
+}
+
+.showreel {
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    position: absolute;
+    padding: 20px 50px;
+    align-items: center;
+
+    .play-icon {
+        width: 50px;
+        height: 50px;
+        margin-right: 15px;
+        display: inline-block;
+        background: url('../assets/play-icon.svg') no-repeat 0 0 / 50px 50px;
+    }
+}
+
+// Menu Area
+.menu-area {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 199;
+    background-color: #333;
+
+    .wg-main-nav {
+        display: grid;
+        grid-gap: 30px;
+        grid-template-columns: 1fr;
+
+        .wg-nav-link {
+            font-size: 6vh;
+            opacity: 0;
+            position: relative;
+            width: max-content;
+            transform: translateX(0%);
+            cursor: default;
+            -webkit-user-select: none;
+
+            &:after,
+            & {
+                transition: all .3s ease-out;
+            }
+
+            &:after {
+                content: "";
+                left: 0;
+                top: 50%;
+                position: absolute;
+                width: 0;
+                height: 1px;
+                display: inline-block;
+                background-color: rgba(white, .50);
+            }
+
+            &:hover:not(.is-active) {
+                padding-left: 40px;
+                letter-spacing: 0.116em;
+
+                &:after {
+                    width: 30px;
+                    left: 0;
+                }
+            }
+
+            &.is-active {
+                padding: 0 30px 0 15px;
+
+                &:after {
+                    width: 100%;
+                    background-color: var(--primary-color);
+                }
+            }
+        }
+    }
+
+    svg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 50vw;
+    }
+}
+
+@import './contact.scss';
+
+//cursor
+.cursor__inner.cursor__inner--circle {
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px;
+    z-index: 9999;
+    position: absolute;
+    pointer-events: none;
+    border-radius: 50%;
+    border: solid 2px var(--primary-color);
+    mix-blend-mode: difference;
+
+    &.clickable {
+        // border-color: var(--beige)
+    }
+}

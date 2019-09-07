@@ -1,0 +1,35 @@
+.blue-element {
+    z-index: 1;
+    position: relative;
+    border: solid 1px black;
+    transform: translateY(100%);
+    background: rgba(30, 143, 255, 0.507);
+    transition: transform .3s ease-in-out;
+
+    //.blue-element.reveal
+    &.reveal {
+        transform: translateY(0%);
+    }
+}
+
+.blue-element, .parent-element {
+    width: 360px;
+    height: 480px;
+}
+
+.parent-element {
+    overflow: hidden;
+    position: relative;
+    border: solid 1px green;
+}
+
+.trigger {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 2;
+    background-color: dodgerblue;
+    border: none;
+}
