@@ -66,7 +66,7 @@ window.addEventListener('load', () => {
     const film = [
         // $('[u-visible]').extContent, 
         ['We<<Inspire.', $('.typeface-large')],
-        ['UI &#x00B7;Ux<<Design<<Frontend.', $('.typeface-large').parentElement],
+        ['UI • Ux<<Design<<Frontend.', $('.typeface-large').parentElement],
     ].map(([text, contain])=> {
        return animateText(text, contain, '<<')
     })
@@ -92,7 +92,6 @@ window.addEventListener('load', () => {
              width: 50,
              height: 50,
          }, '-=700')
-    trace(film);
     ti.finished
         .then(delay(1000))
         .then(() => film.reverse().forEach((e, i)=> setTimeout(e, i * 1000)))
@@ -117,19 +116,6 @@ window.addEventListener('load', () => {
 
 // on scroll 
 window.yScroll = yScroll
-const makeScrollListener = () => {
-    const listeners = [];
-    window.addEventListener('scroll', (event) => {
-        listeners
-            .filter(e => typeof e === 'function')
-            .map(e => e([window.scrollY, window.scrollX]));
-    })
-
-    return (fire) => {
-        listeners.push(fire)
-        console.log(listeners, 'Listeners');
-    }
-}
 
 function handleParallax() {
     trace(' Call Test')

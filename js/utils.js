@@ -8,6 +8,27 @@ export const trace = (e, a = (void 0)) => {
     return e;
 }
 
+// makes scroll listener
+/* Usuage: 
+    subscribeScroll = makeScrollListener()
+    subscribeScroll(([top, left]) => {
+        console.log(top, left);
+    })
+*/
+export const makeScrollListener = () => {
+    const listeners = [];
+    window.addEventListener('scroll', (event) => {
+        listeners
+            .filter(e => typeof e === 'function')
+            .map(e => e([window.scrollY, window.scrollX]));
+    })
+
+    return (fire) => {
+        listeners.push(fire)
+        console.log(listeners, 'Listeners');
+    }
+}
+
 export const once = (fn) => {
     let x = 0
     return [() => {

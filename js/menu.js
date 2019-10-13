@@ -4,7 +4,8 @@ import {
     $,
     delay,
     trace,
-    pipe
+    pipe,
+    makeScrollListener
 } from './utils.js'
 
 
@@ -42,7 +43,6 @@ export const menuArea = (elem) => {
         }
     }
 }
-
 
 const animateList = (elms) => {
     const targets = elms
@@ -136,14 +136,8 @@ const ScrollRemote = (el) => {
     let onNavClick = () => {}
 
     const findScrollElement = (element) => {
-        const {
-            x,
-            y
-        } = element.getBoundingClientRect()
-        yScroll({
-            x,
-            y
-        })
+        const { x, y } = element.getBoundingClientRect()
+        yScroll({ x, y })
     }
 
     const getReference = el => {
@@ -166,16 +160,13 @@ const ScrollRemote = (el) => {
             }]
         })
 
-        window.addEventListener('scroll', () => {
-            const {
-                pageYOffset: pageY
-            } = getOffset()
-
-            offsetMaps.forEach(([index, cord]) => {
-                if ((pageY >= cord.y) && pageY <= (cord.y + cord.height)) {
+        const subscribeScroll = makeScrollListener();
+        offsetMaps.forEach(([index, cord]) => {
+            subscribeScroll(([top]) => {
+                if ((top >= cord.y) && top <= (cord.y + cord.height)) {
                     activate(navs, navs[index])
                 }
-            })
+            });
         })
     }
 
@@ -231,22 +222,23 @@ const Blinder = () => {
         blinder.reset()
     })
 
-    return () => ({
+    return {
         el: blinder,
         open: () => blinder.play(),
         close: () => blinder.restart(),
-    })
+    }
 }
 
 
 const toggleMenu = (Menu) => {
     const navList = animateList(Menu.Links)
-    console.assert(typeof(abin) == 'function', 'Its not a function');
+    
     const {
         open,
         close,
         el: blinder
     } = Blinder();
+
     const closeMenu = el => {
         trace('closing menu')
         close() // closing blinder
