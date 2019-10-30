@@ -1,4 +1,5 @@
 @import './tailwind.min.css';
+@import './layout.scss';
 
 :root {
     --blue: blue;
@@ -308,7 +309,7 @@ body {
 
         .project-card:nth-child(#{$index}) {
             background-color: lighten(black, $index * 15%);
-            // transform: scale(0.7 + ($index / 4));
+            transform: scale(0.7 + ($index / 4));
             z-index: $index + 1;
         }
     }

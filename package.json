@@ -11,9 +11,9 @@
   "author": "Joseph Julius Owonvwon",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.6.0",
+    "@babel/core": "^7.0.0-0",
     "@babel/plugin-transform-async-to-generator": "^7.5.0",
-    "@babel/preset-react": "^7.0.0",
+    "@babel/preset-react": "^7.6.3",
     "sass": "^1.23.0-module.beta.1"
   },
   "dependencies": {

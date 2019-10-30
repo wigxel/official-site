@@ -1,4 +1,6 @@
 import anime from './anime.min.js'
+import carousel from './carousel';
+import proto from './proto'
 import {
     menuArea,
     yScroll,
@@ -6,6 +8,9 @@ import {
 } from './menu.js'
 import SS from './single-form'
 import { $, delay, trace } from './utils'
+
+carousel();
+proto()
 
 const Menu = menuArea($('.menu-area'))
 Menu.hide()
