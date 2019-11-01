@@ -8,6 +8,8 @@ export const trace = (e, a = (void 0)) => {
     return e;
 }
 
+export const log = trace;
+
 // makes scroll listener
 /* Usuage: 
     subscribeScroll = makeScrollListener()
