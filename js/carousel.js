@@ -15,9 +15,9 @@ const buildProject = ({ name, description, technology }) => {
   const project = document.createElement("div");
   project.classList.add("project");
   project.innerHTML = `
-        <h1 class="title">${name}</h1>
+        <h1 class="title font-serif">${name}</h1>
         <div class="description">
-          <p class="header">
+          <p class="header opacity-50">
             DESCRIPTION
           </p>
           <div class="descript">
@@ -28,7 +28,7 @@ const buildProject = ({ name, description, technology }) => {
         </div>
 
         <div class="stack">
-          <p class="header">
+          <p class="header opacity-50">
             frontend
           </p>
           <div class="technologies">
@@ -51,15 +51,15 @@ const createProjects = projects => {
     dotHolder.appendChild(createDot(index));
   });
   slider.style.gridTemplateColumns = getSlideWidth() + "px";
-
-  // Animate the carousel
-  animateCarousel();
 };
 
 function createDot(id) {
   const dot = document.createElement("div");
   dot.classList.add("dot");
-  dot.setAttribute("onclick", () => activateToggle(id));
+  dot.addEventListener('click', () => {
+    actions.pauseAutoplay()
+    slideTo(id)
+  });
 
   return dot;
 }
@@ -75,29 +75,39 @@ function createImage({ picture }) {
   return figure;
 }
 
+const activeArrowButtons = () => {
+  const arrows = document.querySelectorAll("[data-direction]");
+  log(arrows, "arrows");
+
+  arrows.forEach(arrow =>
+    arrow.addEventListener("click", () => {
+      log(arrow.getAttribute("data-direction"), "Action taken");
+      actions.pauseAutoplay()
+      actions[arrow.getAttribute("data-direction")]();
+    })
+  );
+}
+
 const fetchProjects = () => {
     createProjects(projects);
+    animateCarousel();
+    activeArrowButtons()
+    actions.autoplay()
 };
 
 window.addEventListener("load", fetchProjects);
 
 import { log } from "./utils";
 
-// if i click on the next/prev button it moves the slide
-// to a certain index
-const toggle = document.querySelector(".dot-holder");
-
 const getSlideWidth = () => {
   const elem = document.querySelector(".project-pos");
   return elem.clientWidth;
 };
 
-function setupWidth() {
-  Array.from(document.querySelectorAll(".project-pos figure")).forEach(el => {
-    el.style.width = getSlideWidth() + "px";
-  });
-}
-
+/**
+ * Slides the images by the index
+ * @param {int} index the current index
+ */
 function moveSlide(index) {
   // by translateX the parents
   const pos = index * log(getSlideWidth(), "The Slide Width");
@@ -111,6 +121,11 @@ function moveSlide(index) {
 }
 
 const projectSlideHolder = document.querySelector(".details-slide-holder");
+
+/**
+ * Slides the information vertically
+ * @param {int} index The current index
+ */
 const slideInfo = index => {
   const infoPos = projectSlideHolder.children[index].offsetTop + 10;
   const infoTranslate = `translateY(-${infoPos}px)`;
@@ -124,58 +139,55 @@ const slideInfo = index => {
 };
 
 const moveDots = index => {
-  [...toggle.children].forEach(child => {
+  [...dotHolder.children].forEach(child => {
     child.classList.remove("active");
   });
-  toggle.children[index].classList.add("active");
+  dotHolder.children[index].classList.add("active");
 };
 
-const slideTo = index => {
+const slideTo = num => {
   moveSlide(num);
   moveDots(num);
   slideInfo(num);
+  actions.setCurrentIndex(num);
 };
-
-let num = 0;
 
 // const getSlideNum = () => (slider.children.length - 1);
 const getSlideNum = () => projectSlideHolder.children.length;
 
-function increment(i) {
-  num += 1;
-  if (num < getSlideNum()) {
-    slideTo(num);
-    // console.log(num)
-  } else {
-    num = getSlideNum() - 1;
-  }
-}
+const actions = {
+  index: 0,
+  intervalId: 0,
+  // increments the index/count
+  increment() {
+    const index = this.index + 1
+    if (index < getSlideNum()) slideTo(index);
+  },
+  // decrements the index/count
+  decrement() {
+    const { index } = this;
+    if (index > 0) slideTo(index - 1);
+  },
+  // updates the index/count
+  setCurrentIndex(index) {
+     this.index = index;
+  },
+  pauseAutoplay() {
+    clearInterval(this.intervalId);
+    this.intervalId = null
 
-function decrement(i) {
-  num -= 1;
-  if (num >= 0) {
-    slideTo(num);
-    // console.log(num)
-  } else {
-    num = 0;
-  }
-}
-
-const activateToggle = i => {
-  if (i <= projectSlideHolder.children.length - 1) {
-    moveSlide(i);
-    num = i;
+    setTimeout(() => {
+        if (this.intervalId === null)
+        this.autoplay()
+      }, 5000);
+  },
+  // Automate slide
+  autoplay() {
+    this.intervalId = setInterval(() => {
+      if (this.index === (getSlideNum() - 1)) {
+        this.setCurrentIndex(-1)
+      }
+      this.increment();
+    }, 5000);
   }
 };
-
-// Automate slide
-let k = 0;
-setInterval(() => {
-  if (k == projectSlideHolder.children.length - 1) {
-    k = 0;
-    // moveSlide(k)
-  } else {
-    k++;
-    // moveSlide(k)
-  }
-}, 3000);
