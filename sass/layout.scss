@@ -4,11 +4,10 @@
 }
 
 %transition {
-    transition: all 0.5s ease-out;
+  transition: all 0.5s ease-out;
 }
 
 .carousel {
-  min-height: 100vh;
   width: 100%;
   display: grid;
   align-items: center;
@@ -16,6 +15,10 @@
   grid-template-columns: 100px 1fr 1.6fr;
   gap: 20px;
   overflow: hidden;
+
+  * {
+    //   outline: solid 1px red;
+  }
 
   .toggle {
     width: 100%;
@@ -106,13 +109,12 @@
 
       display: grid;
       position: relative;
-      grid-gap: 30px;
       grid-auto-flow: row;
       position: absolute;
-      top: 25%;
+      top: 0;
       z-index: 4;
     }
-    
+
     .project {
       opacity: 0;
       width: auto;
@@ -187,7 +189,8 @@
       border-radius: 15px;
       z-index: 1;
       background: rgba(50, 50, 50, 1);
-      box-shadow: 0 0 3px 5px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 3px 24px -12px rgba(0, 0, 0, 0.28),
+        0 12px 24px rgba(0, 0, 0, 0.1);
       opacity: 0;
       @extend %transition;
 
