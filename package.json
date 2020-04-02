@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "serve": "parcel -p 3009 serve index.html",
-    "build": "parcel build index.html",
+    "build": "parcel build index.html --out-dir=public",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Joseph Julius Owonvwon",
@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "anime.min.js": "^1.2.3-0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "parcel": "^1.12.4"
   }
 }
