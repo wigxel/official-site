@@ -44,10 +44,12 @@
             <span></span>
             <span></span>
           </div>
-          <li data-wg-autoscroll=".jumbotron" class="active">1</li>
-          <li data-wg-autoscroll=".wg-services">2</li>
-          <li data-wg-autoscroll=".portfolio">3</li>
-          <li data-wg-autoscroll=".contact-us">4</li>
+          <div class="flex flex-col">
+            <li data-wg-autoscroll=".jumbotron" class="active">1</li>
+            <li data-wg-autoscroll=".wg-services">2</li>
+            <li data-wg-autoscroll=".portfolio">3</li>
+            <li data-wg-autoscroll=".contact-us">4</li>
+          </div>
         </div>
       </div>
 
@@ -76,68 +78,73 @@
     </section>
     <div class="sharp-edger-reverse h-screen absolute bg-green w-full"></div>
     <section class="bg-white p-2 sharp-edger">
-      <div class="container portfolio">
-        <h3 class="mt-32 mb-0 type-1 font-serif">portfolio</h3>
-        <p class="ml-8 -mt-12 font-sans opacity-50">Some Passionate Works.</p>
+      <div
+        class="flex container portfolio min-h-screen justify-center flex-col"
+      >
+        <hgroup class="mb-0 lg:mb-20">
+          <h3 class="mt-32 mb-0 type-1 font-serif">portfolio</h3>
+          <h5 class="ml-8 -mt-12 font-sans opacity-50">
+            Some Passionate Works.
+          </h5>
+        </hgroup>
+        <section class="carousel">
+          <!-- Aside -->
+          <aside class="toggle">
+            <div class="arrow top" data-direction="decrement">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10.877"
+                height="7.346"
+                viewBox="0 0 10.877 7.346"
+              >
+                <path
+                  d="M437.277,5739.966l5.221,6.23,4.879-6.23"
+                  transform="translate(-436.894 -5739.645)"
+                  fill="none"
+                  stroke="#707070"
+                  stroke-width="1"
+                />
+              </svg>
+            </div>
+            <div class="dots">
+              <div class="dot-holder"></div>
+            </div>
+            <div class="arrow btm" data-direction="increment">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="10.877"
+                height="7.346"
+                viewBox="0 0 10.877 7.346"
+              >
+                <path
+                  d="M437.277,5739.966l5.221,6.23,4.879-6.23"
+                  transform="translate(-436.894 -5739.645)"
+                  fill="none"
+                  stroke="#707070"
+                  stroke-width="1"
+                />
+              </svg>
+            </div>
+          </aside>
+
+          <!--Project Details -->
+          <div class="project-details outline">
+            <div class="detials-pos">
+              <div class="details-slide-holder"></div>
+            </div>
+          </div>
+
+          <!-- Picture -->
+          <div class="project-img">
+            <div class="project-pos">
+              <div class="slide-holder"></div>
+            </div>
+          </div>
+        </section>
       </div>
     </section>
 
     <section class="bg-white">
-      <section class="carousel">
-        <!-- Aside -->
-        <aside class="toggle">
-          <div class="arrow top" data-direction="decrement">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="10.877"
-              height="7.346"
-              viewBox="0 0 10.877 7.346"
-            >
-              <path
-                d="M437.277,5739.966l5.221,6.23,4.879-6.23"
-                transform="translate(-436.894 -5739.645)"
-                fill="none"
-                stroke="#707070"
-                stroke-width="1"
-              />
-            </svg>
-          </div>
-          <div class="dots">
-            <div class="dot-holder"></div>
-          </div>
-          <div class="arrow btm" data-direction="increment">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="10.877"
-              height="7.346"
-              viewBox="0 0 10.877 7.346"
-            >
-              <path
-                d="M437.277,5739.966l5.221,6.23,4.879-6.23"
-                transform="translate(-436.894 -5739.645)"
-                fill="none"
-                stroke="#707070"
-                stroke-width="1"
-              />
-            </svg>
-          </div>
-        </aside>
-
-        <!--Project Details -->
-        <div class="project-details outline">
-          <div class="detials-pos">
-            <div class="details-slide-holder"></div>
-          </div>
-        </div>
-
-        <!-- Picture -->
-        <div class="project-img">
-          <div class="project-pos">
-            <div class="slide-holder"></div>
-          </div>
-        </div>
-      </section>
-
       <div class="container flex items-center">
         <figure class="flex-1 p-30">
           <img
@@ -151,8 +158,10 @@
 
           <article class="font-sans text-p">
             <p class="mb-3">
-              Capable for making interesting Visuals in software design. <br />
-              We create unique application software base on coloration, <br />
+              Capable for making interesting Visuals in software design.
+              <br />
+              We create unique application software base on coloration,
+              <br />
               typography, and other design principles.
             </p>
             <p>
@@ -170,7 +179,8 @@
           <div class="font-serif type-1 mb-2">Why UI/UX?</div>
           <article class="font-sans text-p">
             <p class="">
-              In todays society, end users are drawn to brands that offer <br />
+              In todays society, end users are drawn to brands that offer
+              <br />
               <span class="text-blue italic"
                 >comfortable experience and services</span
               >, with a professional
@@ -189,6 +199,7 @@
 
         <figure class="flex-1 p-30"></figure>
       </div>
+
       <div class="container flex items-center">
         <figure class="flex-1 p-30"></figure>
         <div class="">
@@ -212,7 +223,8 @@
         <div class="text-center font-thin">
           <div class="font-serif text-5xl italic">
             We love what we do. <br />
-            <span class="text-blue">We create</span>, that’s what makes <br />
+            <span class="text-blue">We create</span>, that’s what makes
+            <br />
             it Professional. <br />
           </div>
           <div
@@ -303,7 +315,9 @@
       </svg>
       <div class="container flex flex-col justify-between">
         <div class="text-white wg-main-nav">
-          <div class="mb-12 italic opacity-75 nav-label font-serif">Menu</div>
+          <div class="mb-12 opacity-75 nav-label font-serif">
+            <a data-toggle="menu" class="font-sans text-sm">B A C K </a>
+          </div>
           <a class="italic wg-nav-link font-serif is-active">Home</a>
           <a class="italic wg-nav-link font-serif">Portfolio</a>
           <a class="italic wg-nav-link font-serif">About Us</a>

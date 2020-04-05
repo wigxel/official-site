@@ -1,280 +1,274 @@
-import anime from './anime.min.js'
-import {
-    once,
-    $,
-    delay,
-    trace,
-    pipe,
-    makeScrollListener
-} from './utils.js'
+import anime from "./anime.min.js";
+import { throttle } from "lodash";
+import { once, $, delay, trace, pipe, makeScrollListener } from "./utils.js";
 
-
-export const menuArea = (elem) => {
-    let active = false
-    const menu = elem
-    const body = document.body
-    const links = [...document.querySelectorAll('.wg-main-nav .wg-nav-link')]
-
-    const clickEvent = elms => (fn) => {
-        const navLinks = elms
-        navLinks.forEach(el => el.addEventListener('click', evt => {
-            navLinks.forEach(e => e.classList.remove('is-active'))
-            el.classList.add('is-active')
-            fn(el)
-        }))
-    }
-
-    return {
-        isOpen: _ => active,
-        Links: links,
-        onLinkChange: clickEvent(links),
-        show() {
-            menu.style.visibility = 'visible'
-            body.style.overflow = 'hidden'
-            active = true
-        },
-        toggle() {
-            active ? this.hide() : this.show()
-        },
-        hide() {
-            menu.style.visibility = 'hidden'
-            body.style = ''
-            active = false
-        }
-    }
-}
-
-const animateList = (elms) => {
-    const targets = elms
-
-    const navLinks = anime({
-        targets,
-        opacity: 1,
-        duration: 500,
-        autoplay: false,
-        translateX: '20%',
-        easing: 'easeOutElastic',
-        delay: function (el, i, l) {
-            return i * 100;
-        },
-        endDelay: function (el, i, l) {
-            return (l - i) * 100;
-        }
+const clickEvent = (elms, activeClass = "is-active") => fn => {
+  const navLinks = elms;
+  const unSelectAllLinks = navLinks =>
+    navLinks.map(e => e.classList.remove(activeClass));
+  for (let el in navLinks) {
+    el.addEventListener("click", evt => {
+      unSelectAllLinks();
+      el.classList.add(activeClass);
+      fn(el);
     });
+  }
+};
 
-    return {
-        play() {
-            navLinks.play()
-        },
-        reset() {
-            anime({
-                targets,
-                duration: 0,
-                opacity: 0,
-                translateX: '0',
-            })
-        },
+const animateToggle = ({ toggle }) => {
+  const blinder = Blinder();
+  const { animInstance } = blinder;
+
+  // toggles the menu
+  const [toggleOnce, resetOnce] = once(toggle);
+  animInstance.update = a => {
+    if (a.currentTime > animInstance.duration / 1.5) {
+      toggleOnce();
     }
-}
+  };
+  const open = () => {
+    blinder.open();
+    return animInstance.finished.then(delay(300)).then(resetOnce);
+  };
+  const close = () => {
+    blinder.close();
+    return animInstance.finished.then(animInstance.reset).then(resetOnce);
+  };
 
-let isScrolling = false
+  return [open, close];
+};
+
+export const menuArea = menu => {
+  let active = false;
+  const { body } = document;
+  const links = [...menu.querySelectorAll(".wg-main-nav .wg-nav-link")];
+  const hide = () => {
+    menu.style.visibility = "hidden";
+    body.style = "";
+    active = false;
+  };
+  const show = () => {
+    menu.style.visibility = "visible";
+    body.style.overflow = "hidden";
+    active = true;
+  };
+  const toggle = () => (active ? hide() : show());
+  const navList = animateList(links);
+  const [open, close] = animateToggle({ toggle });
+  const toggleScrollLock = active => () => {
+    const body = $("html, body");
+    body.style.height = active ? "" : "100vh";
+    body.style.overflow = active ? "" : "hidden";
+  };
+  const toggleAnim = () => {
+    const proimse = active
+      ? close().then(navList.reset)
+      : open().then(navList.play);
+    proimse.then(toggleScrollLock(active));
+  };
+  document.addEventListener("click", evt => {
+    if (evt.target.getAttribute("data-toggle") == "menu") {
+      console.log("isActive", active);
+      toggleAnim();
+    }
+  });
+
+  return {
+    isOpen: _ => active,
+    Links: links,
+    onLinkChange: clickEvent(links, "is-active"),
+    toggleAnim,
+    show,
+    toggle,
+    hide
+  };
+};
+
+const animateList = elms => {
+  const targets = elms;
+
+  const navLinks = anime({
+    targets,
+    opacity: 1,
+    duration: 500,
+    autoplay: false,
+    translateX: "20%",
+    easing: "easeOutElastic",
+    delay: function(el, i, l) {
+      return i * 100;
+    },
+    endDelay: function(el, i, l) {
+      return (l - i) * 100;
+    }
+  });
+
+  return {
+    play() {
+      navLinks.play();
+    },
+    reset() {
+      anime({
+        targets,
+        duration: 0,
+        opacity: 0,
+        translateX: "0"
+      });
+    }
+  };
+};
+
+let isScrolling = false;
 export const yScroll = (() => {
-    let cords = {
-        x: 0,
-        y: 0
+  let cords = {
+    x: 0,
+    y: 0
+  };
+
+  const doAn = (offset, duration = 700) => {
+    const { pageYOffset: y, pageXOffset: x } = window;
+    cords = {
+      x,
+      y
+    };
+    if (!isScrolling) {
+      isScrolling = true;
+      anime({
+        targets: cords,
+        y: Math.abs(offset.y + window.pageYOffset),
+        x: offset.x + window.pageXOffset,
+        easing: "easeOutQuad",
+        duration,
+        update: () => window.scroll(cords.x, cords.y)
+      }).finished.then(() => {
+        isScrolling = false;
+      });
     }
+  };
 
-    const doAn = (offset, duration = 1000) => {
-        const {
-            pageYOffset: y,
-            pageXOffset: x
-        } = window
-        cords = {
-            x,
-            y
-        }
-        if (!isScrolling) {
-            isScrolling = true
-            anime({
-                targets: cords,
-                y: Math.abs(offset.y + window.pageYOffset),
-                x: offset.x + window.pageXOffset,
-                easing: 'easeOutQuad',
-                duration,
-                update: () => window.scroll(cords.x, cords.y)
-            }).finished.then(() => {
-                isScrolling = false
-            })
-        }
-    }
+  return a => doAn(a);
+})();
 
-    return a => doAn(a)
-})()
-
-const activate = (elems, el, className = 'active') => {
-    elems.forEach(element => {
-        element === el ? el.classList.add(className) :
-            element.classList.remove(className)
-    })
-}
+const activate = (elems, el, className = "active") => {
+  elems.forEach(element => {
+    element === el
+      ? el.classList.add(className)
+      : element.classList.remove(className);
+  });
+};
 
 const getOffset = () => {
-    const {
-        pageXOffset,
-        pageYOffset
-    } = window
+  const { pageXOffset, pageYOffset } = window;
 
-    return {
-        pageXOffset,
-        pageYOffset
+  return {
+    pageXOffset,
+    pageYOffset
+  };
+};
+
+const ScrollRemote = el => {
+  console.count("ScrollRemote");
+  let index = 0;
+  const menuButton = el.querySelector(".menu-bar");
+  const matchAttrib = "data-wg-autoscroll";
+  const navs = [...el.querySelectorAll("li")];
+  let onNavClick = () => {};
+
+  const setIndex = _index => {
+    if (parseInt(el.getAttribute("data-index")) != _index) {
+      index = _index;
+      const currentEl = navs[_index];
+      scrollTo(getReference(currentEl));
+      activate(navs, currentEl);
+      el.setAttribute("data-index", _index);
     }
-}
-const ScrollRemote = (el) => {
-    const menuButton = el.querySelector('.menu-bar')
-    const matchAttrib = 'data-wg-autoscroll'
-    const navs = [...el.querySelectorAll('li')]
-    let onNavClick = () => {}
+  };
 
-    const findScrollElement = (element) => {
-        const { x, y } = element.getBoundingClientRect()
-        yScroll({ x, y })
-    }
+  const scrollTo = element => {
+    const { x, y } = element.getBoundingClientRect();
+    yScroll({ x, y });
+  };
 
-    const getReference = el => {
-        const element = $(el.getAttribute(matchAttrib))
-        if (element) return element
-        throw Error('reference element doesn\'t exist')
-    }
+  const getReference = el => {
+    const refElement = $(el.getAttribute(matchAttrib));
+    if (refElement) return refElement;
+    throw Error("reference element doesn't exist");
+  };
 
-    const autoSwitch = () => {
-        const offsetMaps = navs.map((el, index) => {
-            const {
-                x,
-                y,
-                height
-            } = getReference(el).getBoundingClientRect()
-            return [index, {
-                x,
-                y,
-                height
-            }]
-        })
+  document.addEventListener("keydown", ({ keyCode }) => {
+    let newIndex = index;
+    const direction = keyCode == 40 ? "DOWN" : keyCode == 38 ? "UP" : "";
 
-        const subscribeScroll = makeScrollListener();
-        offsetMaps.forEach(([index, cord]) => {
-            subscribeScroll(([top]) => {
-                if ((top >= cord.y) && top <= (cord.y + cord.height)) {
-                    activate(navs, navs[index])
-                }
-            });
-        })
-    }
+    if (direction === "UP" && index > 0) newIndex--;
+    if (direction === "DOWN" && index < navs.length - 1) newIndex++;
+    setIndex(newIndex);
+  });
 
-    navs.forEach(el => {
-        el.addEventListener('click', () => {
-            findScrollElement(getReference(el))
-        })
-    })
-
-    return {
-        onMenuClick(fn) {
-            menuButton.addEventListener('click', fn)
-        },
-        onIndexClick: (fn) => onNavClick = fn,
-        autoSwitch
-    }
-}
+  navs.forEach(el => {
+    el.addEventListener("click", () => {
+      scrollTo(getReference(el));
+    });
+  });
+  setIndex(0);
+  return {
+    onMenuClick(fn) {
+      menuButton.addEventListener("click", fn);
+    },
+    onIndexClick: fn => (onNavClick = fn),
+    autoSwitch: () => {}
+  };
+};
 
 const Blinder = () => {
-    const blindElem = document.createElement('div')
+  const blindElem = document.createElement("div");
 
-    blindElem.classList.add('blinder')
-    document.body.appendChild(blindElem);
-    const blinder = anime({
-        targets: blindElem,
-        easing: 'easeOutQuad',
-        right: [{
-                value: 0
-            },
-            {
-                value: 0,
-                delay: 300
-            },
-            {
-                value: '100%'
-            }
-        ],
-        left: [{
-                value: '100%'
-            },
-            {
-                value: 0,
-                delay: 300
-            },
-            {
-                value: 0
-            },
-        ],
-        duration: 800,
-        autoplay: false,
-    })
-    blinder.finished.then(() => {
-        blinder.reset()
-    })
+  blindElem.classList.add("blinder");
+  document.body.appendChild(blindElem);
+  const instance = anime({
+    targets: blindElem,
+    easing: "easeOutQuad",
+    right: [
+      {
+        value: 0
+      },
+      {
+        value: 0,
+        delay: 300
+      },
+      {
+        value: "100%"
+      }
+    ],
+    left: [
+      {
+        value: "100%"
+      },
+      {
+        value: 0,
+        delay: 300
+      },
+      {
+        value: 0
+      }
+    ],
+    duration: 800,
+    autoplay: false
+  });
+  instance.finished.then(() => {
+    instance.reset();
+  });
 
-    return {
-        el: blinder,
-        open: () => blinder.play(),
-        close: () => blinder.restart(),
-    }
-}
-
-
-const toggleMenu = (Menu) => {
-    const navList = animateList(Menu.Links)
-    
-    const {
-        open,
-        close,
-        el: blinder
-    } = Blinder();
-
-    const closeMenu = el => {
-        trace('closing menu')
-        close() // closing blinder
-        navList.reset() // hiding nav list
-    }
-
-    // open blinder
-    if (trace(Menu.isOpen())) {
-        closeMenu()
-    } else {
-        open()
-        blinder.finished
-            .then(delay(300))
-            .then(_ => navList.play())
-    }
-
-    // toggles the menu
-    const [toggle, resetOnce] = once(() => trace(Menu.toggle(), 'doing stuff'))
-    blinder.update = (a) => {
-        if (a.currentTime > (blinder.duration / 1.5)) {
-            toggle()
-        }
-    }
-
-    blinder.finished
-        .then(() => blinder.reset())
-        .then(() => resetOnce())
-
-    Menu.onLinkChange(closeMenu)
-}
+  return {
+    animInstance: instance,
+    open: () => instance.play(),
+    close: () => instance.restart()
+  };
+};
 
 export function activateScrollRemote(Menu) {
-    const remote = ScrollRemote($('.scroll-remote'))
-    remote.onMenuClick(() => toggleMenu(Menu))
-    remote.onIndexClick((evt) => {
-        trace('first click index on remote', evt)
-    })
-    remote.autoSwitch()
+  const remote = ScrollRemote($(".scroll-remote"));
+  remote.onMenuClick(Menu.toggleAnim);
+  remote.onIndexClick(evt => {
+    trace("first click index on remote", evt);
+  });
+  remote.autoSwitch();
 }
