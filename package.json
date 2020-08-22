@@ -5,7 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "build:base-css": "tailwindcss build ./styles/tailwind.base.css -o ./styles/base.css"
+    "build:css": "tailwindcss build ./styles/tailwind.base.css -o ./styles/base.css"
   },
   "dependencies": {
     "@emotion/css": "^11.0.0-next.12",
