@@ -1,8 +1,9 @@
 import React from "react";
+import { css } from "@emotion/css";
 import styled from "@emotion/styled";
 import tw from "@tailwindcssinjs/macro";
-import { css } from "@emotion/css";
 import WigxelLogo from "./Icons/WigxelLogo";
+import HideReveal from "./Typography/HideReveal";
 
 const StyledHeader = styled.header`
   ${tw`
@@ -32,7 +33,9 @@ const Header = () => {
       </section>
       <nav className={css(tw`inline-flex mr-12 uppercase`)}>
         {["Home", "Portfolio"].map((e, idx) => (
-          <li className={css(tw`inline-block px-4`)}>{e}</li>
+          <li className={css(tw`inline-block px-4 cursor-pointer`)}>
+            <HideReveal text={e} />
+          </li>
         ))}
       </nav>
     </StyledHeader>

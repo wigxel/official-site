@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import tw from "@tailwindcssinjs/macro";
-import { css } from "@emotion/css";
+import HideReveal from "../Typography/HideReveal";
 
 const StyledAside = styled.aside`
   ${tw`
@@ -32,7 +32,9 @@ const Aside = () => {
   return (
     <StyledAside>
       {["UI/UX", "Mobile", "Web", "Contact"].map((e, idx) => (
-        <li className={e === "Mobile" ? "active" : ""}>{e}</li>
+        <li className={e === "Mobile" ? "active" : ""}>
+          <HideReveal text={e} />
+        </li>
       ))}
     </StyledAside>
   );
