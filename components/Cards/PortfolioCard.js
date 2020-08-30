@@ -59,22 +59,20 @@ export const PortfolioCard = ({
 }) => {
   return (
     <motion.div
-      layout
       layoutId={id}
-      whileHover="hover"
+      whileHover={!full && "hover"}
       variants={variants}
       onTap={onClick}
     >
       <StyledPCard expand={full} style={style}>
         <motion.button
           onClick={props.onClose}
-          initial={{ y: -100, opacity: 0 }}
+          initial={{ y: -100, opacity: 0, rotate: "90deg" }}
           variants={{
-            fullscreen: { y: 0, opacity: 1, transition: { delay: 1 } },
+            fullscreen: { y: 0, opacity: 0.5, transition: { delay: 1 } },
           }}
-          className={css(
-            tw`w-12 h-12 border text-white rounded-full flex items-center justify-center top-0 right-0 m-20 absolute`
-          )}
+          whileHover={{ opacity: 1 }}
+          className={css(tw`text-white top-0 right-0 mt-20 mr-3 absolute`)}
         >
           <span>CLOSE</span>
         </motion.button>

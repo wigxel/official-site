@@ -10,6 +10,7 @@ export default function MotionExperiment() {
     { title: "Kwivar", id: "KWI" },
     { title: "Femality", id: "FEM" },
     { title: "Salad Freak", id: "SAL" },
+    { title: "E-Hub Forum", id: "EHUB" },
   ]);
   const [selected, setSelected] = React.useState(null);
   const container = React.useRef();
@@ -19,7 +20,7 @@ export default function MotionExperiment() {
   return (
     <AnimateSharedLayout type="crossfade">
       <motion.section className={css(tw`flex`)}>
-        <section className={css(tw`w-full min-h-screen flex flex-1`)}>
+        <section className={css(tw`relative w-full h-screen flex flex-1`)}>
           <div className={css(tw`w-full flex items-center justify-center`)}>
             {items.map((item, idx) => (
               <PortfolioCard
@@ -36,21 +37,16 @@ export default function MotionExperiment() {
         </section>
         <div
           ref={container}
-          className={css(
-            tw`left-0 right-0 h-screen absolute flex items-center justify-center`
-          )}
+          className={css(tw`left-0 right-0 absolute h-screen`)}
           style={{
             pointerEvents: selected ? "all" : "none",
           }}
         >
           <AnimatePresence>
             {selected && (
-              <motion.div
-                layoutId={selected.id}
-                animate="fullscreen"
-                className={css(tw`border-red-500 box-border`)}
-              >
+              <motion.div animate="fullscreen">
                 <PortfolioCard
+                  id={selected.id}
                   title={selected.title}
                   full
                   onClose={() => setSelected(null)}

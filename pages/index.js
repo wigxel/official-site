@@ -62,7 +62,7 @@ const Index = () => {
     >
       <Header />
       <div className={css(tw`flex -mt-24 min-h-screen pt-24`)}>
-        <div className={css(tw`w-24 select-none`)}>
+        <div className={css(tw`w-24 select-none relative z-20`)}>
           <Aside></Aside>
         </div>
         <section className={css(tw`-ml-24 flex-1 flex-shrink-0`)}>
