@@ -4,6 +4,7 @@ import { css } from "@emotion/css";
 import tw from "@tailwindcssinjs/macro";
 import PortfolioCard from "./Cards/PortfolioCard";
 import { motion, AnimatePresence, AnimateSharedLayout } from "framer-motion";
+import { H1, P } from "./Typography";
 
 export default function MotionExperiment() {
   const [items] = React.useState([
@@ -20,7 +21,15 @@ export default function MotionExperiment() {
   return (
     <AnimateSharedLayout type="crossfade">
       <motion.section className={css(tw`flex`)}>
-        <section className={css(tw`relative w-full h-screen flex flex-1`)}>
+        <section
+          className={css(tw`relative w-full h-screen flex flex-col flex-1`)}
+        >
+          <div className={css(tw`self-center mb-8 text-white`)}>
+            <H1 bold className={css(tw`font-bold`)}>
+              Mobile Friendly
+            </H1>
+            <P className={css(tw`text-2xl`)}>Some Cool Mobile Apps</P>
+          </div>
           <div className={css(tw`w-full flex items-center justify-center`)}>
             {items.map((item, idx) => (
               <PortfolioCard

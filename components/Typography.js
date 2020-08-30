@@ -3,7 +3,7 @@ import tw from "@tailwindcssinjs/macro";
 import styled from "@emotion/styled";
 
 export const H1 = styled.h1(tw`
-    font-display 
+    font-display
     text-6xl
     text-black
 `);

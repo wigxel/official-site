@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import tw from "@tailwindcssinjs/macro";
 import HideReveal from "../Typography/HideReveal";
 import { motion, AnimateSharedLayout } from "framer-motion";
+import { usePages, usePageAction } from "../../stores/pageStore";
 
 const StyledAside = styled.aside`
   ${tw`
@@ -12,7 +13,7 @@ const StyledAside = styled.aside`
     flex-grow-0 
     fixed
     bottom-0
-    pr-6
+    pr-8
     h-screen
     flex-shrink-0 
      left-0
@@ -20,11 +21,17 @@ const StyledAside = styled.aside`
    `}
 
   li {
+    ${tw`relative py-4 my-0 inline-block px-4 text-xs uppercase`}
     writing-mode: tb;
-    ${tw`relative py-4 tracking-widest my-2 inline-block px-4 text-xs uppercase`}
+    letter-spacing: 3px;
+
+    > span {
+      ${tw`font-sans`}
+      position: relative;
+    }
 
     &.active {
-      ${tw`text-white font-sans`}
+      ${tw`text-white`}
     }
   }
 
@@ -39,21 +46,20 @@ const StyledAside = styled.aside`
 `;
 
 const Aside = () => {
-  const [page, setPage] = React.useState(null);
-  const activeElse = (e, a, b) => (page === e ? a : b);
+  const { pages, currentPage } = usePages();
+  const { setCurrentPage } = usePageAction();
+  const activeElse = (e, a, b) => (currentPage === e ? a : b);
 
   return (
     <AnimateSharedLayout>
       <StyledAside>
-        {["UI/UX", "Mobile", "Web", "Contact"].map((e, idx) => (
+        {pages.map((pageTitle, idx) => (
           <li
             key={idx}
-            className={activeElse(e, "active", "")}
-            onClick={() => {
-              setPage(e);
-            }}
+            className={activeElse(idx, "active", "")}
+            // onClick={() => setCurrentPage(idx)}
           >
-            {page === e && (
+            {currentPage === idx && (
               <motion.div
                 layoutId="indicator"
                 className="indicator"
@@ -61,7 +67,7 @@ const Aside = () => {
                 transition={spring}
               />
             )}
-            <HideReveal text={e} />
+            <span>{pageTitle}</span>
           </li>
         ))}
       </StyledAside>

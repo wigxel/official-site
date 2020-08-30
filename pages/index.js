@@ -10,17 +10,20 @@ import MotionExperiment from "../components/MotionExperiment";
 import Button from "../components/ButtonStyled";
 import ZigZag from "../components/Icons/ZigZag";
 import SlideUpReveal from "../components/Typography/SlideUpReveal";
-import { motion } from "framer-motion";
+import { motion, useViewportScroll } from "framer-motion";
 import { makeObserver } from "../components/IntersectionObserver";
+import { Provider, usePageAction, usePages } from "../stores/pageStore";
+import useArrowKeys from "../hooks/useArrowKeys";
+import useScroll from "../hooks/useScroll";
 
-const secBgColors = {
-  Idea: "var(--beige",
-  Web: "var(--yellow)",
-  Intro: "var(--beige)",
-  Mobile: "var(--primary)",
-};
+const secBgColors = [
+  "var(--beige",
+  "var(--red)",
+  "var(--yellow)",
+  "var(--primary)",
+];
 
-const Index = () => {
+const Page = () => {
   const [reveal, setReveal] = React.useState({
     Intro: false,
     Idea: false,
@@ -28,15 +31,35 @@ const Index = () => {
     Mobile: false,
   });
   const [selectedItem, setSelectedId] = React.useState(null);
-  const [page, setPage] = React.useState("Intro");
+  const [page, setPage] = React.useState();
   const container = React.useRef(null);
+  const { currentPage } = usePages();
+  const { next, prev, setCurrentPage } = usePageAction();
+  const scrollTo = useScroll();
+  const a = useViewportScroll();
+
+  useArrowKeys(
+    {
+      up: () => prev(),
+      down: () => next(),
+    },
+    {
+      preventDefault: true,
+      altKey: false,
+    }
+  );
+
+  React.useEffect(() => {
+    if (process.browser) console.log("Inner Width");
+    scrollTo(0, window.innerHeight * currentPage);
+  }, [currentPage]);
 
   const setIntersect = React.useCallback(
     (name, once) => (e) => {
       if (once && reveal[name]) return false;
       if (e.isIntersecting) {
         const newState = { ...reveal, [name]: e.isIntersecting };
-        console.info("State > ", name, " > ", reveal, newState);
+        // console.info("State > ", name, " > ", reveal, newState);
         setPage(e.sectionName);
         setReveal({ ...reveal, [name]: e.isIntersecting });
       }
@@ -47,17 +70,16 @@ const Index = () => {
   React.useEffect(() => {
     setTimeout(() => {
       setIntersect("Intro", false, reveal)({ isIntersecting: true });
+      setCurrentPage(0);
     }, 500);
   }, []);
-
-  // console.log("Page", { page, color: secBgColors[page] });
 
   return (
     <motion.div
       ref={container}
       animate="fullscreen"
       initial={{ backgroundColor: "var(--beige)" }}
-      animate={{ backgroundColor: secBgColors[page] }}
+      animate={{ backgroundColor: secBgColors[currentPage] }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
     >
       <Header />
@@ -93,12 +115,12 @@ const Index = () => {
                     </span>
                   </SlideUpReveal>
                 </H1>
-                <H4 className={css(tw`opacity-75 font-sans -mt-4 text-3xl`)}>
+                <H4 className={css(tw`font-sans -mt-4 text-3xl`)}>
                   <SlideUpReveal
                     reveal={reveal.Intro}
-                    transition={{ delay: 0.5 }}
+                    transition={{ duration: 0.3, delay: 0.5 }}
                   >
-                    Some of our <i>passionate</i> works
+                    <b>Some passionate works</b>
                   </SlideUpReveal>
                 </H4>
               </aside>
@@ -106,10 +128,10 @@ const Index = () => {
                 {["Salad Freak", "Kwivar", "Femality"].map((e, idx) => (
                   <motion.div
                     key={idx}
-                    initial={{ y: -100, opacity: 0 }}
+                    initial={{ y: 30, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{
-                      delay: 1 + idx * 0.2,
+                      delay: 2 + idx * 0.5,
                     }}
                     layout
                   >
@@ -210,4 +232,10 @@ export const IntersectionObserver = (props) => {
   );
 };
 
-export default Index;
+export default function Portfolio() {
+  return (
+    <Provider>
+      <Page />
+    </Provider>
+  );
+}
