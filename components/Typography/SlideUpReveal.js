@@ -1,5 +1,6 @@
 import React from "react";
 import { css } from "@emotion/css";
+import { motion } from "framer-motion";
 import styled from "@emotion/styled";
 
 const Style = styled.div`
@@ -7,24 +8,31 @@ const Style = styled.div`
   position: relative;
 
   span {
-    transition: transform 0.75s cubic-bezier(0.19, 1, 0.22, 1);
-  }
-
-  > span {
     display: inline-block;
-    transform: translateY(${(a) => (a.reveal ? "100%" : "0%")});
   }
-
-  ${console.log}
 `;
 
 const SlideComponent = (props) => {
-  console.log("Slide Component > ", props);
   return (
     <Style data-text={props.text} reveal={!props.reveal}>
-      <span>{props.children}</span>
+      <motion.span
+        initial={{ y: "100%" }}
+        animate={{ y: props.reveal ? "0%" : "100%" }}
+        transition={{ easings: "easeOut", ...props.transition }}
+      >
+        {props.children}
+      </motion.span>
     </Style>
   );
 };
+
+// const SlideComponent = (props) => {
+//   // console.log("Slide Component > ", props);
+//   return (
+//     <Style data-text={props.text} reveal={!props.reveal}>
+//       <span>{props.children}</span>
+//     </Style>
+//   );
+// };
 
 export default SlideComponent;

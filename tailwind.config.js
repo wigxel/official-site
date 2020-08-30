@@ -2,6 +2,9 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   theme: {
+    borderRadius: {
+      xl: "24px",
+    },
     extend: {
       colors: {
         black: "#060606",

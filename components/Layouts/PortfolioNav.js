@@ -32,7 +32,7 @@ const Aside = () => {
   return (
     <StyledAside>
       {["UI/UX", "Mobile", "Web", "Contact"].map((e, idx) => (
-        <li className={e === "Mobile" ? "active" : ""}>
+        <li key={idx} className={e === "Mobile" ? "active" : ""}>
           <HideReveal text={e} />
         </li>
       ))}

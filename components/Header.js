@@ -4,10 +4,11 @@ import styled from "@emotion/styled";
 import tw from "@tailwindcssinjs/macro";
 import WigxelLogo from "./Icons/WigxelLogo";
 import HideReveal from "./Typography/HideReveal";
+import { motion } from "framer-motion";
 
-const StyledHeader = styled.header`
+const StyledHeader = styled(motion.div)`
   ${tw`
-    flex justify-between w-full bg-transparent
+    flex justify-between w-full
     h-24 
     items-center
     sticky 
@@ -18,7 +19,9 @@ const StyledHeader = styled.header`
 
 const Header = () => {
   return (
-    <StyledHeader>
+    <StyledHeader
+      variants={{ fullscreen: { backgroundColor: "var(--beige)" } }}
+    >
       <section className={css(tw`flex items-center`)}>
         <div
           className={css(
@@ -33,7 +36,7 @@ const Header = () => {
       </section>
       <nav className={css(tw`inline-flex mr-12 uppercase`)}>
         {["Home", "Portfolio"].map((e, idx) => (
-          <li className={css(tw`inline-block px-4 cursor-pointer`)}>
+          <li key={idx} className={css(tw`inline-block px-4 cursor-pointer`)}>
             <HideReveal text={e} />
           </li>
         ))}

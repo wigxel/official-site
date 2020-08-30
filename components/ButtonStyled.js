@@ -27,7 +27,6 @@ const Button = styled.button(tw`
   border
   hover[bg-primary text-white border-primary]
   focus[outline-none shadow-outline-indigo]
-  active:bg-indigo-700
   transition duration-300 ease-in-out
 `);
 
