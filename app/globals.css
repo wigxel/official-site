@@ -43,7 +43,7 @@
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 20% 98%;
     --muted: 215 27.9% 16.9%;
-    --muted-foreground: 217.9 10.6% 64.9%;
+    --muted-foreground: 244.3, 6.4%, 56.9%;
     --accent: 215 27.9% 16.9%;
     --accent-foreground: 210 20% 98%;
     --destructive: 0 62.8% 30.6%;
@@ -94,6 +94,12 @@ body {
 
 .font-display {
   font-feature-settings: "salt" on, "aalt" on, "ss01" on;
+}
+
+.font-mono {
+  font-synthesis-weight: none;
+  font-feature-settings: "ss04" on, "aalt" off;
+  font-variant-numeric: tabular-nums;
 }
 
 @layer layout {
