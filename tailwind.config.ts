@@ -21,6 +21,7 @@ const config = {
     extend: {
       fontFamily: {
         display: ["Neue Machina"],
+        mono: ["Berkeley Mono"],
         body: ["var(--font-body)", ...fontFamily.sans],
       },
       colors: {
@@ -29,6 +30,12 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        neutral: {
+          500: "#8B8A98",
+        },
+        grid: {
+          border: "hsl(var(--grid-border))",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
