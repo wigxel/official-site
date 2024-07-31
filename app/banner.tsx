@@ -1,24 +1,56 @@
-import type React from "react";
+import { motion, useMotionValueEvent, useScroll } from "framer-motion";
+import { animate } from "framer-motion/dom";
+import React, { type ComponentProps, useRef } from "react";
 import { Cell } from "~/app/cell";
 import { ArrowRight } from "~/components/Icons";
+import { cn } from "~/lib/utils";
 
 export function Banner() {
+  const { scrollY } = useScroll();
+  const bannerRef = useRef<HTMLDivElement>(null);
+
+  // useMotionValueEvent(scrollY, "", (latest) => {
+  //   if (latest < 200) {
+  //     return animate("#00000000", "rgba(0,0,0,0.25)", {
+  //       onComplete: () => console.log("Clie"),
+  //       onUpdate: (value) => {
+  //         console.log("Page scroll: ", latest, value);
+  //         // @ts-expect-error
+  //         bannerRef.current.style.backgroundColor = value;
+  //       },
+  //     });
+  //   }
+  // });
+
   return (
-    <header className={"wg-row"}>
+    <motion.header
+      ref={bannerRef}
+      initial={{
+        background: "#00000000",
+      }}
+      className={"wg-row sticky top-0 z-20"}
+      animate={{
+        background: scrollY.get() > 200 ? "rgba(0,0,0,0.25)" : undefined,
+      }}
+    >
       <Cell size={2}>
         <span>LOGO</span>
       </Cell>
+
       <div className={"wg-row"}>
-        <Cell size={1} className={"items-center"}>
+        <NavItem size={1} className={"items-center text-xs tracking-widest"}>
           PORTFOLIO
-        </Cell>
-        <Cell size={1} className={"items-center"}>
+        </NavItem>
+        <NavItem size={1} className={"items-center text-xs tracking-widest"}>
           SERVICES
-        </Cell>
-        <Cell size={1} className={"items-center"}>
+        </NavItem>
+        <NavItem size={1} className={"items-center text-xs tracking-widest"}>
           ABOUT
-        </Cell>
-        <Cell size={1} className={"items-center p-0 relative"}>
+        </NavItem>
+        <Cell
+          size={1}
+          className={"items-center text-xs tracking-widest p-0 relative"}
+        >
           <button
             type={"button"}
             className={
@@ -29,6 +61,24 @@ export function Banner() {
           </button>
         </Cell>
       </div>
-    </header>
+    </motion.header>
   );
 }
+
+const NavItem = React.forwardRef<HTMLLIElement, ComponentProps<typeof Cell>>(
+  function NavItem(props, ref) {
+    const { children, className, ...PROPS } = props;
+
+    return (
+      <Cell
+        asChild
+        // @ts-expect-error
+        ref={ref}
+        {...PROPS}
+        className={cn("hover:bg-base-700 scanline cursor-pointer", className)}
+      >
+        <li>{children}</li>
+      </Cell>
+    );
+  },
+);

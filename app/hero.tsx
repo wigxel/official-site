@@ -1,9 +1,9 @@
-import { Cell } from "~/app/cell";
 import type React from "react";
+import { Cell } from "~/app/cell";
 
 export function Hero() {
   return (
-    <section className={"wg-row min-h-screen"}>
+    <section className={"wg-row aspect-[16/9]"}>
       <Cell size={2} />
       <Cell size={2}>
         <h1

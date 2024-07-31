@@ -1,3 +1,4 @@
+import Balancer from "react-wrap-balancer";
 import { Cell } from "~/app/cell";
 import { ArrowRight } from "~/components/Icons";
 import { Button } from "~/components/ui/button";
@@ -18,17 +19,19 @@ export function ContactForm() {
 
       <Cell size={2}>
         <div className={"flex flex-col gap-y-12 py-64"}>
-          <hgroup className={"flex flex-col gap-y-2"}>
-            <h2 className={"text-5xl font-display tracking-tighter"}>
-              {`Let's build something awesome together`}
+          <hgroup className={"flex flex-col gap-y-4"}>
+            <h2
+              className={"text-5xl font-display tracking-tighter max-w-[20ch]"}
+            >
+              <Balancer>{`Let's build something awesome together`}</Balancer>
             </h2>
             <p
-              className={
-                "font-body text-neutral-500 max-w-[32ch] font-[300] leading-[2ex]"
-              }
+              className={"font-body text-neutral-500 font-[300] leading-[2ex]"}
             >
-              Provide your contact details and claim a time to meet. We’ll help
-              you do the rest
+              <Balancer>
+                Provide your contact details and claim a time to meet. We’ll
+                help you do the rest
+              </Balancer>
             </p>
           </hgroup>
 

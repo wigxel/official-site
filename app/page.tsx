@@ -12,6 +12,7 @@ export default function Home() {
   return (
     <>
       <title>Wigxel Corp</title>
+
       <div className={"wg-column"}>
         <Banner />
         <main className={"wg-column"}>
