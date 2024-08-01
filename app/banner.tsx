@@ -4,6 +4,7 @@ import React, { type ComponentProps, useRef } from "react";
 import { Cell } from "~/app/cell";
 import { ArrowRight } from "~/components/Icons";
 import { Scanline, ScanlineContent } from "~/components/scanline";
+import { Button } from "~/components/ui/button";
 import { cn } from "~/lib/utils";
 
 const fillMixer = mix("#18183000", "#181830");
@@ -26,7 +27,7 @@ export function Banner() {
       initial={{
         background: "#00000000",
       }}
-      className={"wg-row sticky top-0 z-20"}
+      className={"wg-row sticky top-0 z-40"}
       animate={{
         background: scrollY.get() > 200 ? "rgba(0,0,0,0.25)" : undefined,
       }}
@@ -49,14 +50,16 @@ export function Banner() {
           size={1}
           className={"items-center text-xs tracking-widest p-0 relative"}
         >
-          <button
+          <Button
             type={"button"}
+            size={"cell"}
             className={
-              "flex items-center text-primary px-4 border absolute inset-0 w-full justify-between"
+              "flex w-full h-full items-center text-primary justify-between"
             }
           >
-            GET STARTED <ArrowRight fontSize={"2rem"} />
-          </button>
+            GET STARTED{" "}
+            <ArrowRight color={"currentColor"} fontSize={"1.5rem"} />
+          </Button>
         </Cell>
       </ul>
     </motion.header>

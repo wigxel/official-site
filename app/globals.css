@@ -10,7 +10,8 @@
     --card-foreground: 224 71.4% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 224 71.4% 4.1%;
-    --primary: 152, 100%, 50%;
+    /*--primary: 152, 100%, 50%;*/
+    --primary: 174.05deg 100% 50%;
     --primary-foreground: 210 20% 98%;
     --secondary: 220 14.3% 95.9%;
     --secondary-foreground: 220.9 39.3% 11%;
@@ -38,7 +39,8 @@
     --card-foreground: 210 20% 98%;
     --popover: 224 71.4% 4.1%;
     --popover-foreground: 210 20% 98%;
-    --primary: 152, 100%, 50%;
+    /*--primary: 152, 100%, 50%;*/
+    --primary: 174.05deg 100% 50%;
     --primary-foreground: 220.9 39.3% 11%;
     --secondary: 215 27.9% 16.9%;
     --secondary-foreground: 210 20% 98%;
@@ -156,7 +158,7 @@ body {
       background-repeat: repeat;
       background-blend-mode: soft-light;
       opacity: 0;
-      transition-timing-function: cubic-bezier(0, 0.2, 1, 0.2);
+      transition-timing-function: ease-in;
       transition-duration: 400ms;
     }
   }
@@ -165,4 +167,33 @@ body {
     @apply translate-y-0;
     opacity: 0.1;
   }
+}
+
+.flat-button {
+  position: relative;
+
+  & > span {
+    position: relative;
+    z-index: 20;
+  }
+
+  &:before {
+    @apply absolute inset-x-0 top-[100%] bottom-0 bg-primary z-[-10] will-change-transform transition-all;
+
+    content: "";
+    display: block;
+  }
+
+  &:hover,
+  &:focus {
+    color: hsl(var(--background));
+    o &::before {
+      @apply top-0;
+    }
+  }
+}
+
+*::selection {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--background));
 }

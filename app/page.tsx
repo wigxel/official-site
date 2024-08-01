@@ -14,7 +14,7 @@ export default function Home() {
     <div id="root" className={"wg-column"}>
       {/*<GrainBox />*/}
       <Banner />
-      <main className={"wg-column"}>
+      <main className={"wg-column z-10 relative"}>
         <Hero />
         <Services />
         <ClientsAndPartners />
