@@ -1,4 +1,4 @@
-import { motion, useScroll } from "framer-motion";
+import { mix, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { default as Image } from "next/image";
 import React, { type ComponentProps, useRef } from "react";
 import { Cell } from "~/app/cell";
@@ -6,22 +6,19 @@ import { ArrowRight } from "~/components/Icons";
 import { Scanline, ScanlineContent } from "~/components/scanline";
 import { cn } from "~/lib/utils";
 
+const fillMixer = mix("#18183000", "#181830");
+
 export function Banner() {
   const { scrollY } = useScroll();
   const bannerRef = useRef<HTMLDivElement>(null);
 
-  // useMotionValueEvent(scrollY, "", (latest) => {
-  //   if (latest < 200) {
-  //     return animate("#00000000", "rgba(0,0,0,0.25)", {
-  //       onComplete: () => console.log("Clie"),
-  //       onUpdate: (value) => {
-  //         console.log("Page scroll: ", latest, value);
-  //         // @ts-expect-error
-  //         bannerRef.current.style.backgroundColor = value;
-  //       },
-  //     });
-  //   }
-  // });
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    if (!bannerRef.current) return;
+    const progress = latest / 400;
+    if (!(progress > 1.1)) {
+      bannerRef.current.style.backgroundColor = fillMixer(progress);
+    }
+  });
 
   return (
     <motion.header
@@ -77,7 +74,7 @@ const NavItem = React.forwardRef<HTMLLIElement, ComponentProps<typeof Cell>>(
         asChild
         {...PROPS}
         className={cn(
-          "cursor-pointer items-center text-neutral-500 text-xs tracking-widest",
+          "cursor-pointer items-center hover:text-white text-neutral-500 text-xs tracking-widest",
           className,
         )}
       >
