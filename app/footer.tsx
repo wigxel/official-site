@@ -6,11 +6,12 @@ export function Footer() {
     <footer className={"wg-row"}>
       <Cell size={2}>
         <p className={"text-[14px]"}>
-          PORT-HARCOURT
+          4.844938 PORT-HARCOURT
           <br />
-          NIGERIA
+          6.974811 NIGERIA
         </p>
       </Cell>
+
       <Cell size={4} className={"items-end"}>
         <nav aria-labelledby={"Footer"} className={"flex w-full flex-1"}>
           <ul
