@@ -1,8 +1,9 @@
-import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { animate } from "framer-motion/dom";
+import { motion, useScroll } from "framer-motion";
+import { default as Image } from "next/image";
 import React, { type ComponentProps, useRef } from "react";
 import { Cell } from "~/app/cell";
 import { ArrowRight } from "~/components/Icons";
+import { Scanline, ScanlineContent } from "~/components/scanline";
 import { cn } from "~/lib/utils";
 
 export function Banner() {
@@ -34,19 +35,19 @@ export function Banner() {
       }}
     >
       <Cell size={2}>
-        <span>LOGO</span>
+        <Image
+          src={"/assets/images/wigxel-logo.svg"}
+          alt={"Wigxel Brand Logo"}
+          width={32.59}
+          height={22}
+          className={"aspect-[32.59/22] w-8"}
+        />
       </Cell>
 
-      <div className={"wg-row"}>
-        <NavItem size={1} className={"items-center text-xs tracking-widest"}>
-          PORTFOLIO
-        </NavItem>
-        <NavItem size={1} className={"items-center text-xs tracking-widest"}>
-          SERVICES
-        </NavItem>
-        <NavItem size={1} className={"items-center text-xs tracking-widest"}>
-          ABOUT
-        </NavItem>
+      <ul className={"wg-row"}>
+        <NavItem size={1}>PORTFOLIO</NavItem>
+        <NavItem size={1}>SERVICES</NavItem>
+        <NavItem size={1}>ABOUT</NavItem>
         <Cell
           size={1}
           className={"items-center text-xs tracking-widest p-0 relative"}
@@ -60,7 +61,7 @@ export function Banner() {
             GET STARTED <ArrowRight fontSize={"2rem"} />
           </button>
         </Cell>
-      </div>
+      </ul>
     </motion.header>
   );
 }
@@ -71,13 +72,21 @@ const NavItem = React.forwardRef<HTMLLIElement, ComponentProps<typeof Cell>>(
 
     return (
       <Cell
-        asChild
         // @ts-expect-error
         ref={ref}
+        asChild
         {...PROPS}
-        className={cn("hover:bg-base-700 scanline cursor-pointer", className)}
+        className={cn(
+          "cursor-pointer items-center text-neutral-500 text-xs tracking-widest",
+          className,
+        )}
       >
-        <li>{children}</li>
+        <Scanline>
+          <li>
+            {children}
+            <ScanlineContent />
+          </li>
+        </Scanline>
       </Cell>
     );
   },

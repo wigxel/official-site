@@ -140,3 +140,29 @@ body {
     }
   }
 }
+
+.scanline-root {
+  --scanline-image: "";
+
+  & .scanline-container {
+    @apply overflow-hidden;
+
+    &:before {
+      @apply absolute inset-0 z-[-1] transform translate-y-1;
+
+      content: "";
+      display: block;
+      background-image: var(--scanline-image);
+      background-repeat: repeat;
+      background-blend-mode: soft-light;
+      opacity: 0;
+      transition-timing-function: cubic-bezier(0, 0.2, 1, 0.2);
+      transition-duration: 400ms;
+    }
+  }
+
+  &:hover .scanline-container::before {
+    @apply translate-y-0;
+    opacity: 0.1;
+  }
+}

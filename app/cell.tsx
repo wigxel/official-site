@@ -8,17 +8,19 @@ export function Cell(
     size: 1 | 2 | 3 | 4 | 5 | 6;
   },
 ) {
-  const Comp = props.asChild ? Slot : "div";
+  const { style, asChild, className, size, children, ...PROPS } = props;
+  const Comp = asChild ? Slot : "div";
 
   return (
     <Comp
-      {...props}
-      className={cn("wg-cell px-6 py-4", props.className)}
+      {...PROPS}
+      className={cn("wg-cell px-6 py-4", className)}
       style={{
-        width: `calc(var(--wg-viewport-width) / 6 * ${props.size})`,
+        width: `calc(var(--wg-viewport-width) / 6 * ${size})`,
+        ...(style ?? {}),
       }}
     >
-      {props.children}
+      {children}
     </Comp>
   );
 }
