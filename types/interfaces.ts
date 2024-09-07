@@ -43,6 +43,6 @@ export const AssetUrlAndColorSchema = z.object({
 export type AssetUrlAndColor = z.infer<typeof AssetUrlAndColorSchema>;
 
 export interface Category {
-    id: string;
-    name: string;
-  }
+  id: string;
+  name: string;
+}
