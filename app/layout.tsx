@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import type React from "react";
 import { bodyFont } from "~/styles/font";
+import { getPortfolios } from "~/libs/fetchers";
 
 export const metadata: Metadata = {
   title: "Wigxel Corp",
@@ -9,11 +10,14 @@ export const metadata: Metadata = {
     "A Bespoke Software Solutions Company expertly designing and engineering your success, every step of the way",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const portfolios = await getPortfolios();
+  console.log(portfolios);
+
   return (
     <html lang="en" className={"dark"}>
       <head>
