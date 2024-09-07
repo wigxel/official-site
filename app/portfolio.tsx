@@ -1,8 +1,13 @@
+import Image from "next/image";
 import React, { type ComponentProps } from "react";
 import { Cell } from "~/app/cell";
 import { cn } from "~/lib/utils";
+import type { PortfolioItem } from "~/libs/factories/portfolio";
+import { getPortfolios } from "~/libs/fetchers";
 
-export function Portfolio() {
+export async function Portfolio() {
+  const [first, second, third, fourth, fifth] = await getPortfolios();
+
   return (
     <>
       <section className="wg-row">
@@ -23,45 +28,39 @@ export function Portfolio() {
 
       <section>
         <div className={"wg-row items-start"}>
-          <ProjectCard
-            count={1}
-            size={4}
-            title={"CMK CULINARY"}
-            description={"Website Redesign"}
-          />
-          <ProjectCard
-            count={2}
-            title={"MAJEURS"}
-            description={"Website + Ecommerce"}
-            size={2}
-          />
+          <PortfolioCard data={first} size={4} />
+          <PortfolioCard data={second} size={2} />
         </div>
+
         <div className={"wg-row"}>
           <Cell size={2} />
-          <ProjectCard
-            size={2}
-            count={3}
-            title={"CREVATAL"}
-            description={"Website Redesign"}
-          />
+          <PortfolioCard size={2} data={third} />
           <Cell size={2} />
         </div>
+
         <div className={"wg-row border-grid-border border-t -mt-px"}>
-          <ProjectCard
-            size={2}
-            count={4}
-            title={"FOODSHARE"}
-            description={"SaaS"}
-          />
-          <ProjectCard
-            size={4}
-            count={5}
-            title={"GREEN THUMB"}
-            description={"SaaS"}
-          />
+          <PortfolioCard size={2} data={fourth} />
+          <PortfolioCard size={4} data={fifth} />
         </div>
       </section>
     </>
+  );
+}
+
+function PortfolioCard({
+  data,
+  size,
+}: { data: PortfolioItem; size: ComponentProps<typeof Cell>["size"] }) {
+  if (!data) return null;
+
+  return (
+    <ProjectCard
+      count={data.order}
+      title={data.name}
+      description={data.category}
+      image={data.imageUrl}
+      size={size}
+    />
   );
 }
 
@@ -71,6 +70,7 @@ const ProjectCard = React.forwardRef<
     count: number;
     title: React.ReactNode;
     description: React.ReactNode;
+    image?: string;
   }
 >(function ProjectCard(props, ref) {
   const { children, className, ...PROPS } = props;
@@ -94,9 +94,19 @@ const ProjectCard = React.forwardRef<
           className,
         )}
       >
-        <div className={"bg-black/[0.22] flex-1"} />
+        <figure className={"bg-black/[0.22] flex-1 relative"}>
+          {props.image ? (
+            <Image
+              src={props.image}
+              className={"object-cover object-top"}
+              alt={`${props.title}cover`}
+              fill
+            />
+          ) : null}
+        </figure>
+
         <div className={"px-6 py-4 basis-[80px] shrink-0 items-center flex"}>
-          <div className={"flex flex-col flex-1"}>
+          <div className={"flex flex-col uppercase flex-1"}>
             <h4 className={"text-[14px] font-medium tracking-wide"}>
               {props.title}
             </h4>

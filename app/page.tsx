@@ -1,4 +1,3 @@
-"use client";
 import type React from "react";
 import { ContactForm } from "~/app/contact-form";
 import { Footer } from "~/app/footer";

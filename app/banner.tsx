@@ -1,3 +1,4 @@
+"use client";
 import { mix, motion, useMotionValueEvent, useScroll } from "framer-motion";
 import { default as Image } from "next/image";
 import React, { type ComponentProps, useRef } from "react";
