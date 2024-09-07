@@ -3,6 +3,7 @@ import { ContactForm } from "~/app/contact-form";
 import { Footer } from "~/app/footer";
 import { Grain, type GrainOption } from "~/app/grain";
 import { Hero } from "~/app/hero";
+import { MarqueeCell } from "~/app/marquee-cell";
 import { ClientsAndPartners } from "~/app/partners";
 import { Portfolio } from "~/app/portfolio";
 import { Services } from "~/app/services";
@@ -20,6 +21,7 @@ export default function Home() {
         <Portfolio />
         <ContactForm />
       </main>
+      <MarqueeCell />
       <Footer />
     </div>
   );
