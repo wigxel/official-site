@@ -8,13 +8,9 @@ import { displayAlt } from "~/styles/font";
 
 export function MarqueeCell() {
   return (
-    <motion.div
-      initial={{ height: 0 }}
-      whileInView={{ height: "auto" }}
-      transition={{ duration: 1 }}
-      className={"overflow-hidden group"}
-    >
-      <MarqueeContainer speed={40}>
+    <div className={"overflow-hidden group relative"}>
+      <div className={"absolute inset-0 z-20 bg-pixelate"} />
+      <MarqueeContainer speed={30}>
         <div
           className={cn(
             displayAlt.className,
@@ -35,6 +31,6 @@ export function MarqueeCell() {
           </span>
         </div>
       </MarqueeContainer>
-    </motion.div>
+    </div>
   );
 }
