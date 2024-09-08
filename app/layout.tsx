@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import type React from "react";
-import { bodyFont } from "~/styles/font";
-import { getPortfolios } from "~/libs/fetchers";
+import { cn } from "~/lib/utils";
+import { bodyFont, displayFont } from "~/styles/font";
 
 export const metadata: Metadata = {
   title: "Wigxel Corp",
@@ -15,9 +15,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const portfolios = await getPortfolios();
-  console.log(portfolios);
-
   return (
     <html lang="en" className={"dark"}>
       <head>
@@ -96,7 +93,11 @@ export default async function RootLayout({
         <meta name="theme-color" content="#181830" />
       </head>
 
-      <body className={bodyFont.className}>{children}</body>
+      <body
+        className={cn("font-display", displayFont.variable, bodyFont.className)}
+      >
+        {children}
+      </body>
     </html>
   );
 }

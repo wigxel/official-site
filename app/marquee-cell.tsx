@@ -3,16 +3,18 @@ import type React from "react";
 import { MarqueeContainer } from "~/app/Marquee";
 import { Asterisk } from "~/components/Icons";
 import { cn } from "~/lib/utils";
-import { displayAlt } from "~/styles/font";
+import { displayAltFont } from "~/styles/font";
 
 export function MarqueeCell() {
   return (
-    <div className={"group relative"}>
-      <div className={"absolute inset-0 z-30 bg-pixelate"} />
+    <div className={"group relative cursor-default"}>
+      <div
+        className={"absolute inset-0 z-30 pointer-events-none bg-pixelate"}
+      />
       <MarqueeContainer speed={30}>
         <div
           className={cn(
-            displayAlt.className,
+            displayAltFont.className,
             "flex items-center text-[10vw] font-bold tracking-tighter",
           )}
         >

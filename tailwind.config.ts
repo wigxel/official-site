@@ -20,8 +20,7 @@ const config = {
     },
     extend: {
       fontFamily: {
-        display: ["Neue Machina"],
-        mono: ["Berkeley Mono"],
+        display: ["var(--font-display)", ...fontFamily.sans],
         body: ["var(--font-body)", ...fontFamily.sans],
       },
       colors: {

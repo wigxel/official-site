@@ -84,7 +84,7 @@ const ProjectCard = React.forwardRef<
   } as const;
 
   return (
-    <Cell {...PROPS} className={"p-0 items-start"}>
+    <Cell {...PROPS} className={"p-0 scanline-root cursor-pointer items-start"}>
       <Cell
         ref={ref}
         {...PROPS}
@@ -105,8 +105,13 @@ const ProjectCard = React.forwardRef<
           ) : null}
         </figure>
 
-        <div className={"px-6 py-4 basis-[80px] shrink-0 items-center flex"}>
-          <div className={"flex flex-col uppercase flex-1"}>
+        <div
+          className={
+            "px-6 relative py-4 basis-[80px] shrink-0 items-center flex"
+          }
+        >
+          <div className={"scanline-container"} />
+          <div className={"flex flex-col uppercase flex-1 justify-center"}>
             <h4 className={"text-[14px] font-medium tracking-wide"}>
               {props.title}
             </h4>
@@ -114,9 +119,14 @@ const ProjectCard = React.forwardRef<
               {props.description}
             </p>
           </div>
+
           <div
-            className={"font-mono text-3xl tracking-tighter font-thin"}
-          >{`0${props.count}`}</div>
+            className={
+              "font-display leading-[1] inline-flex items-center tracking-tighter font-thin"
+            }
+          >
+            {`0${props.count}`}
+          </div>
         </div>
       </Cell>
     </Cell>

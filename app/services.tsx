@@ -17,7 +17,9 @@ function ServiceCard(props: {
             {props.children}
           </div>
           <div className={"flex flex-col w-full gap-2"}>
-            <h3 className={"font-mono uppercase text-xl"}>{props.heading}</h3>
+            <h3 className={"font-display-alt uppercase text-xl"}>
+              {props.heading}
+            </h3>
             <div
               className={
                 "text-muted-foreground leading-[2ex] text-[14px] font-[100] max-w-xs"
