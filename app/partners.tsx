@@ -4,75 +4,80 @@ import Image from "next/image";
 import React, { useRef } from "react";
 import { Cell } from "~/app/cell";
 
-const images = [
+const images: SliderItem[] = [
   {
     alt: "Foodshare",
     url: "/assets/images/logos/foodshare.png",
     category: "Client + Partner",
   },
   { alt: "Vercel", url: "/assets/images/logos/vercel.png", category: "Client" },
-  // {
-  //   alt: "Contentful",
-  //   url: "/assets/images/logos/contentful.png",
-  //   category: "Content management",
-  // },
-  // {
-  //   alt: "CMK Culinary",
-  //   url: "/assets/images/logos/cmk.png",
-  //   category: "Client",
-  // },
-  // {
-  //   alt: "Majeurs Holdings",
-  //   url: "/assets/images/logos/majeurs.png",
-  //   category: "Client",
-  // },
-  // {
-  //   alt: "Contentful",
-  //   url: "/assets/images/logos/contentful.png",
-  //   category: "Content management",
-  // },
+  {
+    alt: "Contentful",
+    url: "/assets/images/logos/contentful.png",
+    category: "Content management",
+  },
+  {
+    alt: "CMK Culinary",
+    url: "/assets/images/logos/cmk.png",
+    category: "Client",
+  },
+  {
+    alt: "Majeurs Holdings",
+    url: "/assets/images/logos/majeurs.png",
+    category: "Client",
+  },
+  {
+    alt: "Contentful",
+    url: "/assets/images/logos/contentful.png",
+    category: "Content management",
+  },
 ].map((e) => ({ ...e, id: crypto.randomUUID() }));
 
 export function ClientsAndPartners() {
   return (
-    <section className="wg-row">
-      {Array.from({ length: images.length }).map((_, index) => {
-        return <ClientCard key={String(index)} items={images} index={index} />;
-      })}
-    </section>
+    <SliderProvider duration={4} items={images}>
+      <section className="wg-row">
+        {images.map((_, index) => {
+          return <ClientCard key={String(index)} index={index} />;
+        })}
+      </section>{" "}
+    </SliderProvider>
   );
 }
 
-const clientCardVariants = {
-  hide: { x: "100%", opacity: 0 },
-  fadeInRight: { x: "0%", opacity: 1 },
-  fadeOutLeft: { x: "-100%", opacity: 0 },
-};
-
-function A({ data, delay }) {
-  const [state, setState] = React.useState("fadeInRight");
-  const DURATION = 2;
+function FadeBox(props: {
+  isActive: boolean;
+  data: { url: string; alt: string };
+  duration: number;
+}) {
+  const clientCardVariants = React.useMemo(
+    () => ({
+      hide: { opacity: 0, scale: 0.5 },
+      show: { opacity: 1, scale: 1 },
+    }),
+    [],
+  );
+  const { data, duration, isActive = false } = props;
 
   return (
-    <div
-      // variants={clientCardVariants}
-      // initial={""}
-      // animate={state}
-      // transition={{ duration: DURATION, delay: delay * DURATION }}
-      // onAnimationStart={() => {
-      //   console.log("animation started");
-      // }}
-      // onAnimationComplete={() => {
-      //   console.log("animation end");
-      //   setState("fadeOutLeft");
-      // }}
-      className={
-        "w-[40%] flex items-center relative justify-center border-white self-center aspect-[16/6] overflow-hidden"
-      }
-      // viewport={{ once: true }}
+    <motion.div
+      variants={clientCardVariants}
+      initial={"hide"}
+      animate={isActive ? "show" : "hide"}
+      transition={{ duration: duration / 2, delay: duration / 2 }}
+      className={"flex items-center justify-center"}
+      style={{
+        width: "calc(var(--wg-viewport-width) / 6 * 1)",
+      }}
     >
-      <Image src={data.url} alt={data.alt} fill className="object-contain" />
-    </div>
+      <div
+        className={
+          "w-[40%] flex items-center relative justify-center border-white self-center aspect-[16/6] overflow-hidden"
+        }
+      >
+        <Image src={data.url} alt={data.alt} fill className="object-contain" />
+      </div>
+    </motion.div>
   );
 }
 
@@ -86,39 +91,82 @@ function moveToStart<T>(items: T[], index: number) {
   return [...items.slice(index), ...items.slice(0, index)];
 }
 
-function ClientCard(props: {
-  items: Array<{ id: string; url: string; category: string; alt: string }>;
-  index: number;
-  duration: number;
-}) {
-  const { items: _items, index, duration = 3 } = props;
+type SliderItem = {
+  id: string;
+  alt: string;
+  url: string;
+  category: string;
+};
 
-  const SLIDE_DURATION = React.useRef(duration);
-  const [width, setWidth] = React.useState(240);
-  const items = React.useMemo(() => {
-    const arr = moveToStart(_items, index);
-    return [...arr, arr[0]];
-  }, [_items, index]);
+type SliderValue = {
+  items: SliderItem[];
+  offset: number;
+  duration: number;
+};
+
+const SliderContext = React.createContext<SliderValue>({
+  items: [],
+  offset: 0,
+  duration: 1000,
+});
+
+function SliderProvider(props: {
+  duration: number;
+  items: SliderItem[];
+  children: React.ReactNode;
+}) {
+  const { items, duration, children } = props;
+
+  const slide_duration = React.useRef(duration);
   const [offset, setOffset] = React.useState(0);
-  const ref = useRef<HTMLDivElement>(null);
+  const total_items = items.length + 1;
 
   React.useEffect(() => {
-    const interval = SLIDE_DURATION.current * 1000;
+    const interval = slide_duration.current * 1000;
     setOffset(1);
-
     const id = setInterval(() => {
       setOffset((e) => {
-        if (e >= items.length - 1) {
-          SLIDE_DURATION.current = 0;
+        if (e >= total_items - 1) {
+          slide_duration.current = 0;
           return 0;
         }
-        SLIDE_DURATION.current = 3;
+        slide_duration.current = 3;
         return e + 1;
       });
     }, interval);
 
     return () => clearInterval(id);
-  }, [items]);
+  }, [total_items]);
+
+  return (
+    <SliderContext.Provider
+      value={{
+        items,
+        offset,
+        duration: slide_duration.current,
+      }}
+    >
+      {children}
+    </SliderContext.Provider>
+  );
+}
+
+function ClientCard(props: {
+  index: number;
+}) {
+  const { index } = props;
+  const {
+    items: _items,
+    offset,
+    duration: slide_duration,
+  } = React.useContext(SliderContext);
+  const ref = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = React.useState(240);
+
+  const items = React.useMemo(() => {
+    const arr = moveToStart(_items, index);
+    return [...arr, { ...arr[0], id: crypto.randomUUID() }];
+  }, [_items, index]);
 
   React.useLayoutEffect(() => {
     const clientWidth = ref.current?.clientWidth;
@@ -129,7 +177,9 @@ function ClientCard(props: {
     <Cell
       ref={ref}
       size={1}
-      className={"aspect-[320/212] flex flex-col items-center justify-center"}
+      className={
+        "aspect-[320/212] flex flex-col items-center relative justify-center"
+      }
     >
       <section
         className={"flex left-0 flex-1 relative items-center overflow-hidden"}
@@ -140,22 +190,19 @@ function ClientCard(props: {
         <motion.div
           animate={{ x: -(offset * width) }}
           transition={{
-            duration: SLIDE_DURATION.current / 2,
-            delay: SLIDE_DURATION.current / 2,
+            duration: slide_duration / 2,
+            delay: slide_duration / 2,
           }}
           className={"flex left-0 flex-1 absolute"}
         >
           {items.map((item, innerIndex) => {
             return (
-              <div
-                key={item.id}
-                className={"flex items-center justify-center"}
-                style={{
-                  width: "calc(var(--wg-viewport-width) / 6 * 1)",
-                }}
-              >
-                <A data={item} delay={0.01} />
-              </div>
+              <FadeBox
+                key={item.id + index}
+                data={item}
+                isActive={innerIndex === offset}
+                duration={slide_duration}
+              />
             );
           })}
         </motion.div>
@@ -163,7 +210,7 @@ function ClientCard(props: {
 
       <p
         className={
-          "absolute bottom-0 start-0 flex px-6 font-[300] text-sm text-muted-foreground py-4"
+          "absolute flex-shrink-0 bottom-0 start-0 flex px-6 font-[300] text-sm text-muted-foreground py-4"
         }
       >
         Non
