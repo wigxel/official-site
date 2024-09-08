@@ -1,5 +1,4 @@
 "use client";
-import { motion } from "framer-motion";
 import type React from "react";
 import { MarqueeContainer } from "~/app/Marquee";
 import { Asterisk } from "~/components/Icons";
@@ -8,8 +7,8 @@ import { displayAlt } from "~/styles/font";
 
 export function MarqueeCell() {
   return (
-    <div className={"overflow-hidden group relative"}>
-      <div className={"absolute inset-0 z-20 bg-pixelate"} />
+    <div className={"group relative"}>
+      <div className={"absolute inset-0 z-30 bg-pixelate"} />
       <MarqueeContainer speed={30}>
         <div
           className={cn(

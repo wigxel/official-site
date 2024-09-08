@@ -143,8 +143,12 @@ body {
   }
 }
 
+:root {
+  --scanline-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAGklEQVR4Aa3IIQEAAADCsPcvDddoJgcjuocKFosT7bLfmPAAAAAASUVORK5CYII=);
+}
+
 .scanline-root {
-  --scanline-image: "";
+  /*--scanline-image: "";*/
 
   & .scanline-container {
     @apply overflow-hidden;
@@ -203,5 +207,5 @@ body {
     rgba(0, 0, 0, 0) 2px,
     hsl(var(--background)) 2px
   );
-  background-size: 8px 8px;
+  background-size: 6px 6px;
 }
