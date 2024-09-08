@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React, { type ComponentProps } from "react";
 import { Cell } from "~/app/cell";
+import { HeadingSlot } from "~/components/heading";
 import { cn } from "~/lib/utils";
 import type { PortfolioItem } from "~/libs/factories/portfolio";
 import { getPortfolios } from "~/libs/fetchers";
@@ -12,13 +13,15 @@ export async function Portfolio() {
     <>
       <section className="wg-row">
         <Cell size={2} className={"items-start"}>
-          <h2 className={"text-neutral-500 text-[14px] font-[300] uppercase"}>
-            PORTFOLIO
-          </h2>
+          <HeadingSlot size={"h6"}>
+            <h2 className={"text-neutral-500 uppercase"}>PORTFOLIO</h2>
+          </HeadingSlot>
         </Cell>
         <Cell size={2} className={"min-h-[216px] items-end"}>
           <div className={"mt-24"}>
-            <h3 className={"font-display text-5xl"}>Recent Works</h3>
+            <HeadingSlot size={"h1"}>
+              <h3>Recent Works</h3>
+            </HeadingSlot>
           </div>
         </Cell>
         <Cell size={2} className={"items-end"} style={{ fontSize: "" }}>
@@ -112,7 +115,9 @@ const ProjectCard = React.forwardRef<
         >
           <div className={"scanline-container"} />
           <div className={"flex flex-col uppercase flex-1 justify-center"}>
-            <h4 className={"text-[14px] font-medium tracking-wide"}>
+            <h4
+              className={"text-[14px] font-display font-medium tracking-wide"}
+            >
               {props.title}
             </h4>
             <p className={"text-neutral-500 font-[300] text-[14px] uppercase"}>

@@ -1,6 +1,7 @@
 import Balancer from "react-wrap-balancer";
 import { Cell } from "~/app/cell";
 import { ArrowRight } from "~/components/Icons";
+import { HeadingSlot } from "~/components/heading";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 
@@ -8,23 +9,19 @@ export function ContactForm() {
   return (
     <section id={"contact-form"} className={"wg-row -mt-[1px]"}>
       <Cell size={2} className={"items-start"}>
-        <div
-          className={
-            "text-neutral-500 text-[14px] font-[300] uppercase tracking-[-1px]"
-          }
-        >
-          Contact
-        </div>
+        <HeadingSlot size={"h6"}>
+          <h2 className={"text-neutral-500 uppercase"}>Contact</h2>
+        </HeadingSlot>
       </Cell>
 
       <Cell size={2}>
         <div className={"flex flex-col gap-y-12 py-64"}>
           <hgroup className={"flex flex-col gap-y-4"}>
-            <h2
-              className={"text-5xl font-display tracking-tighter max-w-[20ch]"}
-            >
-              <Balancer>{`Let's build something awesome together`}</Balancer>
-            </h2>
+            <HeadingSlot size={"h1"}>
+              <h3 className={"max-w-[20ch]"}>
+                <Balancer>{`Let's build something awesome together`}</Balancer>
+              </h3>
+            </HeadingSlot>
             <p
               className={
                 "font-body text-neutral-500 font-[300] leading-[2.4ex]"
