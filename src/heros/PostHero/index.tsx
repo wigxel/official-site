@@ -1,4 +1,5 @@
 import type React from "react";
+import { Container } from "@/components/container";
 import { DateParse } from "@/libs/date.helpers";
 import { O } from "@/libs/fp.helpers";
 import type { Post } from "@/payload-types";
@@ -47,7 +48,7 @@ export const PostHero: React.FC<{
           </div>
       </div> */}
 
-      <div className="container mx-auto">
+      <Container>
         <div className="flex bg-gray-500 w-full aspect-[1340/500] text-black p-[calc(115rem/16)]">
           <div className="max-w-[calc(526rem/16)] font-medium flex flex-col">
             <div className="flex gap-2 text-xs mb-2">
@@ -84,7 +85,7 @@ export const PostHero: React.FC<{
             </div>
           </div>
         </div>
-      </div>
+      </Container>
 
       {/*<div className="min-h-[80vh] select-none">
         {heroImage && typeof heroImage !== "string" && (
