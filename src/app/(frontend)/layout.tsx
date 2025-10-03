@@ -41,7 +41,8 @@ export default async function RootLayout({
             }}
           />
 
-          {/*<Header />*/}
+          <Header />
+
           {children}
           <Footer />
         </Providers>

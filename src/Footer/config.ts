@@ -10,6 +10,12 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: "slogan",
+      type: "text",
+      required: true,
+      defaultValue: "Write Motto Here",
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
@@ -17,7 +23,7 @@ export const Footer: GlobalConfig = {
           appearances: false,
         }),
       ],
-      maxRows: 6,
+      maxRows: 12,
       admin: {
         initCollapsed: true,
         components: {
