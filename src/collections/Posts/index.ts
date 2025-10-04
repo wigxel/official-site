@@ -190,11 +190,23 @@ export const Posts: CollectionConfig<'posts'> = {
       },
     },
     {
+      name: 'postType',
+      type: 'select',
+      admin: {
+        position: 'sidebar',
+      },
+      options: [
+        { label: 'Article', value: 'article' },
+        { label: 'Video', value: 'video' },
+      ],
+    },
+    {
       name: 'authors',
       type: 'relationship',
       admin: {
         position: 'sidebar',
       },
+      maxDepth: 3,
       hasMany: true,
       relationTo: 'users',
     },
@@ -225,14 +237,6 @@ export const Posts: CollectionConfig<'posts'> = {
           type: 'relationship',
           relationTo: 'media',
         },
-      ],
-    },
-    {
-      name: 'postType',
-      type: 'select',
-      options: [
-        { label: 'Article', value: 'article' },
-        { label: 'Video', value: 'video' },
       ],
     },
     ...slugField(),

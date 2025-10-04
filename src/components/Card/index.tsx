@@ -1,14 +1,23 @@
 'use client'
+import Link from 'next/link'
+import type React from 'react'
+import { Media } from '@/components/Media'
+import { AuthorInfo, PostInfo } from '@/heros/PostHero'
+import type { Post } from '@/payload-types'
 import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
-import Link from 'next/link'
-import React, { Fragment } from 'react'
 
-import type { Post } from '@/payload-types'
-
-import { Media } from '@/components/Media'
-
-export type CardPostData = Pick<Post, 'slug' | 'categories' | 'meta' | 'title'>
+export type CardPostData = Pick<
+  Post,
+  | 'slug'
+  | 'categories'
+  | 'meta'
+  | 'title'
+  | 'populatedAuthors'
+  | 'authors'
+  | 'publishedAt'
+  | 'postType'
+>
 
 export const Card: React.FC<{
   alignItems?: 'center'
@@ -19,12 +28,11 @@ export const Card: React.FC<{
   title?: string
 }> = (props) => {
   const { card, link } = useClickableCard({})
-  const { className, doc, relationTo, showCategories, title: titleFromProps } = props
+  const { className, doc, relationTo, title: titleFromProps } = props
 
-  const { slug, categories, meta, title } = doc || {}
+  const { slug, meta, title } = doc || {}
   const { description, image: metaImage } = meta || {}
 
-  const hasCategories = categories && Array.isArray(categories) && categories.length > 0
   const titleToUse = titleFromProps || title
   const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
   const href = `/${relationTo}/${slug}`
@@ -32,7 +40,7 @@ export const Card: React.FC<{
   return (
     <article
       className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
+        'bg-background border-border rounded-lg overflow-hidden hover:cursor-pointer',
         className,
       )}
       ref={card.ref}
@@ -41,33 +49,14 @@ export const Card: React.FC<{
         {!metaImage && <div className="">No image</div>}
         {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
       </div>
-      <div className="p-4">
-        {showCategories && hasCategories && (
-          <div className="uppercase text-sm mb-4">
-            {showCategories && hasCategories && (
-              <div>
-                {categories?.map((category, index) => {
-                  if (typeof category === 'object') {
-                    const { title: titleFromCategory } = category
 
-                    const categoryTitle = titleFromCategory || 'Untitled category'
-
-                    const isLast = index === categories.length - 1
-
-                    return (
-                      <Fragment key={index}>
-                        {categoryTitle}
-                        {!isLast && <Fragment>, &nbsp;</Fragment>}
-                      </Fragment>
-                    )
-                  }
-
-                  return null
-                })}
-              </div>
-            )}
+      <div className="py-6">
+        {props.doc && (
+          <div className="text-xs mb-2">
+            <PostInfo post={props.doc} />
           </div>
         )}
+
         {titleToUse && (
           <div className="prose">
             <h3>
@@ -77,7 +66,18 @@ export const Card: React.FC<{
             </h3>
           </div>
         )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
+
+        {description && (
+          <div className="mt-2 line-clamp-2 text-base opacity-70 font-normal w-11/12">
+            {description && <p>{sanitizedDescription}</p>}
+          </div>
+        )}
+
+        {props.doc ? (
+          <div className="mt-4">
+            <AuthorInfo post={props.doc} />{' '}
+          </div>
+        ) : null}
       </div>
     </article>
   )

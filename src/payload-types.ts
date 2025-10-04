@@ -242,6 +242,7 @@ export interface Post {
     description?: string | null;
   };
   publishedAt?: string | null;
+  postType?: ('article' | 'video') | null;
   authors?: (number | User)[] | null;
   populatedAuthors?:
     | {
@@ -250,7 +251,6 @@ export interface Post {
         avatar?: (number | null) | Media;
       }[]
     | null;
-  postType?: ('article' | 'video') | null;
   slug?: string | null;
   slugLock?: boolean | null;
   updatedAt: string;
@@ -1147,6 +1147,7 @@ export interface PostsSelect<T extends boolean = true> {
         description?: T;
       };
   publishedAt?: T;
+  postType?: T;
   authors?: T;
   populatedAuthors?:
     | T
@@ -1155,7 +1156,6 @@ export interface PostsSelect<T extends boolean = true> {
         name?: T;
         avatar?: T;
       };
-  postType?: T;
   slug?: T;
   slugLock?: T;
   updatedAt?: T;

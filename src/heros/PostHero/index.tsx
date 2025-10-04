@@ -12,12 +12,7 @@ import { cn } from '@/utilities/ui'
 export const PostHero: React.FC<{
   post: Post
 }> = ({ post }) => {
-  const { categories, postType, heroImage, description, populatedAuthors, publishedAt, title } =
-    post
-
-  const authors = Arr.isArray(post.authors) ? post.authors : []
-  const hasAuthors =
-    populatedAuthors && populatedAuthors.length > 0 && formatAuthors(populatedAuthors) !== ''
+  const { heroImage, description, title } = post
 
   return (
     <div className="relative flex items-end bg-gray-500">
@@ -52,23 +47,8 @@ export const PostHero: React.FC<{
       <Container className="z-20 relative">
         <div className="flex text-foreground w-full items-center aspect-[1340/500] p-[calc(115rem/16)]">
           <div className="lg:w-1/2 font-medium flex flex-col gap-6">
-            <div className="flex gap-2 text-xs">
-              {postType ? (
-                <>
-                  <span className="capitalize text-brand-yellow-500">
-                    {postType ?? 'No Post Type'}
-                  </span>
-                  <span className="w-px h-4 bg-white/[0.5]" />
-                </>
-              ) : null}
-
-              <span>
-                {O.fromNullable(publishedAt).pipe(
-                  O.flatMap((date) => DateParse.format(date, 'MMM do, yyyy')),
-                  O.map((e) => <span key={'date-content'}>{e}</span>),
-                  O.getOrNull,
-                )}
-              </span>
+            <div className="text-xs">
+              <PostInfo post={post} />
             </div>
 
             <div className="flex flex-col gap-4">
@@ -78,46 +58,83 @@ export const PostHero: React.FC<{
               </hgroup>
 
               {/*Authors*/}
-              <div className="flex flex-col md:flex-row gap-4 md:gap-16">
-                {hasAuthors && (
-                  <div className="flex gap-4 items-center">
-                    <div
-                      className={cn('flex', {
-                        '*:-mx-2 pl-2': authors.length > 1,
-                      })}
-                    >
-                      {pipe(
-                        Arr.fromIterable(authors),
-                        Arr.filterMap((author) => {
-                          if (typeof author === 'number') return O.none()
-                          return expectMedia(author.avatar)
-                        }),
-                        Arr.map((avatar) => {
-                          return (
-                            <Image
-                              key={`${avatar.id}`}
-                              alt={avatar?.alt ?? 'Author Image'}
-                              unoptimized
-                              src={avatar?.url ?? '/logo.svg'}
-                              className="aspect-square w-8 bg-black/60 border rounded-full border-white/[0.16]"
-                              width={32}
-                              height={32}
-                            />
-                          )
-                        }),
-                      )}
-                    </div>
-
-                    <div className="flex flex-col gap-1 text-sm">
-                      <p>{formatAuthors(populatedAuthors)}</p>
-                    </div>
-                  </div>
-                )}
-              </div>
+              <AuthorInfo post={post} />
             </div>
           </div>
         </div>
       </Container>
+    </div>
+  )
+}
+
+export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
+  const authors = pipe(
+    Arr.ensure(post.authors),
+    Arr.filterMap((author) => {
+      if (typeof author === 'number') return O.none()
+      return O.fromNullable(author)
+    }),
+  )
+
+  const author_names = formatAuthors(authors.map((e) => ({ name: e.name })))
+  const hasAuthors = authors && authors.length > 0 && author_names !== ''
+
+  return (
+    <div className="flex flex-col md:flex-row gap-4 md:gap-16">
+      {hasAuthors && (
+        <div className="flex gap-4 items-center">
+          <div
+            className={cn('flex', {
+              '*:-mx-2 pl-2': authors.length > 1,
+            })}
+          >
+            {pipe(
+              authors,
+              Arr.filterMap((user) => expectMedia(user.avatar)),
+              Arr.map((avatar) => {
+                return (
+                  <Image
+                    key={`${avatar.id}`}
+                    alt={avatar?.alt ?? 'Author Image'}
+                    unoptimized
+                    src={avatar?.url ?? '/logo.svg'}
+                    className="aspect-square w-8 bg-black/60 border rounded-full border-white/[0.16]"
+                    width={32}
+                    height={32}
+                  />
+                )
+              }),
+            )}
+          </div>
+
+          <div className="flex flex-col gap-1 text-sm">
+            <p>{author_names}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export function PostInfo({ post }: { post: Pick<Post, 'postType' | 'publishedAt'> }) {
+  const { postType, publishedAt } = post
+
+  return (
+    <div className="flex gap-2">
+      {postType ? (
+        <>
+          <span className="capitalize text-brand-yellow-500">{postType ?? 'No Post Type'}</span>
+          <span className="w-px h-4 bg-white/[0.5]" />
+        </>
+      ) : null}
+
+      <span>
+        {O.fromNullable(publishedAt).pipe(
+          O.flatMap((date) => DateParse.format(date, 'MMM do, yyyy')),
+          O.map((e) => <span key={'date-content'}>{e}</span>),
+          O.getOrNull,
+        )}
+      </span>
     </div>
   )
 }

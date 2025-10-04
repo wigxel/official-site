@@ -25,6 +25,7 @@ export const Users: CollectionConfig = {
       name: 'avatar',
       type: 'relationship',
       relationTo: 'media',
+      maxDepth: 3,
     },
   ],
   timestamps: true,
