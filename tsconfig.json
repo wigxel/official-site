@@ -1,13 +1,19 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig.json",
   "compilerOptions": {
     "strict": true,
     "baseUrl": ".",
     "esModuleInterop": true,
-    "target": "ES2022",
+    "target": "ES2020",
     "lib": [
+      "ES2023",
+      "ES2024",
       "DOM",
       "DOM.Iterable",
-      "ES2022"
+      "ESNext.Iterator",
+      "ESNext.Array",
+      "ESNext.Object",
+      "ESNext"
     ],
     "allowJs": true,
     "skipLibCheck": true,

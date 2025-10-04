@@ -22,10 +22,10 @@ export const Users: CollectionConfig = {
       type: 'text',
     },
     {
-      name: "avatar",
-      type: "relationship",
-      relationTo: "media"
-    }
+      name: 'avatar',
+      type: 'relationship',
+      relationTo: 'media',
+    },
   ],
   timestamps: true,
 }

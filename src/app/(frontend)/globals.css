@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   h1,
   h2,
   h3,
@@ -102,4 +101,9 @@ html {
 html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
+}
+
+body::selection {
+  background-color: oklch(from cyan l c h / 0.8);
+  color: #111;
 }

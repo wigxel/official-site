@@ -1,126 +1,126 @@
-import typography from "@tailwindcss/typography";
-import tailwindcssAnimate from "tailwindcss-animate";
+import typography from '@tailwindcss/typography'
+import tailwindcssAnimate from 'tailwindcss-animate'
 
 /** @type {import('tailwindcss').Config} */
 const config = {
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
-  darkMode: ["selector", '[data-theme="dark"]'],
+  darkMode: ['selector', '[data-theme="dark"]'],
   plugins: [tailwindcssAnimate, typography],
-  prefix: "",
+  prefix: '',
   safelist: [
-    "lg:col-span-4",
-    "lg:col-span-6",
-    "lg:col-span-8",
-    "lg:col-span-12",
-    "border-border",
-    "bg-card",
-    "border-error",
-    "bg-error/30",
-    "border-success",
-    "bg-success/30",
-    "border-warning",
-    "bg-warning/30",
+    'lg:col-span-4',
+    'lg:col-span-6',
+    'lg:col-span-8',
+    'lg:col-span-12',
+    'border-border',
+    'bg-card',
+    'border-error',
+    'bg-error/30',
+    'border-success',
+    'bg-success/30',
+    'border-warning',
+    'bg-warning/30',
   ],
   theme: {
     container: {
       center: true,
       padding: {
-        "2xl": "2rem",
-        DEFAULT: "1rem",
-        lg: "2rem",
-        md: "2rem",
-        sm: "1rem",
-        xl: "2rem",
+        '2xl': '2rem',
+        DEFAULT: '1rem',
+        lg: '2rem',
+        md: '2rem',
+        sm: '1rem',
+        xl: '2rem',
       },
       screens: {
-        "2xl": "86rem",
-        lg: "64rem",
-        md: "48rem",
-        sm: "40rem",
-        xl: "80rem",
+        '2xl': '86rem',
+        lg: '64rem',
+        md: '48rem',
+        sm: '40rem',
+        xl: '80rem',
       },
     },
     extend: {
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
       },
       colors: {
         accent: {
-          DEFAULT: "oklch(var(--accent))",
-          foreground: "oklch(var(--accent-foreground))",
+          DEFAULT: 'oklch(var(--accent))',
+          foreground: 'oklch(var(--accent-foreground))',
         },
-        background: "oklch(var(--background))",
-        border: "hsla(var(--border))",
+        background: 'oklch(var(--background))',
+        border: 'hsla(var(--border))',
         brand: {
           yellow: {
-            500: "#E9A849"
-          }
+            500: '#E9A849',
+          },
         },
         card: {
-          DEFAULT: "oklch(var(--card))",
-          foreground: "oklch(var(--card-foreground))",
+          DEFAULT: 'oklch(var(--card))',
+          foreground: 'oklch(var(--card-foreground))',
         },
         destructive: {
-          DEFAULT: "oklch(var(--destructive))",
-          foreground: "oklch(var(--destructive-foreground))",
+          DEFAULT: 'oklch(var(--destructive))',
+          foreground: 'oklch(var(--destructive-foreground))',
         },
-        foreground: "oklch(var(--foreground))",
-        input: "oklch(var(--input))",
+        foreground: 'oklch(var(--foreground))',
+        input: 'oklch(var(--input))',
         muted: {
-          DEFAULT: "oklch(var(--muted))",
-          foreground: "oklch(var(--muted-foreground))",
+          DEFAULT: 'oklch(var(--muted))',
+          foreground: 'oklch(var(--muted-foreground))',
         },
         popover: {
-          DEFAULT: "oklch(var(--popover))",
-          foreground: "oklch(var(--popover-foreground))",
+          DEFAULT: 'oklch(var(--popover))',
+          foreground: 'oklch(var(--popover-foreground))',
         },
         primary: {
-          DEFAULT: "oklch(var(--primary))",
-          foreground: "oklch(var(--primary-foreground))",
+          DEFAULT: 'oklch(var(--primary))',
+          foreground: 'oklch(var(--primary-foreground))',
         },
-        ring: "oklch(var(--ring))",
+        ring: 'oklch(var(--ring))',
         secondary: {
-          DEFAULT: "oklch(var(--secondary))",
-          foreground: "oklch(var(--secondary-foreground))",
+          DEFAULT: 'oklch(var(--secondary))',
+          foreground: 'oklch(var(--secondary-foreground))',
         },
-        success: "oklch(var(--success))",
-        error: "oklch(var(--error))",
-        warning: "oklch(var(--warning))",
+        success: 'oklch(var(--success))',
+        error: 'oklch(var(--error))',
+        warning: 'oklch(var(--warning))',
       },
       fontFamily: {
-        mono: ["var(--font-geist-mono)"],
-        sans: ["var(--font-geist-sans)"],
+        mono: ['var(--font-geist-mono)'],
+        sans: ['var(--font-geist-sans)'],
       },
       keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+        'accordion-down': {
+          from: { height: '0' },
+          to: { height: 'var(--radix-accordion-content-height)' },
         },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+        'accordion-up': {
+          from: { height: 'var(--radix-accordion-content-height)' },
+          to: { height: '0' },
         },
       },
       typography: () => ({
         DEFAULT: {
           css: [
             {
-              "--tw-prose-body": "var(--text)",
-              "--tw-prose-headings": "var(--text)",
+              '--tw-prose-body': 'var(--text)',
+              '--tw-prose-headings': 'var(--text)',
               h1: {
-                fontWeight: "normal",
-                marginBottom: "0.25em",
+                fontWeight: 'normal',
+                marginBottom: '0.25em',
               },
             },
           ],
@@ -129,10 +129,10 @@ const config = {
           css: [
             {
               h1: {
-                fontSize: "2.5rem",
+                fontSize: '2.5rem',
               },
               h2: {
-                fontSize: "1.25rem",
+                fontSize: '1.25rem',
                 fontWeight: 600,
               },
             },
@@ -142,10 +142,10 @@ const config = {
           css: [
             {
               h1: {
-                fontSize: "3.5rem",
+                fontSize: '3.5rem',
               },
               h2: {
-                fontSize: "1.5rem",
+                fontSize: '1.5rem',
               },
             },
           ],
@@ -153,6 +153,6 @@ const config = {
       }),
     },
   },
-};
+}
 
-export default config;
+export default config

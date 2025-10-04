@@ -10,10 +10,10 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
-      name: "slogan",
-      type: "text",
+      name: 'slogan',
+      type: 'text',
       required: true,
-      defaultValue: "Write Motto Here",
+      defaultValue: 'Write Motto Here',
     },
     {
       name: 'navItems',
