@@ -1,11 +1,8 @@
 import configPromise from '@payload-config'
 import type { Metadata } from 'next/types'
 import { getPayload } from 'payload'
-import React from 'react'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { Container } from '@/components/container'
-import { PageRange } from '@/components/PageRange'
-import { Pagination } from '@/components/Pagination'
 import type { Category } from '@/payload-types'
 import PageClient from './page.client'
 
@@ -50,11 +47,42 @@ export default async function Page() {
         </section>
 
         <section className="col-span-4 flex flex-col gap-24 border-foreground">
+          <TopArticles />
           {categories_.map((e) => {
             return <CategoryCollectionArchive category={e} key={e.id} />
           })}
         </section>
       </Container>
+    </div>
+  )
+}
+
+async function TopArticles() {
+  const payload = await getPayload({ config: configPromise })
+  const posts = await payload.find({
+    collection: 'posts',
+    depth: 2,
+    limit: 3,
+    overrideAccess: true,
+    select: {
+      title: true,
+      slug: true,
+      publishedAt: true,
+      postType: true,
+      categories: true,
+      meta: true,
+      authors: true,
+      populatedAuthors: true,
+    },
+  })
+
+  return (
+    <div className="flex flex-col items-start gap-5">
+      <div className="px-8">
+        <h2 className="font-display font-medium text-[calc(42rem/16)]">Recent</h2>
+      </div>
+
+      <CollectionArchive posts={posts.docs} />
     </div>
   )
 }
@@ -94,7 +122,7 @@ async function CategoryCollectionArchive({
   return (
     <div className="flex flex-col items-start gap-5">
       <div className="px-8">
-        <h2 className="font-heading font-medium text-[calc(42rem/16)]">{category.title}</h2>
+        <h2 className="font-display font-medium text-[calc(42rem/16)]">{category.title}</h2>
       </div>
 
       <CollectionArchive posts={posts.docs} />

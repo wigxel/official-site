@@ -13,13 +13,13 @@ export const HeaderNav = ({ data }: { data: HeaderType }) => {
             <CMSLink
               key={i}
               {...link}
-              className="font-thin last:ml-4 text-accent-foreground text-[20px]"
+              className="font-thin last:ml-4 text-accent-foreground text-base"
               appearance="link"
             />
           )
         }
 
-        return <CMSLink key={i} {...link} className="font-thin text-[20px]" appearance="link" />
+        return <CMSLink key={i} {...link} className="font-thin text-base" appearance="link" />
       })}
     </nav>
   )

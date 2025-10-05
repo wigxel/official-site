@@ -58,7 +58,7 @@ export const Card: React.FC<{
         )}
 
         {titleToUse && (
-          <div className="prose">
+          <div className="prose w-11/12 line-clamp-2 !leading-[2.6ex]">
             <h3>
               <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}

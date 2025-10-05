@@ -1,13 +1,12 @@
 import Link from 'next/link'
+import { Container } from '@/components/container'
 import { CMSLink } from '@/components/Link'
 import { Logo } from '@/components/Logo/Logo'
-import type { Footer as FooterData } from '@/payload-types'
-// import { ThemeSelector } from "@/providers/Theme/ThemeSelector";
+import type { Footer as FooterType } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import { Container } from '@/components/container'
 
 export async function Footer() {
-  const footerData: FooterData = await getCachedGlobal('footer', 1)()
+  const footerData: FooterType = (await getCachedGlobal('footer', 1)()) as FooterType
 
   const navItems = footerData?.navItems || []
 
@@ -36,6 +35,15 @@ export async function Footer() {
               )
             })}
           </nav>
+        </div>
+
+        <div className="grid gap-y-2">
+          <div className="tracking-wider text-foreground/60 hover:text-accent-foreground uppercase text-xs font-thin">
+            &copy;
+          </div>
+          <div className="tracking-wider text-foreground/60 hover:text-accent-foreground uppercase text-xs font-thin">
+            {new Date().getFullYear()}
+          </div>
         </div>
 
         {/*<div className="flex flex-col-reverse items-start md:flex-row gap-4 md:items-center">

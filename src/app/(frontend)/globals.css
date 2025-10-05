@@ -107,3 +107,7 @@ body::selection {
   background-color: oklch(from cyan l c h / 0.8);
   color: #111;
 }
+
+.border-debug {
+  border: solid 1px var(--foreground);
+}

@@ -100,7 +100,7 @@ const config = {
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['var(--font-geist-sans)'],
+        sans: ['Safiro'],
       },
       keyframes: {
         'accordion-down': {
@@ -121,6 +121,9 @@ const config = {
               h1: {
                 fontWeight: 'normal',
                 marginBottom: '0.25em',
+              },
+              h3: {
+                lineHeight: '2.2ex',
               },
             },
           ],

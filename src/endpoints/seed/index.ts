@@ -1,4 +1,4 @@
-import type { CollectionSlug, GlobalSlug, Payload, PayloadRequest, File } from 'payload'
+import type { CollectionSlug, File, GlobalSlug, Payload, PayloadRequest } from 'payload'
 
 import { contactForm as contactFormData } from './contact-form'
 import { contact as contactPageData } from './contact-page'
@@ -213,7 +213,11 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post1({ heroImage: image1Doc, blockImage: image2Doc, author: demoAuthor }),
+    data: post1({
+      heroImage: image1Doc,
+      blockImage: image2Doc,
+      author: demoAuthor,
+    }),
   })
 
   const post2Doc = await payload.create({
@@ -222,7 +226,11 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post2({ heroImage: image2Doc, blockImage: image3Doc, author: demoAuthor }),
+    data: post2({
+      heroImage: image2Doc,
+      blockImage: image3Doc,
+      author: demoAuthor,
+    }),
   })
 
   const post3Doc = await payload.create({
@@ -231,7 +239,11 @@ export const seed = async ({
     context: {
       disableRevalidate: true,
     },
-    data: post3({ heroImage: image3Doc, blockImage: image1Doc, author: demoAuthor }),
+    data: post3({
+      heroImage: image3Doc,
+      blockImage: image1Doc,
+      author: demoAuthor,
+    }),
   })
 
   // update each post with related posts
