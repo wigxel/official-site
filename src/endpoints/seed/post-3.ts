@@ -263,7 +263,7 @@ export const post3: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
       title: 'Dollar and Sense: The Financial Forecast',
     },
     postType: 'article',
-    description: '',
+    description: 'To the winds we go',
     relatedPosts: [], // this is populated by the seed script
     title: 'Dollar and Sense: The Financial Forecast',
   }

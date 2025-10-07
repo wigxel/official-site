@@ -2,7 +2,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { s3Storage } from '@payloadcms/storage-s3'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { buildConfig, type PayloadRequest } from 'payload'
 import sharp from 'sharp' // sharp-import
 import { defaultLexical } from '@/fields/defaultLexical'
@@ -68,20 +68,43 @@ export default buildConfig({
   globals: [Header, Footer],
   plugins: [
     ...plugins,
-    s3Storage({
+    vercelBlobStorage({
+      enabled: true, // Optional, defaults to true
+      // Specify which collections should use Vercel Blob
       collections: {
         media: true,
       },
-      bucket: process.env.S3_BUCKET!,
-      config: {
-        bucketEndpoint: true,
-        credentials: {
-          accessKeyId: process.env.S3_ACCESS_KEY_ID!,
-          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
-        },
-        region: process.env.S3_REGION,
-      },
+      // Token provided by Vercel once Blob storage is added to your Vercel project
+      token: process.env.wigxel_website_READ_WRITE_TOKEN,
     }),
+    // s3Storage({
+    //   collections: {
+    //     media: true,
+    //     'media-with-prefix': {
+    //       prefix: 'test-prefix',
+    //     },
+    //     'media-with-signed-downloads': {
+    //       // Filter only mp4 files
+    //       signedDownloads: {
+    //         shouldUseSignedURL: ({ collection, filename, req }) => {
+    //           return true
+    //           // return filename.endsWith('.mp4')
+    //         },
+    //       },
+    //     },
+    //   },
+    //   // clientUploads: true,
+    //   bucket: process.env.S3_ENDPOINT!,
+    //   config: {
+    //     bucketEndpoint: true,
+    //     endpoint: process.env.S3_ENDPOINT,
+    //     region: process.env.S3_REGION,
+    //     credentials: {
+    //       accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+    //       secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+    //     },
+    //   },
+    // }),
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,

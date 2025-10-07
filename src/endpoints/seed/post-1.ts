@@ -310,7 +310,7 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
       title: 'Digital Horizons: A Glimpse into Tomorrow',
     },
     postType: 'article',
-    description: '',
+    description: 'To the winds we go',
     relatedPosts: [], // this is populated by the seed script
     title: 'Digital Horizons: A Glimpse into Tomorrow',
   }

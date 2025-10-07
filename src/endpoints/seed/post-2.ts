@@ -227,7 +227,7 @@ export const post2: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
       title: 'Global Gaze: Beyond the Headlines',
     },
     postType: 'article',
-    description: '',
+    description: 'To the winds we go',
     relatedPosts: [], // this is populated by the seed script
     title: 'Global Gaze: Beyond the Headlines',
   }
