@@ -18,6 +18,9 @@ importers:
       '@payloadcms/db-postgres':
         specifier: 3.58.0
         version: 3.58.0(payload@3.58.0(graphql@16.11.0)(typescript@5.9.3))
+      '@payloadcms/email-nodemailer':
+        specifier: ^3.60.0
+        version: 3.60.0(payload@3.58.0(graphql@16.11.0)(typescript@5.9.3))
       '@payloadcms/live-preview-react':
         specifier: 3.58.0
         version: 3.58.0(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
@@ -1658,6 +1661,12 @@ packages:
     engines: {node: ^18.20.2 || >=20.9.0}
     peerDependencies:
       payload: 3.58.0
+
+  '@payloadcms/email-nodemailer@3.60.0':
+    resolution: {integrity: sha512-9yU2oU4eYTbrMYUNO9P3o7RQgTgt2fpfpuYVSynlOokR/vRnNBRN3k/W6oEmPjfQylybtbY/gnda1I/4KL8NYg==}
+    engines: {node: ^18.20.2 || >=20.9.0}
+    peerDependencies:
+      payload: 3.60.0
 
   '@payloadcms/graphql@3.58.0':
     resolution: {integrity: sha512-f8akk3of6Bl1Rp4bb6coBczll5IelUOs2mUSQyHvOGKbfz394FsNGX2WSl5DFaelEyyf/cVZpF7tgklvAN+DyA==}
@@ -4346,6 +4355,10 @@ packages:
 
   nodemailer@6.9.16:
     resolution: {integrity: sha512-psAuZdTIRN08HKVd/E8ObdV6NO7NTBY3KsC30F7M4H1OnmLCUNaS56FpYxyb26zWLSyYF9Ozch9KYHhHegsiOQ==}
+    engines: {node: '>=6.0.0'}
+
+  nodemailer@7.0.9:
+    resolution: {integrity: sha512-9/Qm0qXIByEP8lEV2qOqcAW7bRpL8CR9jcTwk3NBnHJNmP9fIJ86g2fgmIXqHY+nj55ZEMwWqYAT2QTDpRUYiQ==}
     engines: {node: '>=6.0.0'}
 
   noms@0.0.0:
@@ -7426,6 +7439,11 @@ snapshots:
   '@payloadcms/email-nodemailer@3.58.0(payload@3.58.0(graphql@16.11.0)(typescript@5.9.3))':
     dependencies:
       nodemailer: 6.9.16
+      payload: 3.58.0(graphql@16.11.0)(typescript@5.9.3)
+
+  '@payloadcms/email-nodemailer@3.60.0(payload@3.58.0(graphql@16.11.0)(typescript@5.9.3))':
+    dependencies:
+      nodemailer: 7.0.9
       payload: 3.58.0(graphql@16.11.0)(typescript@5.9.3)
 
   '@payloadcms/graphql@3.58.0(graphql@16.11.0)(payload@3.58.0(graphql@16.11.0)(typescript@5.9.3))(typescript@5.9.3)':
@@ -10578,6 +10596,8 @@ snapshots:
   node-releases@2.0.21: {}
 
   nodemailer@6.9.16: {}
+
+  nodemailer@7.0.9: {}
 
   noms@0.0.0:
     dependencies:
