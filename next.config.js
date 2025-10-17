@@ -29,6 +29,14 @@ const nextConfig = {
 
     return webpackConfig
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.wigxel.io',
+      },
+    ],
+  },
   reactStrictMode: true,
   redirects,
 }

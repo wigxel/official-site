@@ -2,7 +2,7 @@
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { postgresAdapter } from '@payloadcms/db-postgres'
-import { s3Storage } from '@payloadcms/storage-s3';
+import { s3Storage } from '@payloadcms/storage-s3'
 import { buildConfig, type PayloadRequest } from 'payload'
 import sharp from 'sharp' // sharp-import
 import { defaultLexical } from '@/fields/defaultLexical'
@@ -70,7 +70,7 @@ export default buildConfig({
     ...plugins,
     s3Storage({
       collections: {
-        media: true
+        media: true,
       },
       // clientUploads: true,
       bucket: process.env.S3_BUCKET!,
