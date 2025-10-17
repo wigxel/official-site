@@ -20,8 +20,6 @@ export const getMediaUrl = (url: string | null | undefined, cacheTag?: string | 
 
   // Otherwise prepend client-side URL
   const baseUrl = getClientSideURL()
-  const fullUrl = cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`;
-  console.log('>>>', fullUrl, { baseUrl, url, cacheTag })
 
   return cacheTag ? `${baseUrl}${url}?${cacheTag}` : `${baseUrl}${url}`
 }
