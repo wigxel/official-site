@@ -1,5 +1,5 @@
 import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
-import { Console, Effect, pipe } from 'effect';
+import { Console, Effect, pipe } from 'effect'
 
 const initial_data = [
   {
@@ -319,7 +319,7 @@ const initial_data = [
         id: 1,
         name: 'Joseph',
         avatar: null,
-        email: 'hi@wigxel.io',
+        email: 'hello@wigxel.io',
         sessions: [
           {
             id: '84e570af-283d-4d07-8aa8-0c22e31858a2',
@@ -330,14 +330,14 @@ const initial_data = [
       },
     ],
   },
-];
+]
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   for await (const i of initial_data) {
     await payload.create({
       collection: 'services',
       // @ts-expect-error
-      data: i
+      data: i,
     })
   }
 }
@@ -346,20 +346,22 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   // Migration code
   for await (const i of initial_data) {
     await pipe(
-      Effect.tryPromise(() => payload.find({ collection: "services", where: { title: { equals: i.title } } })),
-      Effect.map(e => e.docs[0]),
+      Effect.tryPromise(() =>
+        payload.find({ collection: 'services', where: { title: { equals: i.title } } }),
+      ),
+      Effect.map((e) => e.docs[0]),
       Effect.flatMap((match) => {
         return Effect.gen(function* () {
-          yield* Effect.logInfo('Running delete operation');
+          yield* Effect.logInfo('Running delete operation')
 
           return yield* Effect.tryPromise(() => {
             return payload.delete({
               collection: 'services',
               where: {
                 title: {
-                  equals: match.title
-                }
-              }
+                  equals: match.title,
+                },
+              },
             })
           })
         })

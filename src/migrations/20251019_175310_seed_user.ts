@@ -1,15 +1,15 @@
 import { type MigrateDownArgs, type MigrateUpArgs, sql } from '@payloadcms/db-postgres'
-import { Effect, pipe } from 'effect';
+import { Effect, pipe } from 'effect'
 
 export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   await payload.create({
-    collection: "users",
+    collection: 'users',
     data: {
       id: 1,
       name: 'Joseph',
-      password: "helloman",
+      password: 'helloman',
       avatar: null,
-      email: 'hi@wigxel.io',
+      email: 'hello@wigxel.io',
       sessions: [
         {
           id: '84e570af-283d-4d07-8aa8-0c22e31858a2',
@@ -23,21 +23,21 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
   const params = {
-    collection: "users",
+    collection: 'users',
     where: {
       email: {
-        equals: 'hi@wigxel.io'
+        equals: 'hello@wigxel.io',
       },
     },
-  } as const;
+  } as const
 
   await pipe(
     Effect.tryPromise(() => payload.find(params)),
     Effect.flatMap((a) => {
-      if (a.totalDocs === 0) return Effect.succeed({});
+      if (a.totalDocs === 0) return Effect.succeed({})
 
-      return Effect.tryPromise(() => payload.delete(params));
+      return Effect.tryPromise(() => payload.delete(params))
     }),
-    Effect.runPromiseExit
+    Effect.runPromiseExit,
   )
 }
