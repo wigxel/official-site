@@ -989,6 +989,56 @@ export const _posts_v_rels = pgTable(
   }),
 )
 
+export const services = pgTable(
+  'services',
+  {
+    id: serial('id').primaryKey(),
+    title: varchar('title').notNull(),
+    description: jsonb('description').notNull(),
+    image: integer('image_id').references(() => media.id, {
+      onDelete: 'set null',
+    }),
+    updatedAt: timestamp('updated_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+    createdAt: timestamp('created_at', { mode: 'string', withTimezone: true, precision: 3 })
+      .defaultNow()
+      .notNull(),
+  },
+  (columns) => ({
+    services_image_idx: index('services_image_idx').on(columns.image),
+    services_updated_at_idx: index('services_updated_at_idx').on(columns.updatedAt),
+    services_created_at_idx: index('services_created_at_idx').on(columns.createdAt),
+  }),
+)
+
+export const services_rels = pgTable(
+  'services_rels',
+  {
+    id: serial('id').primaryKey(),
+    order: integer('order'),
+    parent: integer('parent_id').notNull(),
+    path: varchar('path').notNull(),
+    usersID: integer('users_id'),
+  },
+  (columns) => ({
+    order: index('services_rels_order_idx').on(columns.order),
+    parentIdx: index('services_rels_parent_idx').on(columns.parent),
+    pathIdx: index('services_rels_path_idx').on(columns.path),
+    services_rels_users_id_idx: index('services_rels_users_id_idx').on(columns.usersID),
+    parentFk: foreignKey({
+      columns: [columns['parent']],
+      foreignColumns: [services.id],
+      name: 'services_rels_parent_fk',
+    }).onDelete('cascade'),
+    usersIdFk: foreignKey({
+      columns: [columns['usersID']],
+      foreignColumns: [users.id],
+      name: 'services_rels_users_fk',
+    }).onDelete('cascade'),
+  }),
+)
+
 export const media = pgTable(
   'media',
   {
@@ -1757,6 +1807,7 @@ export const payload_locked_documents_rels = pgTable(
     path: varchar('path').notNull(),
     pagesID: integer('pages_id'),
     postsID: integer('posts_id'),
+    servicesID: integer('services_id'),
     mediaID: integer('media_id'),
     categoriesID: integer('categories_id'),
     usersID: integer('users_id'),
@@ -1776,6 +1827,9 @@ export const payload_locked_documents_rels = pgTable(
     payload_locked_documents_rels_posts_id_idx: index(
       'payload_locked_documents_rels_posts_id_idx',
     ).on(columns.postsID),
+    payload_locked_documents_rels_services_id_idx: index(
+      'payload_locked_documents_rels_services_id_idx',
+    ).on(columns.servicesID),
     payload_locked_documents_rels_media_id_idx: index(
       'payload_locked_documents_rels_media_id_idx',
     ).on(columns.mediaID),
@@ -1814,6 +1868,11 @@ export const payload_locked_documents_rels = pgTable(
       columns: [columns['postsID']],
       foreignColumns: [posts.id],
       name: 'payload_locked_documents_rels_posts_fk',
+    }).onDelete('cascade'),
+    servicesIdFk: foreignKey({
+      columns: [columns['servicesID']],
+      foreignColumns: [services.id],
+      name: 'payload_locked_documents_rels_services_fk',
     }).onDelete('cascade'),
     mediaIdFk: foreignKey({
       columns: [columns['mediaID']],
@@ -2454,6 +2513,28 @@ export const relations__posts_v = relations(_posts_v, ({ one, many }) => ({
     relationName: '_rels',
   }),
 }))
+export const relations_services_rels = relations(services_rels, ({ one }) => ({
+  parent: one(services, {
+    fields: [services_rels.parent],
+    references: [services.id],
+    relationName: '_rels',
+  }),
+  usersID: one(users, {
+    fields: [services_rels.usersID],
+    references: [users.id],
+    relationName: 'users',
+  }),
+}))
+export const relations_services = relations(services, ({ one, many }) => ({
+  image: one(media, {
+    fields: [services.image],
+    references: [media.id],
+    relationName: 'image',
+  }),
+  _rels: many(services_rels, {
+    relationName: '_rels',
+  }),
+}))
 export const relations_media = relations(media, () => ({}))
 export const relations_categories_breadcrumbs = relations(categories_breadcrumbs, ({ one }) => ({
   _parentID: one(categories, {
@@ -2713,6 +2794,11 @@ export const relations_payload_locked_documents_rels = relations(
       references: [posts.id],
       relationName: 'posts',
     }),
+    servicesID: one(services, {
+      fields: [payload_locked_documents_rels.servicesID],
+      references: [services.id],
+      relationName: 'services',
+    }),
     mediaID: one(media, {
       fields: [payload_locked_documents_rels.mediaID],
       references: [media.id],
@@ -2909,6 +2995,8 @@ type DatabaseSchema = {
   _posts_v_version_populated_authors: typeof _posts_v_version_populated_authors
   _posts_v: typeof _posts_v
   _posts_v_rels: typeof _posts_v_rels
+  services: typeof services
+  services_rels: typeof services_rels
   media: typeof media
   categories_breadcrumbs: typeof categories_breadcrumbs
   categories: typeof categories
@@ -2972,6 +3060,8 @@ type DatabaseSchema = {
   relations__posts_v_version_populated_authors: typeof relations__posts_v_version_populated_authors
   relations__posts_v_rels: typeof relations__posts_v_rels
   relations__posts_v: typeof relations__posts_v
+  relations_services_rels: typeof relations_services_rels
+  relations_services: typeof relations_services
   relations_media: typeof relations_media
   relations_categories_breadcrumbs: typeof relations_categories_breadcrumbs
   relations_categories: typeof relations_categories

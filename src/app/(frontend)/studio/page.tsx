@@ -1,5 +1,9 @@
+import config from '@payload-config'
+import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Metadata } from 'next'
+import { getPayload } from 'payload'
 import { Container } from '@/components/container'
+import type { Service } from '@/payload-types'
 
 export const metadata: Metadata = {
   title: 'Studio | Wigxel',
@@ -76,29 +80,31 @@ function StudioPurpose() {
   )
 }
 
-function Skils() {
+async function Skils() {
+  const payload = await getPayload({ config: config })
+
+  const entries = await payload.find({
+    collection: 'services',
+  })
+
   return (
     <Container className="flex flex-col py-24 px-0">
       <section className="flex flex-col divide-y-[0.5px] border-y-[0.5px] border-white/[0.5] divide-white/[0.5]">
-        <SkillItem />
-        <SkillItem />
-        <SkillItem />
-        <SkillItem />
+        {entries.docs.map((e) => {
+          return <SkillItem key={e.id} data={e} />
+        })}
       </section>
     </Container>
   )
 }
 
-function SkillItem() {
+function SkillItem({ data }: { data: Service }) {
   return (
     <section className="py-11 wg-grid-1">
-      <h4 className="w-5/12 text-[calc(42rem/16)] font-semibold col-span-5">BRANDING</h4>
+      <h4 className="text-[calc(42rem/16)] font-semibold col-span-5">{data.title}</h4>
+
       <p className="flex-1 opacity-70 text-foreground col-span-7">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        <br />
-        Sequi asperiores ipsam omnis? Perspiciatis sunt eligendi nam enim <br />
-        dolores praesentium, et tenetur cupiditate magnam nesciunt earum minus ratione, saepe labore
-        neque.
+        <RichText data={data.description} />
       </p>
     </section>
   )

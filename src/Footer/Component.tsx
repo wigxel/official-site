@@ -54,13 +54,17 @@ export async function Footer() {
         </Container>
       </footer>
 
-      <Gutter breakpoints={[{
-        type: "stretch",
-        columns: 12,
-        gutter: 20,
-        margin: 0,
-        maxWidth: 1640
-      }]} />
+      <Gutter
+        breakpoints={[
+          {
+            type: 'stretch',
+            columns: 12,
+            gutter: 20,
+            margin: 0,
+            maxWidth: 1640,
+          },
+        ]}
+      />
     </>
   )
 }
