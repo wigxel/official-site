@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
   h1,
   h2,
   h3,
@@ -110,4 +111,8 @@ body::selection {
 
 .border-debug {
   border: solid 1px var(--foreground);
+}
+
+.wg-grid-1 {
+  @apply grid grid-cols-12 gap-5;
 }
