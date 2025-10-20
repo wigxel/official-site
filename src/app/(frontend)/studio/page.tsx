@@ -136,7 +136,9 @@ function TeamMemberCard(props: { doc: TeamMember }) {
       <figure className="aspect-[435/514] flex-1 w-full bg-gray-200 relative">
         <Image fill alt={props.doc.name}
           className='object-cover'
-          src={props.doc.image?.url} />
+          // @ts-expect-error
+          src={(props.doc.image?.url)}
+        />
       </figure>
 
       <div className="flex flex-col gap-3">
