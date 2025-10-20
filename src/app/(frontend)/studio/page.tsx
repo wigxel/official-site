@@ -115,14 +115,14 @@ async function TeamSection() {
   const payload = await getPayload({ config: config })
   const teamMembers = await payload.find({
     collection: 'team-member',
-    sort: ['-id']
+    sort: ['-id'],
   })
 
   return (
     <Container className="py-24 flex flex-col gap-10">
       <h2 className="text-4xl font-medium font-heading">Meet The Team</h2>
       <div className="grid grid-cols-3 gap-y-12 gap-x-5">
-        {teamMembers.docs.map(member => {
+        {teamMembers.docs.map((member) => {
           return <TeamMemberCard key={member.id} doc={member} />
         })}
       </div>
@@ -134,10 +134,12 @@ function TeamMemberCard(props: { doc: TeamMember }) {
   return (
     <div className="flex flex-col gap-4">
       <figure className="aspect-[435/514] flex-1 w-full bg-gray-200 relative">
-        <Image fill alt={props.doc.name}
-          className='object-cover'
+        <Image
+          fill
+          alt={props.doc.name}
+          className="object-cover"
           // @ts-expect-error
-          src={(props.doc.image?.url)}
+          src={props.doc.image?.url}
         />
       </figure>
 

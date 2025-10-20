@@ -46,6 +46,19 @@ const config = {
       },
     },
     extend: {
+      colors: {
+        brand: {
+          gray: { 200: '#CCC' }
+        }
+      },
+      fontSize: {
+        'display-1': ['calc(80rem/16)', {
+          letterSpacing: '-2px',
+          lineHeight: '2ex',
+          fontFamily: 'font-heading',
+          fontWeight: 'bold'
+        }]
+      },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
@@ -101,6 +114,7 @@ const config = {
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
         sans: ['Safiro'],
+        heading: ['Novela']
       },
       keyframes: {
         'accordion-down': {

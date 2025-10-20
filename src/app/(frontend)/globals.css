@@ -109,7 +109,7 @@ body::selection {
 }
 
 .border-debug {
-  border: solid 1px var(--foreground);
+  border: solid 1px cyan;
 }
 
 .wg-grid-1 {
