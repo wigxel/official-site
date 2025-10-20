@@ -1,9 +1,10 @@
 import config from '@payload-config'
 import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { getPayload } from 'payload'
 import { Container } from '@/components/container'
-import type { Service } from '@/payload-types'
+import type { Service, TeamMember } from '@/payload-types'
 
 export const metadata: Metadata = {
   title: 'Studio | Wigxel',
@@ -110,27 +111,37 @@ function SkillItem({ data }: { data: Service }) {
   )
 }
 
-function TeamSection() {
+async function TeamSection() {
+  const payload = await getPayload({ config: config })
+  const teamMembers = await payload.find({
+    collection: 'team-member',
+    sort: ['-id']
+  })
+
   return (
     <Container className="py-24 flex flex-col gap-10">
       <h2 className="text-4xl font-medium font-heading">Meet The Team</h2>
-      <div className="grid grid-cols-3 gap-5">
-        <TeamMemberCard />
-        <TeamMemberCard />
-        <TeamMemberCard />
+      <div className="grid grid-cols-3 gap-y-12 gap-x-5">
+        {teamMembers.docs.map(member => {
+          return <TeamMemberCard key={member.id} doc={member} />
+        })}
       </div>
     </Container>
   )
 }
 
-function TeamMemberCard() {
+function TeamMemberCard(props: { doc: TeamMember }) {
   return (
     <div className="flex flex-col gap-4">
-      <figure className="aspect-[435/514] flex-1 w-full bg-gray-200"></figure>
+      <figure className="aspect-[435/514] flex-1 w-full bg-gray-200 relative">
+        <Image fill alt={props.doc.name}
+          className='object-cover'
+          src={props.doc.image?.url} />
+      </figure>
 
       <div className="flex flex-col gap-3">
-        <h3 className="text-[calc(32rem/16)] border leading-[1ex]">John Doe</h3>
-        <p className="leading-[1] uppercase opacity-75 text-base">Creative Lead</p>
+        <h3 className="text-[calc(32rem/16)] border leading-[1ex]">{props.doc.name}</h3>
+        <p className="leading-[1] uppercase opacity-75 text-base">{props.doc.role}</p>
       </div>
     </div>
   )
