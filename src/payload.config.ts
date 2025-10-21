@@ -10,6 +10,7 @@ import { defaultLexical } from '@/fields/defaultLexical'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
+import { Portofolios as Portfolios } from './collections/Portfolios'
 import { Posts } from './collections/Posts'
 import { Services } from './collections/Services'
 import { TeamMembers } from './collections/TeamMember'
@@ -66,7 +67,7 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || '',
     },
   }),
-  collections: [Pages, Posts, Services, Media, Categories, Users, TeamMembers],
+  collections: [Pages, Posts, Services, Media, Categories, Users, TeamMembers, Portfolios],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer],
   plugins: [

@@ -1,7 +1,34 @@
+import config from '@payload-config'
+import { capitalize } from 'effect/String';
+import { notFound } from 'next/navigation';
+import { getPayload } from 'payload';
 import { Container } from '@/components/container'
+import { safeArray, safeStr } from '@/libs/data.helpers';
 
-export default function CaseStudy() {
-  const siteIsLive = true
+type Props = {
+  params: Promise<{
+    slug: string;
+  }>
+}
+
+export default async function CaseStudy({ params }: Props) {
+  const siteIsLive = true;
+  const slug = (await params).slug
+
+  console.log({ slug })
+
+  const payload = await getPayload({ config });
+  const results = await payload.find({
+    collection: "portfolios",
+    limit: 1,
+    where: {
+      slug: { equals: slug }
+    }
+  });
+
+  if (results.totalDocs === 0) notFound();
+
+  const portfolio = results.docs[0];
 
   return (
     <section className="flex flex-col gap-[calc(100rem/16)]">
@@ -11,17 +38,20 @@ export default function CaseStudy() {
             <li className="text-foreground">
               <a href="/portfolio">Portfolio</a>
             </li>
-            /<li className="text-accent-foreground">Demi Samande</li>
+            /<li className="text-accent-foreground">
+              {portfolio.name}
+            </li>
           </ul>
         </nav>
 
         <div className="wg-grid-1">
           <div className="col-span-6 flex flex-col gap-6">
-            <h1 className="font-heading uppercase text-display-1">Demi Samande</h1>
+            <h1 className="font-heading uppercase text-display-1">
+              {portfolio.name}
+            </h1>
 
             <p className="text-base">
-              A dynamic digital home for Demi Samande—author, founder, and visionary — crafted to
-              inspire, connect, and empower Africa’s next generation of innovators.
+              {portfolio.short_description}
             </p>
 
             {siteIsLive ? (
@@ -42,22 +72,29 @@ export default function CaseStudy() {
           <div className="wg-grid-1 col-span-8 leading-[2ex] w-full">
             <div className="flex flex-col gap-2 col-span-6">
               <h2 className="opacity-70">Client</h2>
-              <p>Demi Samande</p>
+              <p>{portfolio.client}</p>
             </div>
 
             <div className="flex flex-col gap-2 col-span-6">
               <h2 className="opacity-70">Scope</h2>
-              <p>Branding + Web Design + Development</p>
+              <p>
+                {safeArray(portfolio.scope ?? []).map(e => {
+                  // @ts-expect-error No worries
+                  return capitalize(safeStr(e?.service?.title, "--").toLowerCase())
+                }).join(" + ")}
+              </p>
             </div>
 
             <div className="flex flex-col gap-2 col-span-6">
               <h2 className="opacity-70">Project Type</h2>
-              <p>Portfolio</p>
+              <p>
+                {portfolio.project_type}
+              </p>
             </div>
 
             <div className="flex flex-col gap-2 col-span-6">
               <h2 className="opacity-70">Sector</h2>
-              <p>Personal Branding</p>
+              <p>{portfolio.sector}</p>
             </div>
           </div>
         </div>

@@ -74,6 +74,7 @@ export interface Config {
     categories: Category;
     users: User;
     'team-member': TeamMember;
+    portfolios: Portfolio;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -92,6 +93,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'team-member': TeamMemberSelect<false> | TeamMemberSelect<true>;
+    portfolios: PortfoliosSelect<false> | PortfoliosSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -784,6 +786,31 @@ export interface TeamMember {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolios".
+ */
+export interface Portfolio {
+  id: number;
+  name: string;
+  short_description: string;
+  client?: string | null;
+  scope?:
+    | {
+        service?: (number | null) | Service;
+        id?: string | null;
+      }[]
+    | null;
+  sector?: string | null;
+  project_type?: ('Portfolio' | 'Case Study') | null;
+  cover_image?: (number | null) | Media;
+  slug?: string | null;
+  slugLock?: boolean | null;
+  publishedAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -982,6 +1009,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'team-member';
         value: number | TeamMember;
+      } | null)
+    | ({
+        relationTo: 'portfolios';
+        value: number | Portfolio;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1377,6 +1408,30 @@ export interface TeamMemberSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "portfolios_select".
+ */
+export interface PortfoliosSelect<T extends boolean = true> {
+  name?: T;
+  short_description?: T;
+  client?: T;
+  scope?:
+    | T
+    | {
+        service?: T;
+        id?: T;
+      };
+  sector?: T;
+  project_type?: T;
+  cover_image?: T;
+  slug?: T;
+  slugLock?: T;
+  publishedAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects_select".
  */
 export interface RedirectsSelect<T extends boolean = true> {
@@ -1752,6 +1807,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: number | Post;
+        } | null)
+      | ({
+          relationTo: 'portfolios';
+          value: number | Portfolio;
         } | null);
     global?: string | null;
     user?: (number | null) | User;
