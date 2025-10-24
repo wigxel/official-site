@@ -779,8 +779,8 @@ export interface TeamMember {
   id: number;
   name: string;
   role: string;
-  image: number | Media;
-  image_landscape: number | Media;
+  image?: (number | null) | Media;
+  image_landscape?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }

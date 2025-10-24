@@ -84,7 +84,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   for await (const a of team_members) {
     await payload.create({
       collection: 'team-member',
-      data: { ...a }
+      data: { ...a },
     })
   }
 }

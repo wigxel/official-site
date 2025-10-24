@@ -109,5 +109,4 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   DROP TYPE "public"."enum_portfolios_status";
   DROP TYPE "public"."enum__portfolios_v_version_project_type";
   DROP TYPE "public"."enum__portfolios_v_version_status";`)
-
 }

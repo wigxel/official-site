@@ -24,8 +24,6 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
-
-
   await db.execute(sql`
    ALTER TABLE "team_member" DISABLE ROW LEVEL SECURITY;
   DROP TABLE "team_member" CASCADE;

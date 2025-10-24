@@ -4,9 +4,8 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   // Migration code
   await payload.create({
     collection: 'portfolios',
-    data: dump
+    data: dump,
   })
-
 }
 
 export async function down({ db, payload, req }: MigrateDownArgs): Promise<void> {
@@ -14,9 +13,9 @@ export async function down({ db, payload, req }: MigrateDownArgs): Promise<void>
   await payload.delete({
     collection: 'portfolios',
     where: {
-      slug: { equals: dump.slug }
-    }
-  });
+      slug: { equals: dump.slug },
+    },
+  })
 }
 
 const dump = {
@@ -26,5 +25,5 @@ const dump = {
     'A dynamic digital home for Demi Samande—author, founder, and visionary — crafted to inspire, connect, and empower Africa’s next generation of innovators.',
   client: 'Demi Samande',
   sector: 'Personal Brand',
-  slug: 'demi-samande'
+  slug: 'demi-samande',
 }

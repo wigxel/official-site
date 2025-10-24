@@ -29,13 +29,11 @@ export const TeamMembers: CollectionConfig = {
       name: 'image',
       type: 'relationship',
       relationTo: 'media',
-      required: true,
     },
     {
       name: 'image_landscape',
       type: 'relationship',
       relationTo: 'media',
-      required: true,
     },
   ],
 }

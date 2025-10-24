@@ -27,37 +27,35 @@ export const Portofolios: CollectionConfig = {
     },
     {
       name: 'client',
-      type: "text",
+      type: 'text',
       defaultValue: 'Client Name',
     },
     {
       name: 'scope',
-      type: "array",
+      type: 'array',
       fields: [
         {
-          name: "service", type: "relationship",
-          relationTo: "services",
+          name: 'service',
+          type: 'relationship',
+          relationTo: 'services',
         },
-      ]
+      ],
     },
     {
       name: 'sector',
-      type: "text",
-      defaultValue: "Personal Brand",
+      type: 'text',
+      defaultValue: 'Personal Brand',
     },
     {
       name: 'project_type',
-      type: "select",
-      options: [
-        'Portfolio',
-        'Case Study'
-      ],
-      defaultValue: "Portfolio",
+      type: 'select',
+      options: ['Portfolio', 'Case Study'],
+      defaultValue: 'Portfolio',
     },
     {
-      name: "cover_image",
-      type: "relationship",
-      relationTo: "media",
+      name: 'cover_image',
+      type: 'relationship',
+      relationTo: 'media',
     },
     ...slugField(),
     {
