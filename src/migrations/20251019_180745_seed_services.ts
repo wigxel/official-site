@@ -4,7 +4,7 @@ import { Console, Effect, pipe } from 'effect'
 const initial_data = [
   {
     id: 12,
-    title: 'MARKETING',
+    title: 'Marketing',
     description: {
       root: {
         type: 'root',
@@ -70,7 +70,7 @@ const initial_data = [
   },
   {
     id: 13,
-    title: 'SOFTWARE',
+    title: 'Software',
     description: {
       root: {
         type: 'root',
@@ -146,7 +146,7 @@ const initial_data = [
   },
   {
     id: 14,
-    title: 'DIGITAL DESIGN',
+    title: 'Digital Design',
     description: {
       root: {
         type: 'root',
@@ -242,7 +242,7 @@ const initial_data = [
   },
   {
     id: 15,
-    title: 'BRANDING',
+    title: 'Branding',
     description: {
       root: {
         type: 'root',
