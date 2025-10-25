@@ -12,7 +12,7 @@ import {
 import React from 'react'
 import { Controller } from 'react-hook-form'
 
-import { Error } from '../Error'
+import { InputError } from '../Error'
 import { Width } from '../Width'
 
 export const Select: React.FC<
@@ -57,7 +57,7 @@ export const Select: React.FC<
         }}
         rules={{ required }}
       />
-      {errors[name] && <Error name={name} />}
+      {errors[name] && <InputError name={name} />}
     </Width>
   )
 }

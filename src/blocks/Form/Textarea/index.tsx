@@ -1,11 +1,11 @@
 import type { TextField } from '@payloadcms/plugin-form-builder/types'
+import type React from 'react'
 import type { FieldErrorsImpl, FieldValues, UseFormRegister } from 'react-hook-form'
-
 import { Label } from '@/components/ui/label'
 import { Textarea as TextAreaComponent } from '@/components/ui/textarea'
-import React from 'react'
 
-import { Error } from '../Error'
+
+import { InputError } from '../Error'
 import { Width } from '../Width'
 
 export const Textarea: React.FC<
@@ -34,7 +34,7 @@ export const Textarea: React.FC<
         {...register(name, { required: required })}
       />
 
-      {errors[name] && <Error name={name} />}
+      {errors[name] && <InputError name={name} />}
     </Width>
   )
 }
