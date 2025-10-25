@@ -1,18 +1,3 @@
-import type { CollectionConfig } from 'payload'
-
-import { authenticated } from '../../access/authenticated'
-import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { Archive } from '../../blocks/ArchiveBlock/config'
-import { CallToAction } from '../../blocks/CallToAction/config'
-import { Content } from '../../blocks/Content/config'
-import { FormBlock } from '../../blocks/Form/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { hero } from '@/heros/config'
-import { slugField } from '@/fields/slug'
-import { populatePublishedAt } from '../../hooks/populatePublishedAt'
-import { generatePreviewPath } from '../../utilities/generatePreviewPath'
-import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
-
 import {
   MetaDescriptionField,
   MetaImageField,
@@ -20,6 +5,20 @@ import {
   OverviewField,
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
+import type { CollectionConfig } from 'payload'
+import { slugField } from '@/fields/slug'
+import { hero } from '@/heros/config'
+import { authenticated } from '../../access/authenticated'
+import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
+import { Archive } from '../../blocks/ArchiveBlock/config'
+import { CallToAction } from '../../blocks/CallToAction/config'
+import { Content } from '../../blocks/Content/config'
+import { FormBlock } from '../../blocks/Form/config'
+import { LandingHero } from '../../blocks/LandingHero/config'
+import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { populatePublishedAt } from '../../hooks/populatePublishedAt'
+import { generatePreviewPath } from '../../utilities/generatePreviewPath'
+import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -75,7 +74,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [LandingHero, CallToAction, Content, MediaBlock, Archive, FormBlock],
               required: true,
               admin: {
                 initCollapsed: true,
