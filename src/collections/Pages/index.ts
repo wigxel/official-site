@@ -6,6 +6,7 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import type { CollectionConfig } from 'payload'
+import { CraftsBlock } from '@/blocks/Crafts/config'
 import { slugField } from '@/fields/slug'
 import { hero } from '@/heros/config'
 import { authenticated } from '../../access/authenticated'
@@ -74,7 +75,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [LandingHero, CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [LandingHero, CraftsBlock, CallToAction, Content, MediaBlock, Archive, FormBlock],
               required: true,
               admin: {
                 initCollapsed: true,

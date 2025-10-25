@@ -6,6 +6,7 @@ import { ContentBlock } from '@/blocks/Content/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import type { Page } from '@/payload-types'
+import { CraftsBlockComponent } from './Crafts/Component'
 import { LandingHeroBlockComponent } from './LandingHero/Component'
 
 const blockComponents = {
@@ -15,6 +16,7 @@ const blockComponents = {
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
   landingHero: LandingHeroBlockComponent,
+  crafts: CraftsBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{

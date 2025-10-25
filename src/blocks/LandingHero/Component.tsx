@@ -6,7 +6,7 @@ export function LandingHeroBlockComponent() {
   return (
     <Container className="pt-[calc(238rem/16)]">
       <div className='wg-grid-1 w-full'>
-        <h1 className='col-span-5 font-heading leading-[2ex] text-[calc(64rem/16)]'>
+        <h1 className='col-span-5 heading-1'>
           Human Centric.<br />
           Smart Design.<br />
           Built Right.<br />

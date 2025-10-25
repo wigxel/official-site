@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
   h1,
   h2,
   h3,
@@ -114,4 +115,12 @@ body::selection {
 
 .wg-grid-1 {
   @apply grid grid-cols-12 gap-5;
+}
+
+.heading-1 {
+  @apply font-heading leading-[2ex] text-[calc(64rem/16)];
+}
+
+.heading-2 {
+  @apply font-heading leading-[2ex] text-[calc(48rem/16)];
 }

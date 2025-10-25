@@ -20,6 +20,11 @@ export const Services: CollectionConfig = {
       required: true,
     },
     {
+      name: "sub_text",
+      type: 'textarea',
+      required: false,
+    },
+    {
       name: 'description',
       type: 'richText',
       required: true,
@@ -31,6 +36,7 @@ export const Services: CollectionConfig = {
       relationTo: 'media',
       maxDepth: 3,
     },
+
     {
       name: 'authors',
       type: 'relationship',

@@ -197,7 +197,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (LandingHero | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (LandingHero | WigxelCrafts | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -449,6 +449,54 @@ export interface LandingHero {
   id?: string | null;
   blockName?: string | null;
   blockType: 'landingHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WigxelCrafts".
+ */
+export interface WigxelCrafts {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  links?:
+    | {
+        link: {
+          type?: ('reference' | 'custom') | null;
+          newTab?: boolean | null;
+          reference?:
+            | ({
+                relationTo: 'pages';
+                value: number | Page;
+              } | null)
+            | ({
+                relationTo: 'posts';
+                value: number | Post;
+              } | null);
+          url?: string | null;
+          label: string;
+          /**
+           * Choose how the link should be rendered.
+           */
+          appearance?: ('default' | 'outline') | null;
+        };
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'crafts';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -799,6 +847,7 @@ export interface Form {
 export interface Service {
   id: number;
   title: string;
+  sub_text?: string | null;
   description: {
     root: {
       type: string;
@@ -1156,6 +1205,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         landingHero?: T | LandingHeroSelect<T>;
+        crafts?: T | WigxelCraftsSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
@@ -1181,6 +1231,30 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "LandingHero_select".
  */
 export interface LandingHeroSelect<T extends boolean = true> {
+  richText?: T;
+  links?:
+    | T
+    | {
+        link?:
+          | T
+          | {
+              type?: T;
+              newTab?: T;
+              reference?: T;
+              url?: T;
+              label?: T;
+              appearance?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WigxelCrafts_select".
+ */
+export interface WigxelCraftsSelect<T extends boolean = true> {
   richText?: T;
   links?:
     | T
@@ -1324,6 +1398,7 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface ServicesSelect<T extends boolean = true> {
   title?: T;
+  sub_text?: T;
   description?: T;
   image?: T;
   authors?: T;
