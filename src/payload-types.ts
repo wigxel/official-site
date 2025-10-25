@@ -201,6 +201,7 @@ export interface Page {
     | LandingHero
     | WigxelCrafts
     | WigxelProjects
+    | WigxelPartners
     | CallToActionBlock
     | ContentBlock
     | MediaBlock
@@ -515,6 +516,15 @@ export interface WigxelProjects {
   id?: string | null;
   blockName?: string | null;
   blockType: 'projects';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WigxelPartners".
+ */
+export interface WigxelPartners {
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'partners';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1225,6 +1235,7 @@ export interface PagesSelect<T extends boolean = true> {
         landingHero?: T | LandingHeroSelect<T>;
         crafts?: T | WigxelCraftsSelect<T>;
         projects?: T | WigxelProjectsSelect<T>;
+        partners?: T | WigxelPartnersSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
@@ -1298,6 +1309,14 @@ export interface WigxelCraftsSelect<T extends boolean = true> {
  * via the `definition` "WigxelProjects_select".
  */
 export interface WigxelProjectsSelect<T extends boolean = true> {
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "WigxelPartners_select".
+ */
+export interface WigxelPartnersSelect<T extends boolean = true> {
   id?: T;
   blockName?: T;
 }
