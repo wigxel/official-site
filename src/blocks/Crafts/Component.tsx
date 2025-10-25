@@ -1,6 +1,5 @@
 import config from '@payload-config'
 import { getPayload } from 'payload';
-import type React from 'react'
 import { useId } from 'react'
 import { Container } from '@/components/container'
 import type { Service } from '@/payload-types';
@@ -12,11 +11,6 @@ export async function CraftsBlockComponent() {
     collection: "services",
     limit: 4,
   })
-
-  console.log(
-    "Services",
-    services
-  )
 
   return (<div className='max-w-full overflow-hidden'>
     <Container className="pt-[calc(160rem/16)]">

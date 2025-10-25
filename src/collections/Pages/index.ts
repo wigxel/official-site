@@ -7,6 +7,8 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import type { CollectionConfig } from 'payload'
 import { CraftsBlock } from '@/blocks/Crafts/config'
+import { LandingProjectsBlockComponents } from '@/blocks/Projects/Component'
+import { LandingProjectBlock } from '@/blocks/Projects/config'
 import { slugField } from '@/fields/slug'
 import { hero } from '@/heros/config'
 import { authenticated } from '../../access/authenticated'
@@ -75,7 +77,7 @@ export const Pages: CollectionConfig<'pages'> = {
             {
               name: 'layout',
               type: 'blocks',
-              blocks: [LandingHero, CraftsBlock, CallToAction, Content, MediaBlock, Archive, FormBlock],
+              blocks: [LandingHero, CraftsBlock, LandingProjectBlock, CallToAction, Content, MediaBlock, Archive, FormBlock],
               required: true,
               admin: {
                 initCollapsed: true,
