@@ -20,7 +20,7 @@ export const Services: CollectionConfig = {
       required: true,
     },
     {
-      name: "sub_text",
+      name: 'sub_text',
       type: 'textarea',
       required: false,
     },

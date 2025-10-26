@@ -7,7 +7,6 @@ import { Label } from '@/components/ui/label'
 import { InputError } from '../Error'
 import { Width } from '../Width'
 
-
 export const Text: React.FC<
   TextField & {
     errors: Partial<FieldErrorsImpl>

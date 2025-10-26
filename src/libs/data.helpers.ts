@@ -26,7 +26,7 @@ export const safeObj = <T>(obj: T): T extends Record<string, unknown> ? T : type
 }
 
 export function safeInt(num: unknown, fallback = 0): number {
-  const value = Number.parseInt(num as string)
+  const value = Number.parseInt(num as string, 10)
 
   return !Object.is(Number.NaN, value) ? value : fallback
 }

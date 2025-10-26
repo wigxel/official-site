@@ -1,4 +1,4 @@
-import { type MigrateDownArgs, type MigrateUpArgs, sql } from '@payloadcms/db-postgres'
+import type { MigrateDownArgs, MigrateUpArgs } from '@payloadcms/db-postgres'
 
 // const DEFAULT_IMAGE = {
 //   id: 1,

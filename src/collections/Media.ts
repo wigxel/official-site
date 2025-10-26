@@ -1,11 +1,11 @@
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 import {
   FixedToolbarFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import path from 'path'
 import type { CollectionConfig } from 'payload'
-import { fileURLToPath } from 'url'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
@@ -13,7 +13,7 @@ import { authenticated } from '../access/authenticated'
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-export const Media: CollectionConfig = {
+export const MediaCollection: CollectionConfig = {
   slug: 'media',
   access: {
     create: authenticated,

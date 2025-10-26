@@ -1,7 +1,6 @@
 import type { Block } from 'payload'
 import { FormBlock } from '../Form/config'
 
-
 export const LandingContactBlock: Block = {
   slug: 'landingContact',
   interfaceName: 'WigxelContactForm',

@@ -13,6 +13,12 @@ export const LandingHero: Block = {
   interfaceName: 'LandingHero',
   fields: [
     {
+      name: 'heading',
+      type: 'textarea',
+      defaultValue: 'Human Centric.\nSmart Design.\nBuilt Right.',
+      required: true,
+    },
+    {
       name: 'richText',
       type: 'richText',
       editor: lexicalEditor({
@@ -26,6 +32,11 @@ export const LandingHero: Block = {
         },
       }),
       label: false,
+    },
+    {
+      name: 'cover_image',
+      type: 'relationship',
+      relationTo: 'media',
     },
     linkGroup({
       appearances: ['default', 'outline'],

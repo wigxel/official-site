@@ -74,6 +74,7 @@ export interface Config {
     categories: Category;
     users: User;
     'team-member': TeamMember;
+    collaborations: Collaboration;
     portfolios: Portfolio;
     redirects: Redirect;
     forms: Form;
@@ -93,6 +94,7 @@ export interface Config {
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'team-member': TeamMemberSelect<false> | TeamMemberSelect<true>;
+    collaborations: CollaborationsSelect<false> | CollaborationsSelect<true>;
     portfolios: PortfoliosSelect<false> | PortfoliosSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
@@ -407,6 +409,7 @@ export interface User {
  * via the `definition` "LandingHero".
  */
 export interface LandingHero {
+  heading: string;
   richText?: {
     root: {
       type: string;
@@ -422,6 +425,7 @@ export interface LandingHero {
     };
     [k: string]: unknown;
   } | null;
+  cover_image?: (number | null) | Media;
   links?:
     | {
         link: {
@@ -769,6 +773,18 @@ export interface TeamMember {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collaborations".
+ */
+export interface Collaboration {
+  id: number;
+  name: string;
+  collab_type?: ('Client' | 'Partners') | null;
+  logo?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "portfolios".
  */
 export interface Portfolio {
@@ -785,6 +801,7 @@ export interface Portfolio {
   sector?: string | null;
   project_type?: ('Portfolio' | 'Case Study') | null;
   cover_image?: (number | null) | Media;
+  cover_image_portrait?: (number | null) | Media;
   slug?: string | null;
   slugLock?: boolean | null;
   publishedAt?: string | null;
@@ -994,6 +1011,10 @@ export interface PayloadLockedDocument {
         value: number | TeamMember;
       } | null)
     | ({
+        relationTo: 'collaborations';
+        value: number | Collaboration;
+      } | null)
+    | ({
         relationTo: 'portfolios';
         value: number | Portfolio;
       } | null)
@@ -1115,7 +1136,9 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "LandingHero_select".
  */
 export interface LandingHeroSelect<T extends boolean = true> {
+  heading?: T;
   richText?: T;
+  cover_image?: T;
   links?:
     | T
     | {
@@ -1396,6 +1419,17 @@ export interface TeamMemberSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collaborations_select".
+ */
+export interface CollaborationsSelect<T extends boolean = true> {
+  name?: T;
+  collab_type?: T;
+  logo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "portfolios_select".
  */
 export interface PortfoliosSelect<T extends boolean = true> {
@@ -1411,6 +1445,7 @@ export interface PortfoliosSelect<T extends boolean = true> {
   sector?: T;
   project_type?: T;
   cover_image?: T;
+  cover_image_portrait?: T;
   slug?: T;
   slugLock?: T;
   publishedAt?: T;

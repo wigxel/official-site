@@ -120,7 +120,6 @@ export const FormBlock: React.FC<
         <RichText className="mb-8 lg:mb-12" data={introContent} enableGutter={false} />
       )}
 
-
       <FormProvider {...formMethods}>
         {!isLoading && hasSubmitted && confirmationType === 'message' && (
           <RichText data={confirmationMessage} />
@@ -155,11 +154,15 @@ export const FormBlock: React.FC<
               })}
             </div>
 
-            <div className='!flex justify-end -mt-4 -translate-y-1/2'>
-              <Button form={formID} title="Submit" type="submit" variant="default:dark" size="square">
-                <span className='sr-only'>
-                  {submitButtonLabel}
-                </span>
+            <div className="!flex justify-end -mt-4 -translate-y-1/2">
+              <Button
+                form={formID}
+                title="Submit"
+                type="submit"
+                variant="default:dark"
+                size="square"
+              >
+                <span className="sr-only">{submitButtonLabel}</span>
                 <ArrowRight />
               </Button>
             </div>

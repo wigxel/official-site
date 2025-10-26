@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   h1,
   h2,
   h3,
@@ -126,19 +125,25 @@ body::selection {
 }
 
 .layout-form-grid {
-  form>div {
+  form > div {
     @apply grid grid-cols-2 gap-x-10 gap-y-0;
   }
 
-  form>div>div:last-child {
+  form > div > div:last-child {
     @apply col-span-2;
   }
-
-
 }
 
 .input-border-transition {
   transition-property: all;
-  transition-duration: .4s;
+  transition-duration: 0.4s;
   transition-timing-function: ease-in-out;
+}
+
+.patterned-bg {
+  background-repeat: repeat;
+  background-color: #0b0b0b;
+  background-size: 1696px 608px;
+  background-image: url('/assets/repeat-bg.png');
+  background-blend-mode: darken;
 }

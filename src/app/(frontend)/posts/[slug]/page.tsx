@@ -1,11 +1,9 @@
 import configPromise from '@payload-config'
-import { type SerializedHeadingNode, TypedEditorState } from '@payloadcms/richtext-lexical'
-import { SerializedLexicalNodeWithParent } from '@payloadcms/richtext-lexical/react'
+import type { SerializedHeadingNode } from '@payloadcms/richtext-lexical'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
-import { Block, getPayload } from 'payload'
-import React, { cache } from 'react'
-import { RelatedPosts } from '@/blocks/RelatedPosts/Component'
+import { getPayload } from 'payload'
+import { cache } from 'react'
 import { Container } from '@/components/container'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
@@ -46,7 +44,7 @@ type Args = {
 export default async function Post({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
-  const url = '/posts/' + slug
+  const url = `/posts/${slug}`
   const post = await queryPostBySlug({ slug })
 
   if (!post) return <PayloadRedirects url={url} />

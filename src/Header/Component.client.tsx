@@ -17,26 +17,30 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   /* Storing the value in a useState to avoid hydration errors */
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
-  const pathname = usePathname()
+  const _pathname = usePathname()
 
   useEffect(() => {
     setHeaderTheme(null)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname])
+  }, [setHeaderTheme])
 
   useEffect(() => {
     if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerTheme])
+  }, [headerTheme, theme])
 
   return (
-    <header className="relative z-20" {...(theme ? { 'data-theme': theme } : {})}>
-      <Container className="py-8 flex justify-between">
-        <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+    <header className="sticky top-0 z-20" {...(theme ? { 'data-theme': theme } : {})}>
+      <Container className="py-8 wg-grid-1">
+        <Link href="/" className="col-span-4 flex justify-start">
+          <div>
+          <Logo className="invert dark:invert-0" />
+          </div>
         </Link>
-
-        <HeaderNav data={data} />
+        <div className="col-span-3"></div>
+        <div className="col-span-5">
+          <HeaderNav data={data} />
+        </div>
       </Container>
     </header>
   )

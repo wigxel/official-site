@@ -57,6 +57,11 @@ export const Portofolios: CollectionConfig = {
       type: 'relationship',
       relationTo: 'media',
     },
+    {
+      name: 'cover_image_portrait',
+      type: 'relationship',
+      relationTo: 'media',
+    },
     ...slugField(),
     {
       name: 'publishedAt',

@@ -1,12 +1,10 @@
 'use client'
 
 import type { PayloadAdminBarProps, PayloadMeUser } from '@payloadcms/admin-bar'
-
-import { cn } from '@/utilities/ui'
-import { useSelectedLayoutSegments } from 'next/navigation'
 import { PayloadAdminBar } from '@payloadcms/admin-bar'
+import { useRouter, useSelectedLayoutSegments } from 'next/navigation'
 import React, { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { cn } from '@/utilities/ui'
 
 import './index.scss'
 
@@ -48,7 +46,7 @@ export const AdminBar: React.FC<{
 
   return (
     <div
-      className={cn(baseClass, 'py-2 bg-black text-white', {
+      className={cn(baseClass, 'py-2 bg-cyan-500 fixed top-0 inset-x-0 text-white z-20', {
         block: show,
         hidden: !show,
       })}
