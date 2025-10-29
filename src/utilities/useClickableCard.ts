@@ -1,15 +1,14 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import type { RefObject } from 'react'
 import { useCallback, useEffect, useRef } from 'react'
 
 type UseClickableCardType<T extends HTMLElement> = {
   card: {
-    ref: RefObject<T | null>
+    register: (a: T | null) => void
   }
   link: {
-    ref: RefObject<HTMLAnchorElement | null>
+    register: (a: HTMLAnchorElement | null) => void
   }
 }
 
@@ -49,7 +48,7 @@ function useClickableCard<T extends HTMLElement>({
         }
       }
     },
-     
+
     [],
   )
 
@@ -71,7 +70,7 @@ function useClickableCard<T extends HTMLElement>({
         }
       }
     },
-     
+
     [router, external, newTab, scroll],
   )
 
@@ -92,15 +91,19 @@ function useClickableCard<T extends HTMLElement>({
     return () => {
       abortController.abort()
     }
-     
+
   }, [handleMouseDown, handleMouseUp])
 
   return {
     card: {
-      ref: card,
+      register: (ref: any) => {
+        card.current = ref;
+      }
     },
     link: {
-      ref: link,
+      register: (ref: HTMLAnchorElement | null) => {
+        link.current = ref;
+      }
     },
   }
 }

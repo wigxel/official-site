@@ -7,7 +7,7 @@ import type { LandingHero } from '@/payload-types'
 
 export function LandingHeroBlockComponent(props: LandingHero) {
   return (
-    <Container className="patterned-bg pt-[50dvh] -mt-[var(--header-height)]">
+    <Container className="patterned-bg -mt-[var(--header-height)] pt-[50dvh]">
       <div className="wg-grid-1 w-full">
         <h1 className="heading-1 col-span-5">{intersperse(props.heading.split('\n'), <br />)}</h1>
 
