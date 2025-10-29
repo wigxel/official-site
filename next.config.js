@@ -10,7 +10,7 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 const nextConfig = {
   images: {
     remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL /* 'https://example.com' */].map((item) => {
+      ...[NEXT_PUBLIC_SERVER_URL, 'https://wigxel.io', 'http://localhost'].map((item) => {
         const url = new URL(item)
 
         return {
@@ -29,18 +29,18 @@ const nextConfig = {
 
     return webpackConfig
   },
-  images: {
-    remotePatterns: [
-      {
-        protocol: "http",
-        hostname: "localhost"
-      },
-      {
-        protocol: 'https',
-        hostname: '*.wigxel.io',
-      },
-    ],
-  },
+  // images: {
+  //   remotePatterns: [
+  //     {
+  //       protocol: "http",
+  //       hostname: "localhost:3010"
+  //     },
+  //     {
+  //       protocol: 'https',
+  //       hostname: '*.wigxel.io',
+  //     },
+  //   ],
+  // },
   reactStrictMode: true,
   redirects,
 }
