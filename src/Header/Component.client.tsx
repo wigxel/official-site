@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import type React from 'react'
-import { useEffect, useEffectEvent, useState } from 'react'
+import { startTransition, useEffect, useEffectEvent, useState } from 'react'
 import { Container } from '@/components/container'
 import { Logo } from '@/components/Logo/Logo'
 import type { Header } from '@/payload-types'
@@ -18,17 +18,13 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
 
   const updateTheme = useEffectEvent(() => {
-    if (headerTheme && headerTheme !== theme) {
-      setTheme(headerTheme)
-    }
+    startTransition(() => {
+      setHeaderTheme(null)
+      if (headerTheme && headerTheme !== theme) {
+        setTheme(headerTheme)
+      }
+    })
   });
-
-  useEffect(() => {
-    setHeaderTheme(null)
-
-  }, [setHeaderTheme])
-
-
   useEffect(() => {
     updateTheme();
   }, [])
