@@ -199,7 +199,7 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (LandingHero | WigxelCrafts | WigxelProjects | WigxelPartners | WigxelContactForm)[];
+  layout: (LandingHero | WigxelCrafts | WigxelProjects | WigxelPartners | WigxelContactForm | ArchiveBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -732,6 +732,40 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock".
+ */
+export interface ArchiveBlock {
+  introContent?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  populateBy?: ('collection' | 'selection') | null;
+  relationTo?: 'posts' | null;
+  categories?: (number | Category)[] | null;
+  limit?: number | null;
+  selectedDocs?:
+    | {
+        relationTo: 'posts';
+        value: number | Post;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'archive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "services".
  */
 export interface Service {
@@ -1116,6 +1150,7 @@ export interface PagesSelect<T extends boolean = true> {
         projects?: T | WigxelProjectsSelect<T>;
         partners?: T | WigxelPartnersSelect<T>;
         landingContact?: T | WigxelContactFormSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
       };
   meta?:
     | T
@@ -1218,6 +1253,20 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ArchiveBlock_select".
+ */
+export interface ArchiveBlockSelect<T extends boolean = true> {
+  introContent?: T;
+  populateBy?: T;
+  relationTo?: T;
+  categories?: T;
+  limit?: T;
+  selectedDocs?: T;
   id?: T;
   blockName?: T;
 }

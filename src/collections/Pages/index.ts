@@ -6,6 +6,8 @@ import {
   PreviewField,
 } from '@payloadcms/plugin-seo/fields'
 import type { CollectionConfig } from 'payload'
+import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
+import { Archive } from '@/blocks/ArchiveBlock/config'
 import { LandingContactBlock } from '@/blocks/Contact/config'
 import { CraftsBlock } from '@/blocks/Crafts/config'
 import { PartnersBlock } from '@/blocks/Partners/config'
@@ -79,6 +81,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 LandingProjectBlock,
                 PartnersBlock,
                 LandingContactBlock,
+                Archive
               ],
               required: true,
               admin: {

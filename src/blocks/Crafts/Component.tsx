@@ -1,6 +1,5 @@
 import config from '@payload-config'
 import { getPayload } from 'payload'
-import { useId } from 'react'
 import { Container } from '@/components/container'
 import { Media } from '@/components/Media'
 import type { Service } from '@/payload-types'
@@ -34,6 +33,11 @@ export async function CraftsBlockComponent() {
 }
 
 function ServiceEntry({ entry }: { entry: Service }) {
+  if (typeof entry.image === 'number') {
+    console.warn("Expecting Media. Got number");
+    return;
+  }
+
   return (
     <div className="flex w-full min-w-[25vw] flex-1 flex-col items-center gap-8">
       <div
