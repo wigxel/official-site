@@ -55,7 +55,7 @@ export async function PartnersBlockComponents() {
 
                   {/* Back */}
                   <div
-                    className="absolute inset-0 flex items-center justify-center bg-background bg-orange-600 p-4"
+                    className="absolute inset-0 flex items-center justify-center bg-orange-600 p-4"
                     style={{
                       transform: 'rotateY(180deg)',
                       WebkitBackfaceVisibility: 'hidden',

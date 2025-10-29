@@ -2,13 +2,11 @@ import config from '@payload-config'
 import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import { getPayload } from 'payload'
-import { useId } from 'react'
 import { Container } from '@/components/container'
 import { Media } from '@/components/Media'
 import type { Portfolio } from '@/payload-types'
 
 export async function LandingProjectsBlockComponents() {
-  const id = useId()
   const payload = await getPayload({ config })
   const resource = await payload.find({
     collection: 'portfolios',
@@ -19,7 +17,7 @@ export async function LandingProjectsBlockComponents() {
     <Container className="flex flex-col gap-10 pt-[calc(160rem/16)]">
       <h2 className="heading-1 whitespace-nowrap">Projects</h2>
 
-      <div id={`carousel-${id}`} className="grid grid-cols-4 gap-[calc(20rem/16)]">
+      <div className="grid grid-cols-4 gap-[calc(20rem/16)]">
         {resource.docs.map((e) => {
           return <ProjectCard key={e.id} entry={e} />
         })}

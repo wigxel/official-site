@@ -1,5 +1,6 @@
 import config from '@payload-config'
 import { capitalize } from 'effect/String'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import { Container } from '@/components/container'
@@ -14,8 +15,6 @@ type Props = {
 export default async function CaseStudy({ params }: Props) {
   const siteIsLive = true
   const slug = (await params).slug
-
-  console.log({ slug })
 
   const payload = await getPayload({ config })
   const results = await payload.find({
@@ -36,7 +35,7 @@ export default async function CaseStudy({ params }: Props) {
         <nav>
           <ul className="flex gap-2 text-muted-foreground">
             <li className="text-foreground">
-              <a href="/portfolio">Portfolio</a>
+              <Link prefetch href="/portfolio">Portfolio</Link>
             </li>
             /<li className="text-accent-foreground">{portfolio.name}</li>
           </ul>

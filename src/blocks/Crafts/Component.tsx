@@ -6,7 +6,6 @@ import { Media } from '@/components/Media'
 import type { Service } from '@/payload-types'
 
 export async function CraftsBlockComponent() {
-  const id = useId()
   const payload = await getPayload({ config })
   const services = await payload.find({
     collection: 'services',
@@ -23,10 +22,7 @@ export async function CraftsBlockComponent() {
         </div>
       </Container>
 
-      <div
-        id={`carousel-${id}`}
-        className="relative mt-[calc(120rem/16)] flex h-[680px] justify-between"
-      >
+      <div className="relative mt-[calc(120rem/16)] flex h-[680px] justify-between">
         <div className="absolute left-0 top-0 flex gap-x-[10vw]">
           {services.docs.map((e) => {
             return <ServiceEntry key={e.id} entry={e} />
