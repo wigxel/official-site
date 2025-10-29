@@ -12,7 +12,7 @@ export const Logo = (props: Props) => {
       width="62"
       height="43"
       viewBox="0 0 62 43"
-      className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
+      className={clsx('h-[34px] w-full max-w-[9.375rem]', className)}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

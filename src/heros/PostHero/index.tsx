@@ -42,18 +42,18 @@ export const PostHero: React.FC<{
         <Media fill priority imgClassName="z-10 object-cover" resource={heroImage} />
       )}
 
-      <div className="absolute pointer-events-none left-0 bottom-0 top-0 z-10 w-1/2 bg-gradient-to-r from-black to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-1/2 bg-gradient-to-r from-black to-transparent" />
 
-      <Container className="z-20 relative">
-        <div className="flex text-foreground w-full items-center aspect-[1340/500] p-[calc(115rem/16)]">
-          <div className="lg:w-1/2 font-medium flex flex-col gap-6">
+      <Container className="relative z-20">
+        <div className="flex aspect-[1340/500] w-full items-center p-[calc(115rem/16)] text-foreground">
+          <div className="flex flex-col gap-6 font-medium lg:w-1/2">
             <div className="text-xs">
               <PostInfo post={post} />
             </div>
 
             <div className="flex flex-col gap-4">
-              <hgroup className="flex flex-col gap-3 mb-6">
-                <h1 className="text-6xl tracking-tight text-balance">{title}</h1>
+              <hgroup className="mb-6 flex flex-col gap-3">
+                <h1 className="text-balance text-6xl tracking-tight">{title}</h1>
                 <p className="text-base">{description}</p>
               </hgroup>
 
@@ -80,9 +80,9 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
   const hasAuthors = authors && authors.length > 0 && author_names !== ''
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 md:gap-16">
+    <div className="flex flex-col gap-4 md:flex-row md:gap-16">
       {hasAuthors && (
-        <div className="flex gap-4 items-center">
+        <div className="flex items-center gap-4">
           <div
             className={cn('flex', {
               '*:-mx-2 pl-2': authors.length > 1,
@@ -98,7 +98,7 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
                     alt={avatar?.alt ?? 'Author Image'}
                     unoptimized
                     src={avatar?.url ?? '/logo.svg'}
-                    className="aspect-square w-8 bg-black/60 border rounded-full border-white/[0.16]"
+                    className="aspect-square w-8 rounded-full border border-white/[0.16] bg-black/60"
                     width={32}
                     height={32}
                   />
@@ -124,7 +124,7 @@ export function PostInfo({ post }: { post: Pick<Post, 'postType' | 'publishedAt'
       {postType ? (
         <>
           <span className="capitalize text-brand-yellow-500">{postType ?? 'No Post Type'}</span>
-          <span className="w-px h-4 bg-white/[0.5]" />
+          <span className="h-4 w-px bg-white/[0.5]" />
         </>
       ) : null}
 

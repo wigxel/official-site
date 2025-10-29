@@ -60,9 +60,9 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <PostHero post={post} />
 
-      <Container className="flex mt-[calc(72rem/16)] items-start lg:gap-12">
-        <aside className="w-1/4 shrink top-0 sticky gap-4 flex flex-col">
-          <h4 className="pt-4 text-gray-300 uppercase text-xs tracking-widest">Quick Glance</h4>
+      <Container className="mt-[calc(72rem/16)] flex items-start lg:gap-12">
+        <aside className="sticky top-0 flex w-1/4 shrink flex-col gap-4">
+          <h4 className="pt-4 text-xs uppercase tracking-widest text-gray-300">Quick Glance</h4>
 
           <ul className="flex flex-col gap-3">
             {Array.from(readHeadings(post.content)).map((e, index) => {
@@ -74,8 +74,8 @@ export default async function Post({ params: paramsPromise }: Args) {
                   })}
                   data-active={index === 0}
                 >
-                  <span className="tabular-nums flex items-center gap-1">
-                    <span className="group-data-[active=true]:w-[48px] inline-block border-b-2 border-accent-foreground" />
+                  <span className="flex items-center gap-1 tabular-nums">
+                    <span className="inline-block border-b-2 border-accent-foreground group-data-[active=true]:w-[48px]" />
                     <span className="group-data-[active=true]:text-accent-foreground">
                       {serialNo(index + 1)}.&nbsp;
                     </span>
@@ -93,9 +93,9 @@ export default async function Post({ params: paramsPromise }: Args) {
           </ul>
         </aside>
 
-        <div className="shrink-0 max-w-[70ch] w-full border-foreground flex-1">
+        <div className="w-full max-w-[70ch] flex-1 shrink-0 border-foreground">
           <div className="flex flex-col items-center gap-4">
-            <RichText className="max-w-[48rem] mx-auto" data={post.content} enableGutter={false} />
+            <RichText className="mx-auto max-w-3xl" data={post.content} enableGutter={false} />
           </div>
 
           {/*{post.relatedPosts && post.relatedPosts.length > 0 && (

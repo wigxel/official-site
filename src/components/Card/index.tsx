@@ -52,13 +52,13 @@ export const Card: React.FC<{
 
       <div className="py-6">
         {props.doc && (
-          <div className="text-xs mb-2">
+          <div className="mb-2 text-xs">
             <PostInfo post={props.doc} />
           </div>
         )}
 
         {titleToUse && (
-          <div className="prose w-11/12 line-clamp-2 !leading-[2.6ex]">
+          <div className="prose line-clamp-2 w-11/12 !leading-[2.6ex]">
             <h3>
               <Link className="not-prose" href={href} ref={link.ref}>
                 {titleToUse}
@@ -68,7 +68,7 @@ export const Card: React.FC<{
         )}
 
         {description && (
-          <div className="mt-2 line-clamp-2 text-base opacity-70 font-normal w-11/12">
+          <div className="mt-2 line-clamp-2 w-11/12 text-base font-normal opacity-70">
             {description && <p>{sanitizedDescription}</p>}
           </div>
         )}

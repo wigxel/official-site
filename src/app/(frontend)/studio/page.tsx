@@ -14,10 +14,10 @@ export default function StudioPage() {
   return (
     <section>
       <Container className="absolute">
-        <h1 className="text-7xl font-heading">Studio</h1>
+        <h1 className="font-heading text-7xl">Studio</h1>
       </Container>
 
-      <div className="aspect-[16/6] w-full bg-[#111] -mt-24" />
+      <div className="-mt-24 aspect-[16/6] w-full bg-[#111]" />
 
       <StudioPurpose />
 
@@ -26,7 +26,7 @@ export default function StudioPage() {
       <Container className="wg-grid-1">
         <div className="col-span-5"></div>
         <div className="col-span-7">
-          <p className="flex text-[calc(32rem/16)] leading-[2.2ex] max-w-[40ch]">
+          <p className="flex max-w-[40ch] text-[calc(32rem/16)] leading-[2.2ex]">
             We develop UX focused software solutions on the Internet &amp; Mobile space for medium
             and large scale business looking to scale their business.
           </p>
@@ -40,11 +40,11 @@ export default function StudioPage() {
 
 function StudioPurpose() {
   return (
-    <Container className="flex flex-col gap-[calc(111rem/16)] pt-24 pb-[calc(140rem/16)]">
+    <Container className="flex flex-col gap-[calc(111rem/16)] pb-[calc(140rem/16)] pt-24">
       <div className="wg-grid-1 text-[calc(18rem/16)]">
-        <h1 className="pr-12 text-left col-span-5 text-accent-foreground">WHO ARE WE?</h1>
+        <h1 className="col-span-5 pr-12 text-left text-accent-foreground">WHO ARE WE?</h1>
 
-        <div className="col-span-7 flex-1 max-w-2xl flex flex-col gap-6 text-[1.1em]">
+        <div className="col-span-7 flex max-w-2xl flex-1 flex-col gap-6 text-[1.1em]">
           <p className="">
             We develop UX focused software solutions on the Internet & Mobile space for medium and
             large scale business looking to scale their business.
@@ -53,9 +53,9 @@ function StudioPurpose() {
       </div>
 
       <div className="wg-grid-1 text-[calc(18rem/16)]">
-        <h1 className="pr-12 text-left col-span-5 text-accent-foreground">PROBLEM + OUR PURPOSE</h1>
+        <h1 className="col-span-5 pr-12 text-left text-accent-foreground">PROBLEM + OUR PURPOSE</h1>
 
-        <div className="col-span-7 flex-1 max-w-2xl flex flex-col gap-6 text-[1.1em]">
+        <div className="col-span-7 flex max-w-2xl flex-1 flex-col gap-6 text-[1.1em]">
           <p className="">
             We see business struggling create an impact on the internet everyday. Most think they
             are doing it right and we can blame them since they don’t know better.
@@ -69,8 +69,8 @@ function StudioPurpose() {
       </div>
 
       <div className="wg-grid-1 text-[calc(18rem/16)]">
-        <h1 className="pr-12 text-left col-span-5 text-accent-foreground">OUR SERVICES</h1>
-        <div className="col-span-7 flex-1 max-w-2xl flex flex-col gap-6 text-[1.1em]">
+        <h1 className="col-span-5 pr-12 text-left text-accent-foreground">OUR SERVICES</h1>
+        <div className="col-span-7 flex max-w-2xl flex-1 flex-col gap-6 text-[1.1em]">
           <p className="">
             We offer a wide range of creative & technical services that covers every steps of a
             production & post-production pipeline
@@ -89,8 +89,8 @@ async function Skils() {
   })
 
   return (
-    <Container className="flex flex-col py-24 px-0">
-      <section className="flex flex-col divide-y-[0.5px] border-y-[0.5px] border-white/[0.5] divide-white/[0.5]">
+    <Container className="flex flex-col px-0 py-24">
+      <section className="flex flex-col divide-y-[0.5px] divide-white/[0.5] border-y-[0.5px] border-white/[0.5]">
         {entries.docs.map((e) => {
           return <SkillItem key={e.id} data={e} />
         })}
@@ -101,10 +101,10 @@ async function Skils() {
 
 function SkillItem({ data }: { data: Service }) {
   return (
-    <section className="py-11 wg-grid-1">
-      <h4 className="text-[calc(42rem/16)] font-semibold col-span-5">{data.title}</h4>
+    <section className="wg-grid-1 py-11">
+      <h4 className="col-span-5 text-[calc(42rem/16)] font-semibold">{data.title}</h4>
 
-      <p className="flex-1 opacity-70 text-foreground col-span-7">
+      <p className="col-span-7 flex-1 text-foreground opacity-70">
         <RichText data={data.description} />
       </p>
     </section>
@@ -119,9 +119,9 @@ async function TeamSection() {
   })
 
   return (
-    <Container className="py-24 flex flex-col gap-10">
-      <h2 className="text-4xl font-medium font-heading">Meet The Team</h2>
-      <div className="grid grid-cols-3 gap-y-12 gap-x-5">
+    <Container className="flex flex-col gap-10 py-24">
+      <h2 className="font-heading text-4xl font-medium">Meet The Team</h2>
+      <div className="grid grid-cols-3 gap-x-5 gap-y-12">
         {teamMembers.docs.map((member) => {
           return <TeamMemberCard key={member.id} doc={member} />
         })}
@@ -133,7 +133,7 @@ async function TeamSection() {
 function TeamMemberCard(props: { doc: TeamMember }) {
   return (
     <div className="flex flex-col gap-4">
-      <figure className="aspect-[435/514] flex-1 w-full bg-gray-200 relative">
+      <figure className="relative aspect-[435/514] w-full flex-1 bg-gray-200">
         <Image
           fill
           alt={props.doc.name}
@@ -144,8 +144,8 @@ function TeamMemberCard(props: { doc: TeamMember }) {
       </figure>
 
       <div className="flex flex-col gap-3">
-        <h3 className="text-[calc(32rem/16)] border leading-[1ex]">{props.doc.name}</h3>
-        <p className="leading-[1] uppercase opacity-75 text-base">{props.doc.role}</p>
+        <h3 className="border text-[calc(32rem/16)] leading-[1ex]">{props.doc.name}</h3>
+        <p className="text-base uppercase leading-none opacity-75">{props.doc.role}</p>
       </div>
     </div>
   )

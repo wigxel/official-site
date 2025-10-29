@@ -47,10 +47,10 @@ export function Gutter(props: { breakpoints: T[] }) {
         return (
           <div
             key={e.columns + e.margin + e.maxWidth}
-            className="mx-auto w-full h-full flex justify-center traisition "
+            className="traisition mx-auto flex size-full justify-center "
           >
             <div
-              className="flex w-full h-full"
+              className="flex size-full"
               style={{
                 gap: `${e.gutter}px`,
                 maxWidth: `${e.maxWidth}px`,
@@ -58,7 +58,7 @@ export function Gutter(props: { breakpoints: T[] }) {
               }}
             >
               {columns.map((index) => {
-                return <div key={index} className="bg-[--column-fill] flex-1" />
+                return <div key={index} className="flex-1 bg-[--column-fill]" />
               })}
             </div>
           </div>

@@ -1,11 +1,11 @@
 import config from '@payload-config'
+import { ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import { getPayload } from 'payload'
 import { useId } from 'react'
 import { Container } from '@/components/container'
 import { Media } from '@/components/Media'
 import type { Portfolio } from '@/payload-types'
-import { ArrowRight, ArrowUpLeft, ArrowUpRight } from 'lucide-react'
-import Link from 'next/link'
 
 export async function LandingProjectsBlockComponents() {
   const id = useId()
@@ -16,35 +16,35 @@ export async function LandingProjectsBlockComponents() {
   })
 
   return (
-    <Container className="pt-[calc(160rem/16)] flex flex-col gap-10">
+    <Container className="flex flex-col gap-10 pt-[calc(160rem/16)]">
       <h2 className="heading-1 whitespace-nowrap">Projects</h2>
 
-      <div id={`carousel-${id}`} className="grid gap-[calc(20rem/16)] grid-cols-4">
+      <div id={`carousel-${id}`} className="grid grid-cols-4 gap-[calc(20rem/16)]">
         {resource.docs.map((e) => {
-          return <ProjectEntry key={e.id} entry={e} />
+          return <ProjectCard key={e.id} entry={e} />
         })}
       </div>
     </Container>
   )
 }
 
-function ProjectEntry({ entry }: { entry: Portfolio }) {
+function ProjectCard({ entry }: { entry: Portfolio }) {
   return (
-    <Link href={`/portfolio/${entry.slug}`} className="flex-1 group flex flex-col gap-4 items-center">
+    <Link href={`/portfolio/${entry.slug}`} className="group flex min-h-[var(--bg-blue-200)] flex-1 flex-col items-center gap-4">
       <Media
         fill
-        className="aspect-[358/450] w-full relative bg-gray-800 bg-cover"
+        className="relative aspect-[358/450] w-full bg-gray-800 bg-cover"
         resource={entry.cover_image}
-        imgClassName="bg-cover"
+        imgClassName="object-cover"
       />
 
-      <div className="text-start gap-2 w-full">
-        <h3 className="flex items-center text-base gap-2 font-medium">
+      <div className="w-full gap-2 text-start">
+        <h3 className="flex items-center justify-between gap-2 text-base font-medium">
           {entry.name}
-          <ArrowRight className="size-4" />
+          <ArrowRight className="size-4 -translate-x-6 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
         </h3>
 
-        <p className="text-sm font-body opacity-70 line-clamp-2 pe-6">{entry.short_description}</p>
+        <p className="font-body line-clamp-2 pe-6 text-sm opacity-70">{entry.short_description}</p>
       </div>
     </Link>
   )

@@ -137,7 +137,7 @@ export const FormBlock: React.FC<
 
                 if (Field) {
                   return (
-                    <div className="mb-6 last:mb-0 text-[#393939]" key={index}>
+                    <div className="mb-6 text-[#393939] last:mb-0" key={index}>
                       <Field
                         form={formFromProps}
                         {...field}
@@ -154,7 +154,7 @@ export const FormBlock: React.FC<
               })}
             </div>
 
-            <div className="!flex justify-end -mt-4 -translate-y-1/2">
+            <div className="-mt-4 !flex -translate-y-1/2 justify-end">
               <Button
                 form={formID}
                 title="Submit"

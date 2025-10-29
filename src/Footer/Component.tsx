@@ -14,23 +14,23 @@ export async function Footer() {
   return (
     <>
       <footer className="mt-auto border-t border-border text-foreground">
-        <Container className="py-8 gap-8 flex flex-col md:flex-row md:justify-between">
-          <div className="w-1/3 flex gap-2">
+        <Container className="flex flex-col gap-8 py-8 md:flex-row md:justify-between">
+          <div className="flex w-1/3 gap-2">
             <Link className="flex items-center" href="/">
               <Logo />
             </Link>
 
-            <p className="text-sm font-thin line-clamp-2 max-w-[12ch] text-balance">
+            <p className="line-clamp-2 max-w-[12ch] text-balance text-sm font-thin">
               {footerData.slogan ?? 'We Rock'}
             </p>
           </div>
 
           <div className=" flex-1 shrink">
-            <nav className="grid gap-x-4 gap-y-2 grid-cols-4">
+            <nav className="grid grid-cols-4 gap-x-4 gap-y-2">
               {navItems.map(({ link }, i) => {
                 return (
                   <CMSLink
-                    className="tracking-wider text-foreground/60 hover:text-accent-foreground uppercase text-xs font-thin"
+                    className="text-foreground/60 text-xs font-thin uppercase tracking-wider hover:text-accent-foreground"
                     key={i}
                     {...link}
                   />
@@ -40,10 +40,10 @@ export async function Footer() {
           </div>
 
           <div className="grid gap-y-2">
-            <div className="tracking-wider text-foreground/60 hover:text-accent-foreground uppercase text-xs font-thin">
+            <div className="text-foreground/60 text-xs font-thin uppercase tracking-wider hover:text-accent-foreground">
               &copy;
             </div>
-            <div className="tracking-wider text-foreground/60 hover:text-accent-foreground uppercase text-xs font-thin">
+            <div className="text-foreground/60 text-xs font-thin uppercase tracking-wider hover:text-accent-foreground">
               {new Date().getFullYear()}
             </div>
           </div>

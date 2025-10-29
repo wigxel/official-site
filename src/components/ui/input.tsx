@@ -7,7 +7,7 @@ const Input: React.FC<
   } & React.InputHTMLAttributes<HTMLInputElement>
 > = ({ type, className, ref, ...props }) => {
   return (
-    <div className="relative group">
+    <div className="group relative">
       <input
         className={cn(
           'flex h-10 z-20 relative w-full border-b font-medium bg-transparent border-border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
@@ -18,7 +18,7 @@ const Input: React.FC<
         {...props}
       />
 
-      <span className="group-focus-within:top-0 z-10 top-full bottom-0 input-border-transition inset-x-0 bg-orange-500/20 absolute"></span>
+      <span className="input-border-transition absolute inset-x-0 bottom-0 top-full z-10 bg-orange-500/20 group-focus-within:top-0"></span>
     </div>
   )
 }

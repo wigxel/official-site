@@ -44,12 +44,12 @@ export default async function CaseStudy({ params }: Props) {
 
         <div className="wg-grid-1">
           <div className="col-span-6 flex flex-col gap-6">
-            <h1 className="font-heading uppercase text-display-1">{portfolio.name}</h1>
+            <h1 className="font-heading text-display-1 uppercase">{portfolio.name}</h1>
 
             <p className="text-base">{portfolio.short_description}</p>
 
             {siteIsLive ? (
-              <a className="text-accent-foreground font-thin" href="https://demisamande.com">
+              <a className="font-thin text-accent-foreground" href="https://demisamande.com">
                 Visit Live Site
               </a>
             ) : null}
@@ -60,16 +60,16 @@ export default async function CaseStudy({ params }: Props) {
       </Container>
 
       <Container className="flex flex-col gap-[calc(64rem/16)]">
-        <div className="aspect-[1340/848] w-full bg-gray-800 rounded-lg"></div>
+        <div className="aspect-[1340/848] w-full rounded-lg bg-gray-800"></div>
 
         <div className="wg-grid-1">
-          <div className="wg-grid-1 col-span-8 leading-[2ex] w-full">
-            <div className="flex flex-col gap-2 col-span-6">
+          <div className="wg-grid-1 col-span-8 w-full leading-[2ex]">
+            <div className="col-span-6 flex flex-col gap-2">
               <h2 className="opacity-70">Client</h2>
               <p>{portfolio.client}</p>
             </div>
 
-            <div className="flex flex-col gap-2 col-span-6">
+            <div className="col-span-6 flex flex-col gap-2">
               <h2 className="opacity-70">Scope</h2>
               <p>
                 {safeArray(portfolio.scope ?? [])
@@ -81,12 +81,12 @@ export default async function CaseStudy({ params }: Props) {
               </p>
             </div>
 
-            <div className="flex flex-col gap-2 col-span-6">
+            <div className="col-span-6 flex flex-col gap-2">
               <h2 className="opacity-70">Project Type</h2>
               <p>{portfolio.project_type}</p>
             </div>
 
-            <div className="flex flex-col gap-2 col-span-6">
+            <div className="col-span-6 flex flex-col gap-2">
               <h2 className="opacity-70">Sector</h2>
               <p>{portfolio.sector}</p>
             </div>
@@ -96,12 +96,12 @@ export default async function CaseStudy({ params }: Props) {
 
       <Container className="flex flex-col gap-[calc(100rem/16)]">
         <div className="wg-grid-1">
-          <h2 className="font-heading text-display-1 col-span-4">
+          <h2 className="col-span-4 font-heading text-display-1">
             The
             <br />
             Brief
           </h2>
-          <p className="text-muted-foreground col-span-4 text-balance">
+          <p className="col-span-4 text-balance text-muted-foreground">
             Demi reached out to us with the need to grow her visibility. Her goal was to create an
             online presence where people could see everything she does professionally, establishing
             her work as a founder, speaker, author, podcaster and innovator. Her new book was also
@@ -109,10 +109,10 @@ export default async function CaseStudy({ params }: Props) {
           </p>
         </div>
 
-        <div className="w-full aspect-[1340/873] bg-gray-800" />
+        <div className="aspect-[1340/873] w-full bg-gray-800" />
         <div className="wg-grid-1">
-          <h2 className="font-heading text-display-1 col-span-4">Solution</h2>
-          <p className="text-muted-foreground col-span-4 text-balance">
+          <h2 className="col-span-4 font-heading text-display-1">Solution</h2>
+          <p className="col-span-4 text-balance text-muted-foreground">
             Demi reached out to us with the need to grow her visibility. Her goal was to create an
             online presence where people could see everything she does professionally, establishing
             her work as a founder, speaker, author, podcaster and innovator. Her new book was also
@@ -127,8 +127,8 @@ export default async function CaseStudy({ params }: Props) {
 
         <div className="wg-grid-1">
           <div className="col-span-4" />
-          <div className="flex flex-col gap-4 col-span-4 text-lg">
-            <p className="text-muted-foreground col-span-4 text-balance w-full">
+          <div className="col-span-4 flex flex-col gap-4 text-lg">
+            <p className="col-span-4 w-full text-balance text-muted-foreground">
               Demi reached out to us with the need to grow her visibility. Her goal was to create an
               online presence where people could see everything she does professionally,
               establishing her work as a founder, speaker, author, podcaster and innovator. Her new
@@ -139,12 +139,12 @@ export default async function CaseStudy({ params }: Props) {
           <div className="col-span-4" />
         </div>
 
-        <div className="w-full aspect-[1340/843] bg-gray-800" />
+        <div className="aspect-[1340/843] w-full bg-gray-800" />
 
         <div className="wg-grid-1">
           <div className="col-span-4" />
-          <div className="flex flex-col gap-4 col-span-4">
-            <p className="text-foreground col-span-4 text-xl text-center w-full">
+          <div className="col-span-4 flex flex-col gap-4">
+            <p className="col-span-4 w-full text-center text-xl text-foreground">
               Overall, we were able to design a website that aligned with Demi expertise and
               professional taste, positioning her to the right audience and gaining visibility
             </p>
@@ -161,11 +161,11 @@ export default async function CaseStudy({ params }: Props) {
 
       <Container>
         <div className="wg-grid-1 !gap-11">
-          <div className="flex flex-col col-span-7 gap-8">
+          <div className="col-span-7 flex flex-col gap-8">
             <span className="text-accent-foreground">NEXT STEPS</span>
 
             <div className="flex flex-col gap-6">
-              <h2 className="text-display-1 font-heading uppercase">
+              <h2 className="font-heading text-display-1 uppercase">
                 Majeurs
                 <br />
                 Holdings

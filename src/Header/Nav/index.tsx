@@ -1,34 +1,35 @@
 'use client'
-import type { Header as HeaderType } from '@/payload-types'
-import { CMSLink } from '@/components/Link'
+import { init, last } from 'effect/Array'
 import { pipe } from 'effect/Function'
-import { take, init, last } from 'effect/Array'
+import { CMSLink } from '@/components/Link'
 import { O } from '@/libs/fp.helpers'
+import type { Header as HeaderType } from '@/payload-types'
 
 export const HeaderNav = ({ data }: { data: HeaderType }) => {
-  const navItems = data?.navItems || []
+  const navItems = data?.navItems || [];
+
   const initial_items = pipe(
     init(navItems),
     O.getOrElse(() => []),
   )
 
   return (
-    <nav className="flex gap-5 items-center">
-      <div className='flex-1 flex gap-6'>
+    <nav className="flex items-center gap-5">
+      <div className='flex flex-1 gap-6'>
         {initial_items.map(({ link }) => {
-          return <CMSLink key={link.label} {...link} className="font-thin text-base" appearance="link" />
+          return <CMSLink key={link.label} {...link} className="text-base font-thin" appearance="link" />
         })}
       </div>
 
       {pipe(
         last(navItems),
         O.match({
-          onSome: ({link}) => {
+          onSome: ({ link }) => {
             return (
               <CMSLink
                 key={link.label}
                 {...link}
-                className="font-thin last:ml-4 text-accent-foreground text-base"
+                className="text-base font-thin text-accent-foreground last:ml-4"
                 appearance="link"
               />
             )

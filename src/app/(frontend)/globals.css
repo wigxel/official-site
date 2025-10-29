@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
   h1,
   h2,
   h3,
@@ -47,6 +48,8 @@
     --success: 196 52% 74%;
     --warning: 34 89% 85%;
     --error: 10 100% 86%;
+
+    --header-height: 6.125rem;
   }
 
   [data-theme='dark'] {
@@ -125,11 +128,11 @@ body::selection {
 }
 
 .layout-form-grid {
-  form > div {
+  form>div {
     @apply grid grid-cols-2 gap-x-10 gap-y-0;
   }
 
-  form > div > div:last-child {
+  form>div>div:last-child {
     @apply col-span-2;
   }
 }

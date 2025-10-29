@@ -16,7 +16,7 @@ export async function CraftsBlockComponent() {
   return (
     <div className="max-w-full overflow-hidden">
       <Container className="pt-[calc(160rem/16)]">
-        <div className="flex flex-col w-min">
+        <div className="flex w-min flex-col">
           <h2 className="heading-1 whitespace-nowrap">Our Crafts</h2>
 
           <p className="text-right">How we shape your vision into results.</p>
@@ -25,9 +25,9 @@ export async function CraftsBlockComponent() {
 
       <div
         id={`carousel-${id}`}
-        className="flex justify-between mt-[calc(120rem/16)] h-[680px] relative"
+        className="relative mt-[calc(120rem/16)] flex h-[680px] justify-between"
       >
-        <div className="flex absolute left-0 top-0 gap-x-[10vw]">
+        <div className="absolute left-0 top-0 flex gap-x-[10vw]">
           {services.docs.map((e) => {
             return <ServiceEntry key={e.id} entry={e} />
           })}
@@ -39,9 +39,9 @@ export async function CraftsBlockComponent() {
 
 function ServiceEntry({ entry }: { entry: Service }) {
   return (
-    <div className="flex-1 min-w-[25vw] w-full flex flex-col gap-8 items-center">
+    <div className="flex w-full min-w-[25vw] flex-1 flex-col items-center gap-8">
       <div
-        className="flex shrink-0 h-[calc(500rem/16)] justify-center items-end relative"
+        className="relative flex h-[calc(500rem/16)] shrink-0 items-end justify-center"
         style={{
           aspectRatio: (entry?.image?.width || 1) / (entry.image?.height || 1),
         }}
@@ -49,10 +49,10 @@ function ServiceEntry({ entry }: { entry: Service }) {
         <Media fill resource={entry.image} />
       </div>
 
-      <div className="h-[calc(148rem/16)] w-full flex flex-col gap-3 text-center">
+      <div className="flex h-[calc(148rem/16)] w-full flex-col gap-3 text-center">
         <h3 className="heading-2">{entry.title}</h3>
 
-        <p className="text-sm font-body opacity-70">{entry.sub_text}</p>
+        <p className="font-body text-sm opacity-70">{entry.sub_text}</p>
       </div>
     </div>
   )

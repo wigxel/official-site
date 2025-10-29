@@ -24,13 +24,13 @@ export default async function Page() {
   const categories_ = categories.docs
 
   return (
-    <div className="pt-24 pb-24">
+    <div className="py-24">
       <PageClient />
 
       <Container className="grid grid-cols-5 grid-rows-1">
         <section>
-          <div className="sticky top-0 gap-6 flex-col flex">
-            <div className="prose dark:prose-invert max-w-none">
+          <div className="sticky top-0 flex flex-col gap-6">
+            <div className="prose max-w-none dark:prose-invert">
               <h1>Archives</h1>
             </div>
 
@@ -79,7 +79,7 @@ async function TopArticles() {
   return (
     <div className="flex flex-col items-start gap-5">
       <div className="px-8">
-        <h2 className="font-display font-medium text-[calc(42rem/16)]">Recent</h2>
+        <h2 className="font-display text-[calc(42rem/16)] font-medium">Recent</h2>
       </div>
 
       <CollectionArchive posts={posts.docs} />
@@ -122,7 +122,7 @@ async function CategoryCollectionArchive({
   return (
     <div className="flex flex-col items-start gap-5">
       <div className="px-8">
-        <h2 className="font-display font-medium text-[calc(42rem/16)]">{category.title}</h2>
+        <h2 className="font-display text-[calc(42rem/16)] font-medium">{category.title}</h2>
       </div>
 
       <CollectionArchive posts={posts.docs} />

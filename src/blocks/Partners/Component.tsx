@@ -13,14 +13,14 @@ export async function PartnersBlockComponents() {
   })
 
   return (
-    <Container className="py-[calc(160rem/16)] flex flex-col gap-10">
+    <Container className="flex flex-col gap-10 py-[calc(160rem/16)]">
       <section className="wg-grid-1">
         <div className="col-span-3 flex flex-col gap-6">
-          <h2 className="heading-1 whitespace-nowrap text-start flex flex-col w-min">
-            <span className="italic text-[0.6em] ">The</span>
+          <h2 className="heading-1 flex w-min flex-col whitespace-nowrap text-start">
+            <span className="text-[0.6em] italic ">The</span>
             <span>Great Wall</span>
             <span className="text-end">
-              <span className="font-thin text-center text-[0.6em] align-text-top italic">
+              <span className="text-center align-text-top text-[0.6em] font-thin italic">
                 of&nbsp;&nbsp;
               </span>
               Clients
@@ -28,21 +28,21 @@ export async function PartnersBlockComponents() {
           </h2>
         </div>
 
-        <div className="grid col-span-6 grid-cols-3 gap-px mt-24 bg-white/10">
+        <div className="col-span-6 mt-24 grid grid-cols-3 gap-px bg-white/10">
           {slots.map((index) => {
             const match = collabs.docs[index]
 
             if (!match) {
-              return <section key={index} className={`bg-background aspect-square`} />
+              return <section key={index} className={`aspect-square bg-background`} />
             }
 
             return (
               <section
                 key={match.id}
-                className={`bg-background select-none relative overflow-hidden group aspect-square`}
+                className={`group relative aspect-square select-none overflow-hidden bg-background`}
               >
                 <div
-                  className="w-full h-full relative transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
+                  className="relative size-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
                   style={{ transformStyle: 'preserve-3d' }}
                 >
                   {/* Front */}
@@ -55,7 +55,7 @@ export async function PartnersBlockComponents() {
 
                   {/* Back */}
                   <div
-                    className="absolute inset-0 flex bg-orange-600 items-center justify-center p-4 bg-background"
+                    className="absolute inset-0 flex items-center justify-center bg-background bg-orange-600 p-4"
                     style={{
                       transform: 'rotateY(180deg)',
                       WebkitBackfaceVisibility: 'hidden',
@@ -72,8 +72,8 @@ export async function PartnersBlockComponents() {
           })}
         </div>
 
-        <div className="col-span-3 flex flex-col justify-end items-start">
-          <p className="opacity-70 text-base text-end text-balance">
+        <div className="col-span-3 flex flex-col items-start justify-end">
+          <p className="text-balance text-end text-base opacity-70">
             We partner with executive brands and teams to transform brand strategy, positioning, and
             identity into a brand that aligns culture and accelerates growth.
           </p>
