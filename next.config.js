@@ -10,7 +10,12 @@ const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
 const nextConfig = {
   images: {
     remotePatterns: [
-      ...[NEXT_PUBLIC_SERVER_URL, 'https://wigxel.io', 'http://localhost'].map((item) => {
+      ...[
+        NEXT_PUBLIC_SERVER_URL,
+        'https://official-staging.wigxel.io',
+        'https://wigxel.io',
+        'http://localhost'
+      ].map((item) => {
         const url = new URL(item)
 
         return {
