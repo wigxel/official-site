@@ -824,24 +824,53 @@ export interface Collaboration {
 export interface Portfolio {
   id: number;
   name: string;
-  short_description: string;
-  client?: string | null;
-  scope?:
-    | {
-        service?: (number | null) | Service;
-        id?: string | null;
-      }[]
-    | null;
-  sector?: string | null;
-  project_type?: ('Portfolio' | 'Case Study') | null;
-  cover_image?: (number | null) | Media;
-  cover_image_portrait?: (number | null) | Media;
+  basic: {
+    short_description: string;
+    client?: string | null;
+    scope?:
+      | {
+          service?: (number | null) | Service;
+          id?: string | null;
+        }[]
+      | null;
+    sector?: string | null;
+    project_type?: ('Portfolio' | 'Case Study') | null;
+    cover_image?: (number | null) | Media;
+    cover_image_portrait?: (number | null) | Media;
+    url?: string | null;
+  };
+  layout?: CaseStudyBriefBlock[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
   publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseStudyBriefBlock".
+ */
+export interface CaseStudyBriefBlock {
+  heading?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'caseStudyBrief';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1483,24 +1512,44 @@ export interface CollaborationsSelect<T extends boolean = true> {
  */
 export interface PortfoliosSelect<T extends boolean = true> {
   name?: T;
-  short_description?: T;
-  client?: T;
-  scope?:
+  basic?:
     | T
     | {
-        service?: T;
-        id?: T;
+        short_description?: T;
+        client?: T;
+        scope?:
+          | T
+          | {
+              service?: T;
+              id?: T;
+            };
+        sector?: T;
+        project_type?: T;
+        cover_image?: T;
+        cover_image_portrait?: T;
+        url?: T;
       };
-  sector?: T;
-  project_type?: T;
-  cover_image?: T;
-  cover_image_portrait?: T;
+  layout?:
+    | T
+    | {
+        caseStudyBrief?: T | CaseStudyBriefBlockSelect<T>;
+      };
   slug?: T;
   slugLock?: T;
   publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CaseStudyBriefBlock_select".
+ */
+export interface CaseStudyBriefBlockSelect<T extends boolean = true> {
+  heading?: T;
+  content?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

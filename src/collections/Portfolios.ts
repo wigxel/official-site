@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
+import { BriefBlock } from '@/blocks/CaseStudy/Brief/config'
 import { slugField } from '@/fields/slug'
+import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
 
@@ -12,6 +14,23 @@ export const Portofolios: CollectionConfig = {
     update: authenticated,
   },
   admin: {
+    livePreview: {
+      url: ({ data, req }) => {
+        const path = generatePreviewPath({
+          slug: typeof data?.slug === 'string' ? data.slug : '',
+          collection: 'portfolios',
+          req,
+        })
+
+        return path
+      },
+    },
+    preview: (data, { req }) =>
+      generatePreviewPath({
+        slug: typeof data?.slug === 'string' ? data.slug : '',
+        collection: 'portfolios',
+        req,
+      }),
     useAsTitle: 'name',
   },
   fields: [
@@ -21,46 +40,73 @@ export const Portofolios: CollectionConfig = {
       required: true,
     },
     {
-      name: 'short_description',
-      type: 'textarea',
-      required: true,
-    },
-    {
-      name: 'client',
-      type: 'text',
-      defaultValue: 'Client Name',
-    },
-    {
-      name: 'scope',
-      type: 'array',
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'service',
-          type: 'relationship',
-          relationTo: 'services',
+          name: "basic",
+          label: "Basic",
+          fields: [
+            {
+              name: 'short_description',
+              type: 'textarea',
+              required: true,
+            },
+            {
+              name: 'client',
+              type: 'text',
+              defaultValue: 'Client Name',
+            },
+            {
+              name: 'scope',
+              type: 'array',
+              fields: [
+                {
+                  name: 'service',
+                  type: 'relationship',
+                  relationTo: 'services',
+                },
+              ],
+            },
+            {
+              name: 'sector',
+              type: 'text',
+              defaultValue: 'Personal Brand',
+            },
+            {
+              name: 'project_type',
+              type: 'select',
+              options: ['Portfolio', 'Case Study'],
+              defaultValue: 'Portfolio',
+            },
+            {
+              name: 'cover_image',
+              type: 'relationship',
+              relationTo: 'media',
+            },
+            {
+              name: 'cover_image_portrait',
+              type: 'relationship',
+              relationTo: 'media',
+            },
+            {
+              name: 'url',
+              type: 'text',
+              defaultValue: '#',
+            },
+          ]
         },
-      ],
-    },
-    {
-      name: 'sector',
-      type: 'text',
-      defaultValue: 'Personal Brand',
-    },
-    {
-      name: 'project_type',
-      type: 'select',
-      options: ['Portfolio', 'Case Study'],
-      defaultValue: 'Portfolio',
-    },
-    {
-      name: 'cover_image',
-      type: 'relationship',
-      relationTo: 'media',
-    },
-    {
-      name: 'cover_image_portrait',
-      type: 'relationship',
-      relationTo: 'media',
+        {
+          label: "Layout",
+          fields: [
+            {
+              type: "blocks",
+              name: "layout",
+              label: "Construct Layout",
+              blocks: [BriefBlock]
+            }
+          ],
+        },
+      ]
     },
     ...slugField(),
     {

@@ -1,9 +1,13 @@
-import config from '@payload-config'
+"use server"
+import configPromise from '@payload-config'
 import { capitalize } from 'effect/String'
+import { draftMode } from 'next/headers'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
-import { getPayload } from 'payload'
+import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
+import { cache } from 'react'
+import { PortfolioRenderBlocks, RenderBlocks } from '@/blocks/RenderBlocks'
 import { Container } from '@/components/container'
+import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { safeArray, safeStr } from '@/libs/data.helpers'
 
 type Props = {
@@ -12,22 +16,49 @@ type Props = {
   }>
 }
 
-export default async function CaseStudy({ params }: Props) {
-  const siteIsLive = true
-  const slug = (await params).slug
 
-  const payload = await getPayload({ config })
-  const results = await payload.find({
+const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
+  const { isEnabled: draft } = await draftMode()
+
+  const payload = await getPayload({ config: configPromise })
+
+  const result = await payload.find({
     collection: 'portfolios',
+    draft,
     limit: 1,
+    pagination: false,
+    overrideAccess: draft,
     where: {
-      slug: { equals: slug },
+      slug: {
+        equals: slug,
+      },
     },
   })
 
-  if (results.totalDocs === 0) notFound()
+  return result.docs?.[0] || null
+})
 
-  const portfolio = results.docs[0]
+
+export default async function CaseStudy({ params: paramsPromise }: Props) {
+  const { isEnabled: draft } = await draftMode()
+
+  const { slug = 'home' } = await paramsPromise
+  const url = `/${slug}`
+
+  const page: RequiredDataFromCollectionSlug<'portfolios'> | null = await queryPageBySlug({
+    slug,
+  })
+
+  if (!page) {
+    return <PayloadRedirects url={url} />
+  }
+
+  const { name, basic, layout } = page
+
+  const siteIsLive = !draft;
+  const portfolio = basic;
+
+  console.log(basic);
 
   return (
     <section className="flex flex-col gap-[calc(100rem/16)]">
@@ -37,18 +68,18 @@ export default async function CaseStudy({ params }: Props) {
             <li className="text-foreground">
               <Link prefetch href="/portfolio">Portfolio</Link>
             </li>
-            /<li className="text-accent-foreground">{portfolio.name}</li>
+            /<li className="text-accent-foreground">{name}</li>
           </ul>
         </nav>
 
         <div className="wg-grid-1">
           <div className="col-span-6 flex flex-col gap-6">
-            <h1 className="font-heading text-display-1 uppercase">{portfolio.name}</h1>
+            <h1 className="font-heading text-display-1 uppercase">{name}</h1>
 
             <p className="text-base">{portfolio.short_description}</p>
 
-            {siteIsLive ? (
-              <a className="font-thin text-accent-foreground" href="https://demisamande.com">
+            {portfolio.url !== "#" ? (
+              <a className="font-thin text-accent-foreground" target='_blank' rel='noreferrer noopener' href={portfolio.url}>
                 Visit Live Site
               </a>
             ) : null}
@@ -93,20 +124,9 @@ export default async function CaseStudy({ params }: Props) {
         </div>
       </Container>
 
+
       <Container className="flex flex-col gap-[calc(100rem/16)]">
-        <div className="wg-grid-1">
-          <h2 className="col-span-4 font-heading text-display-1">
-            The
-            <br />
-            Brief
-          </h2>
-          <p className="col-span-4 text-balance text-muted-foreground">
-            Demi reached out to us with the need to grow her visibility. Her goal was to create an
-            online presence where people could see everything she does professionally, establishing
-            her work as a founder, speaker, author, podcaster and innovator. Her new book was also
-            to be launched soon and she wanted to drive sales through her engagements.
-          </p>
-        </div>
+        <RenderBlocks blocks={layout} />
 
         <div className="aspect-[1340/873] w-full bg-gray-800" />
         <div className="wg-grid-1">
