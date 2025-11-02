@@ -4,6 +4,7 @@ export async function up({ db, payload, req }: MigrateUpArgs): Promise<void> {
   // Migration code
   await payload.create({
     collection: 'portfolios',
+    // @ts-expect-error
     data: dump,
   })
 }

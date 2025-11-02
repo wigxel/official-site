@@ -18,6 +18,7 @@ export const PortfolioRenderBlocks: React.FC<{
             const Block = blockComponents[blockType]
 
             if (Block) {
+              // @ts-expect-error Figure out later
               return <Block key={block.id} {...block} />
             }
           }

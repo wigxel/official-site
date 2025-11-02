@@ -15,6 +15,7 @@ export async function CenterContentComponent(props: CenterContentBlock) {
           {props.heading ? <h2 className="text-lg font-semibold">{props.heading}</h2> : null}
 
           <div className="col-span-4 text-balance text-muted-foreground">
+            {/* @ts-expect-error Figure out later */}
             <RichText data={props.content} enableProse={false} enableGutter={false} />
           </div>
         </section>

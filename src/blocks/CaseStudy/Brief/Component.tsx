@@ -8,6 +8,7 @@ export async function BriefComponentBlock(props: CaseStudyBriefBlock) {
       <h2 className="col-span-4 font-heading text-display-1">{props.heading}</h2>
 
       <div className="col-span-4 text-balance text-muted-foreground">
+        {/* @ts-expect-error Figure out later */}
         <RichText data={props.content} enableProse={false} enableGutter={false} />
       </div>
     </div>

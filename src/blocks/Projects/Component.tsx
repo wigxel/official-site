@@ -35,7 +35,7 @@ function ProjectCard({ entry }: { entry: Portfolio }) {
       <Media
         fill
         className="relative aspect-[358/450] w-full bg-gray-800 bg-cover"
-        resource={entry.cover_image}
+        resource={entry.basic.cover_image}
         imgClassName="object-cover"
       />
 
@@ -45,7 +45,9 @@ function ProjectCard({ entry }: { entry: Portfolio }) {
           <ArrowRight className="size-4 -translate-x-6 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100" />
         </h3>
 
-        <p className="font-body line-clamp-2 pe-6 text-sm opacity-70">{entry.short_description}</p>
+        <p className="font-body line-clamp-2 pe-6 text-sm opacity-70">
+          {entry.basic.short_description}
+        </p>
       </div>
     </Link>
   )
