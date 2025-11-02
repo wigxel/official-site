@@ -842,6 +842,7 @@ export interface Portfolio {
   layout?: (CaseStudyBriefBlock | ImageGroupBlock | CenterContentBlock)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
+  next?: (number | null) | Portfolio;
   publishedAt?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -1599,6 +1600,7 @@ export interface PortfoliosSelect<T extends boolean = true> {
       };
   slug?: T;
   slugLock?: T;
+  next?: T;
   publishedAt?: T;
   updatedAt?: T;
   createdAt?: T;

@@ -112,6 +112,16 @@ export const Portofolios: CollectionConfig = {
     },
     ...slugField(),
     {
+      name: 'next',
+      label: 'Next Portfolio',
+      type: 'relationship',
+      relationTo: 'portfolios',
+      admin: {
+        isSortable: true,
+        position: 'sidebar',
+      },
+    },
+    {
       name: 'publishedAt',
       type: 'date',
       admin: {

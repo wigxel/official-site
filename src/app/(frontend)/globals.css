@@ -149,3 +149,18 @@ body::selection {
   background-image: url('/assets/repeat-bg.png');
   background-blend-mode: darken;
 }
+
+.next-project-button {
+  --next-color: hsl(var(--foreground));
+  color: hsla(from var(--next-color) h s l / 0);
+  -webkit-text-stroke: 1px var(--next-color);
+  transform: rotateY(-45deg) translateZ(0);
+  transform-origin: right center;
+  transition: all 0.3s ease-out;
+}
+
+.next-project-button:hover {
+  transform: rotateY(0) translateZ(0);
+  color: hsla(from var(--next-color) h s l / 0.8);
+  -webkit-text-stroke: 1px var(--next-color);
+}

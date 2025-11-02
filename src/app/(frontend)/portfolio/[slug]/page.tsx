@@ -12,6 +12,7 @@ import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { safeArray, safeStr } from '@/libs/data.helpers'
 import { O, pipe } from '@/libs/fp.helpers'
 import { expectMedia } from '@/libs/payload/factories/media'
+import { safeReference } from '@/libs/utils'
 
 type Props = {
   params: Promise<{
@@ -30,6 +31,7 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
     limit: 1,
     pagination: false,
     overrideAccess: draft,
+    depth: 2,
     where: {
       slug: {
         equals: slug,
@@ -54,7 +56,7 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
     return <PayloadRedirects url={url} />
   }
 
-  const { name, basic: basicInfo, layout } = page
+  const { name, next, basic: basicInfo, layout } = page
 
   const portfolio = basicInfo
 
@@ -149,23 +151,48 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
         <RenderBlocks blocks={layout} />
       </Container>
 
-      <Container>
-        <div className="wg-grid-1 !gap-11">
-          <div className="col-span-7 flex flex-col gap-8">
-            <span className="text-accent-foreground">NEXT STEPS</span>
+      {pipe(
+        safeReference(next),
+        O.map((portfolio) => {
+          return (
+            <Container key={portfolio.id}>
+              <div className="wg-grid-1 !gap-11">
+                <div className="col-span-7" />
 
-            <div className="flex flex-col gap-6">
-              <h2 className="font-heading text-display-1 uppercase">
-                Majeurs
-                <br />
-                Holdings
-              </h2>
-            </div>
-          </div>
+                <div className="col-span-5 flex flex-col gap-8 text-end">
+                  <span className="tracking-wider text-accent-foreground">NEXT PROJECT</span>
 
-          <div className="col-span-full aspect-[1340/275] bg-gray-800"></div>
-        </div>
-      </Container>
+                  <Link href={`/portfolio/${portfolio.slug}`} draggable={false}>
+                    <div className="flex flex-col gap-6" style={{ perspective: '100vw' }}>
+                      <h2 className="next-project-button cursor-pointer select-none text-balance font-heading text-display-1 uppercase">
+                        {portfolio.name}
+                      </h2>
+                    </div>
+                  </Link>
+                </div>
+
+                <div className="col-span-full aspect-[1340/275] overflow-hidden">
+                  {pipe(
+                    expectMedia(portfolio.basic.cover_image),
+                    O.map((media) => {
+                      return (
+                        <ImageMedia
+                          key={media.id}
+                          resource={media}
+                          pictureClassName="aspect-[1340/275] bg-gray-800"
+                          imgClassName="w-full"
+                        />
+                      )
+                    }),
+                    O.getOrElse(() => <div className="aspect-[1340/275] bg-gray-800" />),
+                  )}
+                </div>
+              </div>
+            </Container>
+          )
+        }),
+        O.getOrNull,
+      )}
     </section>
   )
 }
