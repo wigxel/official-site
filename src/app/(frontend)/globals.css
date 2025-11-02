@@ -164,3 +164,11 @@ body::selection {
   color: hsla(from var(--next-color) h s l / 0.8);
   -webkit-text-stroke: 1px var(--next-color);
 }
+
+.view-site-button {
+  corner-shape: scoop;
+}
+
+.view-site-button:hover {
+  corner-shape: round;
+}

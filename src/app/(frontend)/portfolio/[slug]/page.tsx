@@ -104,25 +104,26 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
               O.fromNullable(portfolio.url),
               O.filter((url) => url !== '#'),
               O.map((url) => (
-                <div
-                  key={url}
-                  className="absolute bottom-0 right-[12vw] translate-y-full overflow-hidden rounded-full"
-                >
-                  <div className="group relative flex aspect-square w-[200px] items-center justify-center">
-                    <div className="absolute inset-6 flex rotate-0 items-center justify-center rounded-full border-2 border-accent-foreground bg-accent-foreground transition-all hover:-rotate-12">
-                      <span className="text-[0.76rem] font-semibold text-black">VISIT SITE</span>
-                    </div>
+                <a href={url} key={url} target="_blank" rel="noreferrer noopener">
+                  <div className="absolute bottom-0 right-[12vw] translate-y-full overflow-hidden rounded-full">
+                    <div className="group relative flex aspect-square w-[200px] items-center justify-center">
+                      <div className="view-site-button absolute inset-6 flex -rotate-12 items-center justify-center rounded-full border-2 border-accent-foreground transition-all hover:-rotate-0">
+                        <span className="text-[0.76rem] font-semibold text-foreground">
+                          VISIT SITE
+                        </span>
+                      </div>
 
-                    <Image
-                      alt="View Live Website"
-                      width={200}
-                      height={200}
-                      src={'/assets/curly-circle.svg'}
-                      className="animate absolute animate-spin running"
-                      style={{ animationDuration: '20s' }}
-                    />
+                      <Image
+                        alt="View Live Website"
+                        width={200}
+                        height={200}
+                        src={'/assets/curly-circle.svg'}
+                        className="animate pointer-events-none absolute animate-spin running"
+                        style={{ animationDuration: '20s' }}
+                      />
+                    </div>
                   </div>
-                </div>
+                </a>
               )),
               O.getOrElse(() => null),
             )}
@@ -139,7 +140,7 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
             <ImageMedia
               key={e.id}
               resource={e}
-              pictureClassName={'aspect-[1340/848] w-full rounded-lg bg-gray-800'}
+              pictureClassName={'w-full rounded-lg bg-gray-800'}
               imgClassName="w-full"
             />
           )),
