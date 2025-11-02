@@ -28,7 +28,10 @@ export async function LandingProjectsBlockComponents() {
 
 function ProjectCard({ entry }: { entry: Portfolio }) {
   return (
-    <Link href={`/portfolio/${entry.slug}`} className="group flex min-h-[var(--bg-blue-200)] flex-1 flex-col items-center gap-4">
+    <Link
+      href={`/portfolio/${entry.slug}`}
+      className="group flex min-h-[var(--bg-blue-200)] flex-1 flex-col items-center gap-4"
+    >
       <Media
         fill
         className="relative aspect-[358/450] w-full bg-gray-800 bg-cover"

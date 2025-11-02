@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-
   h1,
   h2,
   h3,
@@ -93,7 +92,7 @@
   }
 
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply flex min-h-[100vh] flex-col bg-background text-foreground;
   }
 }
 
@@ -120,19 +119,19 @@ body::selection {
 }
 
 .heading-1 {
-  @apply font-heading leading-[2ex] text-[calc(64rem/16)];
+  @apply font-heading text-[calc(64rem/16)] leading-[2ex];
 }
 
 .heading-2 {
-  @apply font-heading leading-[2ex] text-[calc(46rem/16)];
+  @apply font-heading text-[calc(46rem/16)] leading-[2ex];
 }
 
 .layout-form-grid {
-  form>div {
+  form > div {
     @apply grid grid-cols-2 gap-x-10 gap-y-0;
   }
 
-  form>div>div:last-child {
+  form > div > div:last-child {
     @apply col-span-2;
   }
 }

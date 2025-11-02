@@ -91,19 +91,18 @@ function useClickableCard<T extends HTMLElement>({
     return () => {
       abortController.abort()
     }
-
   }, [handleMouseDown, handleMouseUp])
 
   return {
     card: {
       register: (ref: any) => {
-        card.current = ref;
-      }
+        card.current = ref
+      },
     },
     link: {
       register: (ref: HTMLAnchorElement | null) => {
-        link.current = ref;
-      }
+        link.current = ref
+      },
     },
   }
 }

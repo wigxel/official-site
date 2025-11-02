@@ -30,19 +30,19 @@ export const ArchiveBlock: React.FC<
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
         ? {
-          where: {
-            categories: {
-              in: flattenedCategories,
+            where: {
+              categories: {
+                in: flattenedCategories,
+              },
             },
-          },
-        }
+          }
         : {}),
     })
 
     posts = fetchedPosts.docs
   } else {
     if (selectedDocs?.length) {
-      const filteredSelectedPosts: Post[] = [];
+      const filteredSelectedPosts: Post[] = []
 
       for (const selected of selectedDocs) {
         if (typeof selected.value === 'object') {

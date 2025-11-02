@@ -34,8 +34,8 @@ export async function CraftsBlockComponent() {
 
 function ServiceEntry({ entry }: { entry: Service }) {
   if (typeof entry.image === 'number') {
-    console.warn("Expecting Media. Got number");
-    return;
+    console.warn('Expecting Media. Got number')
+    return
   }
 
   return (

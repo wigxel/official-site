@@ -13,8 +13,8 @@ export const safeNum = (a: unknown, fallback = 0): number => {
   return !Object.is(Number.NaN, value) ? value : fallback
 }
 
-export const safeArray = <T>(a?: Array<T>): Array<T | never> =>
-  Array.isArray(a) ? a : EmptyPrimitives.Array
+export const safeArray = <T>(a: Array<T> | null | undefined) =>
+  Array.isArray(a) ? (a as NonNullable<T>[]) : (EmptyPrimitives.Array as never[])
 
 export const safeStr = (a: unknown, fallback = ''): string => (typeof a === 'string' ? a : fallback)
 

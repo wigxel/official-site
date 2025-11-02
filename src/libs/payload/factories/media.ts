@@ -1,5 +1,5 @@
 import { safeObj } from '@/libs/data.helpers'
-import { O } from '@/libs/fp.helpers'
+import { O, pipe } from '@/libs/fp.helpers'
 import type { Media } from '@/payload-types'
 
 const keys = new Set([
@@ -32,4 +32,15 @@ export function expectMedia(value: unknown): O.Option<Media & { kind: 'media' }>
   }
 
   return O.fromNullable({ kind: 'media', ...value })
+}
+
+export function aspectRatio(value: unknown) {
+  return pipe(
+    expectMedia(value),
+    O.flatMap((e) => {
+      return O.all({ width: O.fromNullable(e.width), height: O.fromNullable(e.height) })
+    }),
+    O.map(({ width, height }) => width / height),
+    O.getOrElse(() => 1),
+  )
 }

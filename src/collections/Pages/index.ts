@@ -80,7 +80,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 LandingProjectBlock,
                 PartnersBlock,
                 LandingContactBlock,
-                Archive
+                Archive,
               ],
               required: true,
               admin: {

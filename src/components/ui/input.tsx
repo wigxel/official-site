@@ -10,7 +10,7 @@ const Input: React.FC<
     <div className="group relative">
       <input
         className={cn(
-          'flex h-10 z-20 relative w-full border-b font-medium bg-transparent border-border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+          'relative z-20 flex h-10 w-full border-b border-border bg-transparent px-3 py-2 text-sm font-medium file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
           className,
         )}
         ref={ref}

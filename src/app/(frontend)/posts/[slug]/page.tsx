@@ -69,7 +69,7 @@ export default async function Post({ params: paramsPromise }: Args) {
               return (
                 <li
                   key={e.id}
-                  className={cn('flex group gap-px flex-col', {
+                  className={cn('group flex flex-col gap-px', {
                     'text-foreground opacity-60': index > 0,
                   })}
                   data-active={index === 0}
@@ -82,7 +82,7 @@ export default async function Post({ params: paramsPromise }: Args) {
                   </span>
                   <span
                     className={cn(
-                      'text-base hover:underline cursor-pointer group-data-[active=true]:text-gray-200',
+                      'cursor-pointer text-base hover:underline group-data-[active=true]:text-gray-200',
                     )}
                   >
                     {e.title ?? 'No Content'}

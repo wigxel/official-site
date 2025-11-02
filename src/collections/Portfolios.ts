@@ -1,5 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { BriefBlock } from '@/blocks/CaseStudy/Brief/config'
+import { CenterContentBlock } from '@/blocks/CaseStudy/CenterParagraph/config'
+import { ImageGroupBlock } from '@/blocks/CaseStudy/ImageGroup/config'
 import { slugField } from '@/fields/slug'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { anyone } from '../access/anyone'
@@ -14,6 +16,7 @@ export const Portofolios: CollectionConfig = {
     update: authenticated,
   },
   admin: {
+    useAsTitle: 'name',
     livePreview: {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
@@ -31,7 +34,6 @@ export const Portofolios: CollectionConfig = {
         collection: 'portfolios',
         req,
       }),
-    useAsTitle: 'name',
   },
   fields: [
     {
@@ -43,8 +45,8 @@ export const Portofolios: CollectionConfig = {
       type: 'tabs',
       tabs: [
         {
-          name: "basic",
-          label: "Basic",
+          name: 'basic',
+          label: 'Basic',
           fields: [
             {
               name: 'short_description',
@@ -93,20 +95,20 @@ export const Portofolios: CollectionConfig = {
               type: 'text',
               defaultValue: '#',
             },
-          ]
-        },
-        {
-          label: "Layout",
-          fields: [
-            {
-              type: "blocks",
-              name: "layout",
-              label: "Construct Layout",
-              blocks: [BriefBlock]
-            }
           ],
         },
-      ]
+        {
+          label: 'Layout',
+          fields: [
+            {
+              type: 'blocks',
+              name: 'layout',
+              label: 'Construct Layout',
+              blocks: [BriefBlock, ImageGroupBlock, CenterContentBlock],
+            },
+          ],
+        },
+      ],
     },
     ...slugField(),
     {

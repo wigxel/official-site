@@ -839,7 +839,7 @@ export interface Portfolio {
     cover_image_portrait?: (number | null) | Media;
     url?: string | null;
   };
-  layout?: CaseStudyBriefBlock[] | null;
+  layout?: (CaseStudyBriefBlock | ImageGroupBlock | CenterContentBlock)[] | null;
   slug?: string | null;
   slugLock?: boolean | null;
   publishedAt?: string | null;
@@ -871,6 +871,67 @@ export interface CaseStudyBriefBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'caseStudyBrief';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageGroupBlock".
+ */
+export interface ImageGroupBlock {
+  images?: ImageGroupEntry[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageGroup';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageGroupEntry".
+ */
+export interface ImageGroupEntry {
+  poster?: (number | null) | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  layout_style?: ('none' | 'basic' | 'over') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'imageGroupEntry';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CenterContentBlock".
+ */
+export interface CenterContentBlock {
+  heading?: string | null;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'centerContent';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1533,6 +1594,8 @@ export interface PortfoliosSelect<T extends boolean = true> {
     | T
     | {
         caseStudyBrief?: T | CaseStudyBriefBlockSelect<T>;
+        imageGroup?: T | ImageGroupBlockSelect<T>;
+        centerContent?: T | CenterContentBlockSelect<T>;
       };
   slug?: T;
   slugLock?: T;
@@ -1546,6 +1609,40 @@ export interface PortfoliosSelect<T extends boolean = true> {
  * via the `definition` "CaseStudyBriefBlock_select".
  */
 export interface CaseStudyBriefBlockSelect<T extends boolean = true> {
+  heading?: T;
+  content?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageGroupBlock_select".
+ */
+export interface ImageGroupBlockSelect<T extends boolean = true> {
+  images?:
+    | T
+    | {
+        imageGroupEntry?: T | ImageGroupEntrySelect<T>;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ImageGroupEntry_select".
+ */
+export interface ImageGroupEntrySelect<T extends boolean = true> {
+  poster?: T;
+  content?: T;
+  layout_style?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "CenterContentBlock_select".
+ */
+export interface CenterContentBlockSelect<T extends boolean = true> {
   heading?: T;
   content?: T;
   id?: T;

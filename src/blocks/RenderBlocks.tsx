@@ -5,13 +5,16 @@ import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import type { Page, Portfolio } from '@/payload-types'
 import { BriefComponentBlock } from './CaseStudy/Brief/Component'
+import { CenterContentComponent } from './CaseStudy/CenterParagraph/Component'
+import { ImageEntryComponent } from './CaseStudy/ImageEntry/Component'
+import { ImageGroupComponent } from './CaseStudy/ImageGroup/Component'
 import { LandingContactBlockComponent } from './Contact/Component'
 import { CraftsBlockComponent } from './Crafts/Component'
 import { LandingHeroBlockComponent } from './LandingHero/Component'
 import { PartnersBlockComponents } from './Partners/Component'
 import { LandingProjectsBlockComponents } from './Projects/Component'
 
-const blockComponents = {
+export const blockComponents = {
   archive: ArchiveBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
@@ -20,7 +23,10 @@ const blockComponents = {
   projects: LandingProjectsBlockComponents,
   partners: PartnersBlockComponents,
   landingContact: LandingContactBlockComponent,
-  caseStudyBrief: BriefComponentBlock
+  caseStudyBrief: BriefComponentBlock,
+  imageGroupEntry: ImageEntryComponent,
+  imageGroup: ImageGroupComponent,
+  centerContent: CenterContentComponent,
 }
 
 export const RenderBlocks: React.FC<{
@@ -35,7 +41,7 @@ export const RenderBlocks: React.FC<{
       <Fragment>
         {blocks.map((block) => {
           const { blockType } = block
-          console.log("blockType", blockType);
+          console.log('blockType', blockType)
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]
@@ -52,39 +58,6 @@ export const RenderBlocks: React.FC<{
           return null
         })}
       </Fragment>
-    )
-  }
-
-  return null
-}
-
-
-
-export const PortfolioRenderBlocks: React.FC<{
-  blocks: Portfolio['layout']
-}> = (props) => {
-  const { blocks } = props
-
-  const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
-
-  if (hasBlocks) {
-    return (
-      <>
-        {blocks.map((block) => {
-          const { blockType } = block
-
-          if (blockType && blockType in blockComponents) {
-            const Block = blockComponents[blockType]
-
-            if (Block) {
-              return (
-                <Block key={block.id} {...block} />
-              )
-            }
-          }
-          return null
-        })}
-      </>
     )
   }
 

@@ -25,7 +25,7 @@ export async function Footer() {
             </p>
           </div>
 
-          <div className=" flex-1 shrink">
+          <div className="flex-1 shrink">
             <nav className="grid grid-cols-4 gap-x-4 gap-y-2">
               {navItems.map(({ link }, i) => {
                 return (

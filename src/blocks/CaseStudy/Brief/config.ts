@@ -8,7 +8,7 @@ export const BriefBlock: Block = {
     {
       name: 'heading',
       type: 'text',
-      defaultValue: "The Brief",
+      defaultValue: 'The Brief',
     },
     {
       name: 'content',
@@ -16,9 +16,7 @@ export const BriefBlock: Block = {
       required: false,
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures
-          ]
+          return [...rootFeatures]
         },
       }),
       label: 'Intro Content',

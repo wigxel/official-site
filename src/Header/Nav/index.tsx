@@ -6,7 +6,7 @@ import { O } from '@/libs/fp.helpers'
 import type { Header as HeaderType } from '@/payload-types'
 
 export const HeaderNav = ({ data }: { data: HeaderType }) => {
-  const navItems = data?.navItems || [];
+  const navItems = data?.navItems || []
 
   const initial_items = pipe(
     init(navItems),
@@ -15,9 +15,11 @@ export const HeaderNav = ({ data }: { data: HeaderType }) => {
 
   return (
     <nav className="flex items-center gap-5">
-      <div className='flex flex-1 gap-6'>
+      <div className="flex flex-1 gap-6">
         {initial_items.map(({ link }) => {
-          return <CMSLink key={link.label} {...link} className="text-base font-thin" appearance="link" />
+          return (
+            <CMSLink key={link.label} {...link} className="text-base font-thin" appearance="link" />
+          )
         })}
       </div>
 

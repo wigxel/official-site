@@ -5,6 +5,7 @@ import { Media } from '@/components/Media'
 import { DateParse } from '@/libs/date.helpers'
 import { Arr, O, pipe } from '@/libs/fp.helpers'
 import { expectMedia } from '@/libs/payload/factories/media'
+import { safeReference } from '@/libs/utils'
 import type { Post } from '@/payload-types'
 import { formatAuthors } from '@/utilities/formatAuthors'
 import { cn } from '@/utilities/ui'
@@ -70,10 +71,7 @@ export const PostHero: React.FC<{
 export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
   const authors = pipe(
     Arr.ensure(post.authors),
-    Arr.filterMap((author) => {
-      if (typeof author === 'number') return O.none()
-      return O.fromNullable(author)
-    }),
+    Arr.filterMap((author) => safeReference(author)),
   )
 
   const author_names = formatAuthors(authors.map((e) => ({ name: e.name })))
@@ -85,7 +83,7 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
         <div className="flex items-center gap-4">
           <div
             className={cn('flex', {
-              '*:-mx-2 pl-2': authors.length > 1,
+              'pl-2 *:-mx-2': authors.length > 1,
             })}
           >
             {pipe(

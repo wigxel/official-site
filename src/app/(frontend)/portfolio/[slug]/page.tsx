@@ -1,21 +1,23 @@
-"use server"
+'use server'
 import configPromise from '@payload-config'
 import { capitalize } from 'effect/String'
 import { draftMode } from 'next/headers'
 import Link from 'next/link'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
-import { PortfolioRenderBlocks, RenderBlocks } from '@/blocks/RenderBlocks'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Container } from '@/components/container'
+import { ImageMedia } from '@/components/Media/ImageMedia'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { safeArray, safeStr } from '@/libs/data.helpers'
+import { O, pipe } from '@/libs/fp.helpers'
+import { expectMedia } from '@/libs/payload/factories/media'
 
 type Props = {
   params: Promise<{
     slug: string
   }>
 }
-
 
 const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
@@ -38,7 +40,6 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
   return result.docs?.[0] || null
 })
 
-
 export default async function CaseStudy({ params: paramsPromise }: Props) {
   const { isEnabled: draft } = await draftMode()
 
@@ -53,12 +54,9 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
     return <PayloadRedirects url={url} />
   }
 
-  const { name, basic, layout } = page
+  const { name, basic: basicInfo, layout } = page
 
-  const siteIsLive = !draft;
-  const portfolio = basic;
-
-  console.log(basic);
+  const portfolio = basicInfo
 
   return (
     <section className="flex flex-col gap-[calc(100rem/16)]">
@@ -66,7 +64,9 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
         <nav>
           <ul className="flex gap-2 text-muted-foreground">
             <li className="text-foreground">
-              <Link prefetch href="/portfolio">Portfolio</Link>
+              <Link prefetch href="/portfolio">
+                Portfolio
+              </Link>
             </li>
             /<li className="text-accent-foreground">{name}</li>
           </ul>
@@ -75,25 +75,46 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
         <div className="wg-grid-1">
           <div className="col-span-6 flex flex-col gap-6">
             <h1 className="font-heading text-display-1 uppercase">{name}</h1>
-
             <p className="text-base">{portfolio.short_description}</p>
-
-            {portfolio.url !== "#" ? (
-              <a className="font-thin text-accent-foreground" target='_blank' rel='noreferrer noopener' href={portfolio.url}>
-                Visit Live Site
-              </a>
-            ) : null}
+            {pipe(
+              O.fromNullable(portfolio.url),
+              O.filter((url) => url !== '#'),
+              O.map((url) => (
+                <a
+                  key="live-site"
+                  href={url}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="font-thin text-accent-foreground"
+                >
+                  Visit Live Site
+                </a>
+              )),
+              O.getOrElse(() => null),
+            )}
           </div>
         </div>
 
         <div className="flex"></div>
       </Container>
 
-      <Container className="flex flex-col gap-[calc(64rem/16)]">
-        <div className="aspect-[1340/848] w-full rounded-lg bg-gray-800"></div>
+      <Container className="mb-24 flex flex-col gap-[calc(64rem/16)]">
+        {pipe(
+          expectMedia(basicInfo.cover_image),
+          O.map((e) => (
+            <ImageMedia
+              key={e.id}
+              resource={e}
+              pictureClassName={'aspect-[1340/848] w-full rounded-lg bg-gray-800'}
+              imgClassName="w-full"
+            />
+          )),
+          O.getOrElse(() => <div className="aspect-[1340/600] w-full rounded-lg bg-gray-900" />),
+        )}
 
         <div className="wg-grid-1">
-          <div className="wg-grid-1 col-span-8 w-full leading-[2ex]">
+          <div className="col-span-7" />
+          <div className="wg-grid-1 col-span-4 w-full leading-[2ex]">
             <div className="col-span-6 flex flex-col gap-2">
               <h2 className="opacity-70">Client</h2>
               <p>{portfolio.client}</p>
@@ -124,58 +145,8 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
         </div>
       </Container>
 
-
       <Container className="flex flex-col gap-[calc(100rem/16)]">
         <RenderBlocks blocks={layout} />
-
-        <div className="aspect-[1340/873] w-full bg-gray-800" />
-        <div className="wg-grid-1">
-          <h2 className="col-span-4 font-heading text-display-1">Solution</h2>
-          <p className="col-span-4 text-balance text-muted-foreground">
-            Demi reached out to us with the need to grow her visibility. Her goal was to create an
-            online presence where people could see everything she does professionally, establishing
-            her work as a founder, speaker, author, podcaster and innovator. Her new book was also
-            to be launched soon and she wanted to drive sales through her engagements.
-          </p>
-        </div>
-
-        <div className="wg-grid-1">
-          <div className="col-span-6 aspect-[660/500] bg-blue-700"></div>
-          <div className="col-span-6 aspect-[660/500] bg-orange-600"></div>
-        </div>
-
-        <div className="wg-grid-1">
-          <div className="col-span-4" />
-          <div className="col-span-4 flex flex-col gap-4 text-lg">
-            <p className="col-span-4 w-full text-balance text-muted-foreground">
-              Demi reached out to us with the need to grow her visibility. Her goal was to create an
-              online presence where people could see everything she does professionally,
-              establishing her work as a founder, speaker, author, podcaster and innovator. Her new
-              book was also to be launched soon and she wanted to drive sales through her
-              engagements.
-            </p>
-          </div>
-          <div className="col-span-4" />
-        </div>
-
-        <div className="aspect-[1340/843] w-full bg-gray-800" />
-
-        <div className="wg-grid-1">
-          <div className="col-span-4" />
-          <div className="col-span-4 flex flex-col gap-4">
-            <p className="col-span-4 w-full text-center text-xl text-foreground">
-              Overall, we were able to design a website that aligned with Demi expertise and
-              professional taste, positioning her to the right audience and gaining visibility
-            </p>
-          </div>
-          <div className="col-span-4" />
-        </div>
-
-        <div className="wg-grid-1">
-          <div className="col-span-4 aspect-[433/500] bg-blue-700"></div>
-          <div className="col-span-4 aspect-[433/500] bg-slate-700"></div>
-          <div className="col-span-4 aspect-[433/500] bg-orange-600"></div>
-        </div>
       </Container>
 
       <Container>

@@ -17,7 +17,7 @@ export async function PartnersBlockComponents() {
       <section className="wg-grid-1">
         <div className="col-span-3 flex flex-col gap-6">
           <h2 className="heading-1 flex w-min flex-col whitespace-nowrap text-start">
-            <span className="text-[0.6em] italic ">The</span>
+            <span className="text-[0.6em] italic">The</span>
             <span>Great Wall</span>
             <span className="text-end">
               <span className="text-center align-text-top text-[0.6em] font-thin italic">

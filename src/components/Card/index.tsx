@@ -39,13 +39,13 @@ export const Card: React.FC<{
 
   return (
     <article
-      ref={ref => card.register(ref)}
+      ref={(ref) => card.register(ref)}
       className={cn(
-        'bg-background border-border rounded-lg overflow-hidden hover:cursor-pointer',
+        'overflow-hidden rounded-lg border-border bg-background hover:cursor-pointer',
         className,
       )}
     >
-      <div className="relative w-full ">
+      <div className="relative w-full">
         {!metaImage && <div className="">No image</div>}
         {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
       </div>
@@ -60,9 +60,7 @@ export const Card: React.FC<{
         {titleToUse && (
           <div className="prose line-clamp-2 w-11/12 !leading-[2.6ex]">
             <h3>
-              <Link className="not-prose" href={href}
-                ref={ref => link.register(ref)}
-              >
+              <Link className="not-prose" href={href} ref={(ref) => link.register(ref)}>
                 {titleToUse}
               </Link>
             </h3>

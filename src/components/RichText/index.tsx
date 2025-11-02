@@ -23,7 +23,7 @@ type NodeTypes =
   | SerializedBlockNode<MediaBlockProps | BannerBlockProps | CodeBlockProps>
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
-  const { value, relationTo } = linkNode.fields.doc ?? { value: undefined, relationTo: undefined };
+  const { value, relationTo } = linkNode.fields.doc ?? { value: undefined, relationTo: undefined }
 
   if (typeof value !== 'object') {
     throw new Error('Expected value to be an object')
@@ -67,7 +67,7 @@ export default function RichText(props: Props) {
         {
           container: enableGutter,
           'max-w-none': !enableGutter,
-          'mx-auto prose md:prose-md dark:prose-invert': enableProse,
+          'prose mx-auto md:prose-md dark:prose-invert': enableProse,
         },
         className,
       )}

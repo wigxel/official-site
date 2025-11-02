@@ -47,7 +47,7 @@ export function Gutter(props: { breakpoints: T[] }) {
         return (
           <div
             key={e.columns + e.margin + e.maxWidth}
-            className="traisition mx-auto flex size-full justify-center "
+            className="traisition mx-auto flex size-full justify-center"
           >
             <div
               className="flex size-full"
