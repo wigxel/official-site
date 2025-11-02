@@ -52,6 +52,12 @@ const config = {
         }
       },
       fontSize: {
+        'display': ['9rem', {
+          letterSpacing: '-2px',
+          lineHeight: '2ex',
+          fontFamily: 'font-heading',
+          fontWeight: 'bold'
+        }],
         'display-1': ['calc(80rem/16)', {
           letterSpacing: '-2px',
           lineHeight: '2ex',

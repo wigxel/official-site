@@ -1,12 +1,15 @@
 'use server'
 import configPromise from '@payload-config'
+import { init, intersperse } from 'effect/Array'
 import { capitalize } from 'effect/String'
 import { draftMode } from 'next/headers'
+import Image from 'next/image'
 import Link from 'next/link'
 import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Container } from '@/components/container'
+import { LineHover } from '@/components/line-hover'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { safeArray, safeStr } from '@/libs/data.helpers'
@@ -65,32 +68,61 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
       <Container className="flex flex-col gap-[calc(32rem/16)]">
         <nav>
           <ul className="flex gap-2 text-muted-foreground">
-            <li className="text-foreground">
+            <li className="text-foreground/[0.5]">
               <Link prefetch href="/portfolio">
                 Portfolio
               </Link>
             </li>
-            /<li className="text-accent-foreground">{name}</li>
+            /<li className="text-foreground">{name}</li>
           </ul>
         </nav>
 
-        <div className="wg-grid-1">
+        <div className="wg-grid-1 relative">
           <div className="col-span-6 flex flex-col gap-6">
             <h1 className="font-heading text-display-1 uppercase">{name}</h1>
             <p className="text-base">{portfolio.short_description}</p>
+
+            {/*{pipe(
+              O.fromNullable(portfolio.url),
+              O.filter((url) => url !== '#'),
+              O.map((url) => (
+                <LineHover key="live-site">
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="font-thin text-accent-foreground"
+                  >
+                    Visit Live Site
+                  </a>
+                </LineHover>
+              )),
+              O.getOrElse(() => null),
+            )}*/}
+
             {pipe(
               O.fromNullable(portfolio.url),
               O.filter((url) => url !== '#'),
               O.map((url) => (
-                <a
-                  key="live-site"
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="font-thin text-accent-foreground"
+                <div
+                  key={url}
+                  className="absolute bottom-0 right-[12vw] translate-y-full overflow-hidden rounded-full"
                 >
-                  Visit Live Site
-                </a>
+                  <div className="group relative flex aspect-square w-[200px] items-center justify-center">
+                    <div className="absolute inset-6 flex rotate-0 items-center justify-center rounded-full border-2 border-accent-foreground bg-accent-foreground transition-all hover:-rotate-12">
+                      <span className="text-[0.76rem] font-semibold text-black">VISIT SITE</span>
+                    </div>
+
+                    <Image
+                      alt="View Live Website"
+                      width={200}
+                      height={200}
+                      src={'/assets/curly-circle.svg'}
+                      className="animate absolute animate-spin running"
+                      style={{ animationDuration: '20s' }}
+                    />
+                  </div>
+                </div>
               )),
               O.getOrElse(() => null),
             )}
@@ -157,15 +189,15 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
           return (
             <Container key={portfolio.id}>
               <div className="wg-grid-1 !gap-11">
-                <div className="col-span-7" />
-
-                <div className="col-span-5 flex flex-col gap-8 text-end">
+                <div className="col-span-full flex flex-col gap-8 text-end">
                   <span className="tracking-wider text-accent-foreground">NEXT PROJECT</span>
 
                   <Link href={`/portfolio/${portfolio.slug}`} draggable={false}>
                     <div className="flex flex-col gap-6" style={{ perspective: '100vw' }}>
-                      <h2 className="next-project-button cursor-pointer select-none text-balance font-heading text-display-1 uppercase">
-                        {portfolio.name}
+                      <h2 className="next-project-button cursor-pointer select-none text-balance font-heading text-display uppercase leading-[2ex]">
+                        {(() => {
+                          return pipe(portfolio.name.split(' '), intersperse(<br />))
+                        })()}
                       </h2>
                     </div>
                   </Link>
