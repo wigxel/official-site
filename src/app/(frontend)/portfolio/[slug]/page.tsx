@@ -1,6 +1,6 @@
 'use server'
 import configPromise from '@payload-config'
-import { init, intersperse } from 'effect/Array'
+import { intersperse } from 'effect/Array'
 import { capitalize } from 'effect/String'
 import { draftMode } from 'next/headers'
 import Image from 'next/image'
@@ -9,7 +9,7 @@ import { getPayload, type RequiredDataFromCollectionSlug } from 'payload'
 import { cache } from 'react'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
 import { Container } from '@/components/container'
-import { LineHover } from '@/components/line-hover'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { safeArray, safeStr } from '@/libs/data.helpers'
@@ -65,6 +65,8 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
 
   return (
     <section className="flex flex-col gap-[calc(100rem/16)]">
+      {draft && <LivePreviewListener />}
+
       <Container className="flex flex-col gap-[calc(32rem/16)]">
         <nav>
           <ul className="flex gap-2 text-muted-foreground">
@@ -149,7 +151,7 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
 
         <div className="wg-grid-1">
           <div className="col-span-7" />
-          <div className="wg-grid-1 col-span-4 w-full leading-[2ex]">
+          <div className="wg-grid-1 col-span-5 w-full leading-[2ex]">
             <div className="col-span-6 flex flex-col gap-2">
               <h2 className="opacity-70">Client</h2>
               <p>{portfolio.client}</p>

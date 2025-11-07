@@ -96,7 +96,7 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
                     alt={avatar?.alt ?? 'Author Image'}
                     unoptimized
                     src={avatar?.url ?? '/logo.svg'}
-                    className="aspect-square w-8 rounded-full border border-white/[0.16] bg-black/60"
+                    className="aspect-square w-8 rounded-full border border-white/[0.16] bg-black/60 object-cover"
                     width={32}
                     height={32}
                   />

@@ -115,7 +115,7 @@ body::selection {
 }
 
 .wg-grid-1 {
-  @apply grid grid-cols-12 gap-5;
+  @apply grid grid-cols-4 gap-5 md:grid-cols-12;
 }
 
 .heading-1 {
@@ -124,6 +124,10 @@ body::selection {
 
 .heading-2 {
   @apply font-heading text-[calc(46rem/16)] leading-[2ex];
+}
+
+.heading-3 {
+  @apply font-heading text-[calc(42rem/16)] leading-[2ex];
 }
 
 .layout-form-grid {

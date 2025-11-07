@@ -63,7 +63,25 @@ const config = {
           lineHeight: '2ex',
           fontFamily: 'font-heading',
           fontWeight: 'bold'
-        }]
+        }],
+        'heading-1': ['calc(64rem/16)', {
+          letterSpacing: '-2px',
+          lineHeight: '2ex',
+          fontFamily: 'font-heading',
+          fontWeight: 'bold'
+        }],
+        'heading-2': ['calc(46rem/16)', {
+          letterSpacing: '-2px',
+          lineHeight: '2ex',
+          fontFamily: 'font-heading',
+          fontWeight: 'bold'
+        }],
+        'heading-3': ['calc(42rem/16)', {
+          letterSpacing: '-2px',
+          lineHeight: '2ex',
+          fontFamily: 'font-heading',
+          fontWeight: 'bold'
+        }],
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',

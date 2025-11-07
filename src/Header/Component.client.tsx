@@ -1,5 +1,6 @@
 'use client'
 import { useEffectEvent } from '@payloadcms/ui'
+import Image from 'next/image'
 import Link from 'next/link'
 import type React from 'react'
 import { startTransition, useEffect, useState } from 'react'
@@ -33,13 +34,27 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <header className="sticky top-0 z-20" {...(theme ? { 'data-theme': theme } : {})}>
       <Container className="wg-grid-1 py-8">
-        <Link href="/" className="col-span-4 flex justify-start">
+        <Link href="/" className="col-span-3 flex justify-start md:col-span-4">
           <div>
             <Logo className="invert dark:invert-0" />
           </div>
         </Link>
-        <div className="col-span-3"></div>
-        <div className="col-span-5">
+
+        <div className="col-span-3 hidden md:block"></div>
+
+        <div className="flex justify-end md:col-span-5 md:hidden">
+          <button className="appearance-none" type="button">
+            <Image
+              src="/assets/menu-icon.svg"
+              alt="Icons"
+              className="aspect-[24.06/18] w-6"
+              width={24.06}
+              height={18}
+            />
+          </button>
+        </div>
+
+        <div className="hidden md:col-span-5 md:block">
           <HeaderNav data={data} />
         </div>
       </Container>
