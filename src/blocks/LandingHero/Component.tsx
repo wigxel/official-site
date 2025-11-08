@@ -9,7 +9,7 @@ export function LandingHeroBlockComponent(props: LandingHero) {
   return (
     <Container className="patterned-bg -mt-[20dvh] pt-[20dvh] md:-mt-[var(--header-height)] md:pt-[50dvh]">
       <div className="wg-grid-1 min-h-[60dvh] w-full md:min-h-[unset]">
-        <h1 className="heading-3 md:heading-1 col-span-full flex flex-col justify-end md:col-span-5">
+        <h1 className="heading-1 col-span-full flex flex-col justify-end md:col-span-5">
           {intersperse(props.heading.split('\n'), <br />)}
         </h1>
 

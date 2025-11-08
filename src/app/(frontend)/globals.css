@@ -119,20 +119,16 @@ body::selection {
 }
 
 .heading-1 {
-  @apply font-heading text-[calc(64rem/16)] leading-[2ex];
+  @apply font-heading text-heading-3 leading-[2ex] md:text-[calc(64rem/16)];
 }
 
 .heading-2 {
   @apply font-heading text-[calc(46rem/16)] leading-[2ex];
 }
 
-.heading-3 {
-  @apply font-heading text-[calc(42rem/16)] leading-[2ex];
-}
-
 .layout-form-grid {
   form > div {
-    @apply grid grid-cols-2 gap-x-10 gap-y-0;
+    @apply grid grid-cols-2 gap-4 gap-y-0 md:gap-x-10;
   }
 
   form > div > div:last-child {

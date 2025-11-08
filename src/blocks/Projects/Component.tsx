@@ -17,7 +17,7 @@ export async function LandingProjectsBlockComponents() {
     <Container className="flex flex-col gap-10 pt-[calc(160rem/16)]">
       <h2 className="heading-1 whitespace-nowrap">Projects</h2>
 
-      <div className="grid grid-cols-4 gap-[calc(20rem/16)]">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-[calc(20rem/16)]">
         {resource.docs.map((e) => {
           return <ProjectCard key={e.id} entry={e} />
         })}

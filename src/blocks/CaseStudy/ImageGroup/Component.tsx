@@ -10,7 +10,7 @@ export function ImageGroupComponent(props: ImageGroupBlock) {
     <>
       <ComponentTag>#ImageGroup</ComponentTag>
 
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2 md:flex-row">
         {safeArray(props.images)
           .map((image) => safeReference(image.poster))
           .map((safe_poster, index) => {

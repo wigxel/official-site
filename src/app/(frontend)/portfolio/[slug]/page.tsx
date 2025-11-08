@@ -69,7 +69,7 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
 
       <Container className="flex flex-col gap-[calc(32rem/16)]">
         <nav>
-          <ul className="flex gap-2 text-muted-foreground">
+          <ul className="flex gap-2 text-xs text-muted-foreground md:text-base">
             <li className="text-foreground/[0.5]">
               <Link prefetch href="/portfolio">
                 Portfolio
@@ -81,7 +81,7 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
 
         <div className="wg-grid-1 relative">
           <div className="col-span-6 flex flex-col gap-6">
-            <h1 className="font-heading text-display-1 uppercase">{name}</h1>
+            <h1 className="font-heading text-heading-3 uppercase md:text-display-1">{name}</h1>
             <p className="text-base">{portfolio.short_description}</p>
 
             {/*{pipe(
@@ -142,22 +142,24 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
             <ImageMedia
               key={e.id}
               resource={e}
-              pictureClassName={'w-full rounded-lg bg-gray-800'}
+              pictureClassName={'-mx-4 lg:mx-0 rounded-lg bg-gray-800'}
               imgClassName="w-full"
             />
           )),
-          O.getOrElse(() => <div className="aspect-[1340/600] w-full rounded-lg bg-gray-900" />),
+          O.getOrElse(() => (
+            <div className="-mx-4 aspect-[1340/600] rounded-lg bg-gray-900 lg:mx-0" />
+          )),
         )}
 
         <div className="wg-grid-1">
-          <div className="col-span-7" />
+          <div className="hidden md:col-span-7 md:block" />
           <div className="wg-grid-1 col-span-5 w-full leading-[2ex]">
-            <div className="col-span-6 flex flex-col gap-2">
+            <div className="col-span-2 flex flex-col gap-2 md:col-span-6">
               <h2 className="opacity-70">Client</h2>
               <p>{portfolio.client}</p>
             </div>
 
-            <div className="col-span-6 flex flex-col gap-2">
+            <div className="col-span-2 flex flex-col gap-2 md:col-span-6">
               <h2 className="opacity-70">Scope</h2>
               <p>
                 {safeArray(portfolio.scope ?? [])
@@ -169,12 +171,12 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
               </p>
             </div>
 
-            <div className="col-span-6 flex flex-col gap-2">
+            <div className="col-span-2 flex flex-col gap-2 md:col-span-6">
               <h2 className="opacity-70">Project Type</h2>
               <p>{portfolio.project_type}</p>
             </div>
 
-            <div className="col-span-6 flex flex-col gap-2">
+            <div className="col-span-2 flex flex-col gap-2 md:col-span-6">
               <h2 className="opacity-70">Sector</h2>
               <p>{portfolio.sector}</p>
             </div>
@@ -182,7 +184,7 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
         </div>
       </Container>
 
-      <Container className="flex flex-col gap-[calc(100rem/16)]">
+      <Container className="flex flex-col gap-10 md:gap-[calc(100rem/16)]">
         <RenderBlocks blocks={layout} />
       </Container>
 
@@ -197,7 +199,12 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
 
                   <Link href={`/portfolio/${portfolio.slug}`} draggable={false}>
                     <div className="flex flex-col gap-6" style={{ perspective: '100vw' }}>
-                      <h2 className="next-project-button cursor-pointer select-none text-balance font-heading text-display uppercase leading-[2ex]">
+                      <h2
+                        className="next-project-button cursor-pointer select-none text-balance font-heading uppercase leading-[2ex]"
+                        style={{
+                          fontSize: 'clamp(1.4rem,15vw, 9rem)',
+                        }}
+                      >
                         {(() => {
                           return pipe(portfolio.name.split(' '), intersperse(<br />))
                         })()}

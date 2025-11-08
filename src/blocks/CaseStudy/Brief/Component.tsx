@@ -5,7 +5,7 @@ import type { CaseStudyBriefBlock } from '@/payload-types'
 export async function BriefComponentBlock(props: CaseStudyBriefBlock) {
   return (
     <div className="wg-grid-1">
-      <h2 className="col-span-4 font-heading text-display-1">{props.heading}</h2>
+      <h2 className="col-span-4 font-heading text-heading-3 md:text-display-1">{props.heading}</h2>
 
       <div className="col-span-4 text-balance text-muted-foreground">
         {/* @ts-expect-error Figure out later */}

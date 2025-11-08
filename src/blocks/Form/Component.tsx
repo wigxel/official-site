@@ -154,16 +154,17 @@ export const FormBlock: React.FC<
               })}
             </div>
 
-            <div className="-mt-4 !flex -translate-y-1/2 justify-end">
+            <div className="pointer-events-none -mt-4 !flex -translate-y-1/2 justify-end">
               <Button
                 form={formID}
                 title="Submit"
                 type="submit"
                 variant="default:dark"
                 size="square"
+                className="pointer-events-auto h-12 w-12 md:w-auto"
               >
                 <span className="sr-only">{submitButtonLabel}</span>
-                <ArrowRight />
+                <ArrowRight className="size-4 md:size-6" />
               </Button>
             </div>
           </form>

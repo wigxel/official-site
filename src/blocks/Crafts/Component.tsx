@@ -14,15 +14,17 @@ export async function CraftsBlockComponent() {
   return (
     <div className="max-w-full overflow-hidden">
       <Container className="pt-[calc(160rem/16)]">
-        <div className="flex w-min flex-col">
+        <div className="flex flex-col md:w-min">
           <h2 className="heading-1 whitespace-nowrap">Our Crafts</h2>
 
-          <p className="text-right">How we shape your vision into results.</p>
+          <p className="text-start text-sm md:text-end md:text-base">
+            How we shape your vision into results.
+          </p>
         </div>
       </Container>
 
-      <div className="relative mt-[calc(120rem/16)] flex h-[680px] justify-between">
-        <div className="absolute left-0 top-0 flex gap-x-[10vw]">
+      <div className="relative mt-[calc(60rem/16)] flex h-[680px] justify-between md:mt-[calc(120rem/16)]">
+        <div className="left-0 top-0 flex gap-x-[10vw] md:absolute">
           {services.docs.map((e) => {
             return <ServiceEntry key={e.id} entry={e} />
           })}
@@ -39,9 +41,9 @@ function ServiceEntry({ entry }: { entry: Service }) {
   }
 
   return (
-    <div className="flex w-full min-w-[25vw] flex-1 flex-col items-center gap-8">
+    <div className="border-debug flex w-[80svw] flex-1 flex-col items-center gap-8 md:w-full md:min-w-[25vw]">
       <div
-        className="relative flex h-[calc(500rem/16)] shrink-0 items-end justify-center"
+        className="relative flex h-[calc(500rem/16)] w-full shrink-0 items-end justify-center overflow-hidden md:w-auto"
         style={{
           aspectRatio: (entry?.image?.width || 1) / (entry.image?.height || 1),
         }}
@@ -51,7 +53,6 @@ function ServiceEntry({ entry }: { entry: Service }) {
 
       <div className="flex h-[calc(148rem/16)] w-full flex-col gap-3 text-center">
         <h3 className="heading-2">{entry.title}</h3>
-
         <p className="font-body text-sm opacity-70">{entry.sub_text}</p>
       </div>
     </div>
