@@ -19,7 +19,7 @@ export function LandingContactBlockComponent(props: RequiredDataFromCollectionSl
               CONTACT
             </h2>
 
-            <h2 className="z-2 not-sr-only absolute inset-0 z-0 flex flex-col justify-between font-heading text-[19.5vw] leading-[1.4ex] text-black">
+            <h2 className="z-2 not-sr-only absolute inset-0 z-0 flex flex-col justify-between font-heading text-[19.5vw] leading-[1.4ex] text-black md:hidden">
               <span className="self-start">REACH</span>
               <span className="self-end">OUT</span>
             </h2>

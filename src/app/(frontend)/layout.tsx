@@ -12,13 +12,18 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cn } from '@/utilities/ui'
 
 import './globals.css'
+import { bodyFont, displayFont } from '@/libs/font'
 import { getServerSideURL } from '@/utilities/getURL'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
 
   return (
-    <html className={cn('font-sans', GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html
+      className={cn('font-sans', GeistMono.variable, displayFont.variable, bodyFont.variable)}
+      lang="en"
+      suppressHydrationWarning
+    >
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />

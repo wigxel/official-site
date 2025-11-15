@@ -172,3 +172,78 @@ body::selection {
 .view-site-button:hover {
   corner-shape: round;
 }
+
+/* Icon Transition Cross*/
+.icon-cross {
+  --ic-icon-size: 3rem;
+  --ic-text-color: white;
+
+  display: block;
+  width: var(--ic-icon-size);
+  aspect-ratio: 1;
+  scale: 0.6;
+  position: relative;
+  rotate: 45deg;
+}
+
+.icon-cross[aria-expanded='true'] {
+  --ic-text-color: black;
+}
+
+.icon-cross span {
+  @apply pointer-events-none transition-all duration-200 ease-in-out;
+}
+
+.icon-cross[aria-expanded='true'] > .cross-circ {
+  width: 3px;
+}
+
+.icon-cross[aria-expanded='true'] > .cross-line {
+  @apply rotate-0;
+}
+
+.icon-cross > .cross-line {
+  @apply absolute inset-0 flex rotate-45 items-center justify-center;
+}
+
+.icon-cross .cross-line-1,
+.icon-cross .cross-line-2 {
+  display: block;
+  position: absolute;
+  width: var(--ic-icon-size);
+  height: 3px;
+  background-color: var(--ic-text-color);
+}
+
+.icon-cross .cross-line-2 {
+  rotate: 90deg;
+}
+
+.icon-cross > span.cross-circ {
+  width: calc(50% - 0.25rem);
+  display: block;
+  border-radius: 999px;
+  aspect-ratio: 1;
+  position: absolute;
+  background-color: var(--ic-text-color);
+}
+
+.icon-cross > span.cross-circ:nth-child(1) {
+  top: 0;
+  right: 0;
+}
+
+.icon-cross > span.cross-circ:nth-child(2) {
+  left: 0;
+  top: 0;
+}
+
+.icon-cross > span.cross-circ:nth-child(3) {
+  left: 0;
+  bottom: 0;
+}
+
+.icon-cross > span.cross-circ:nth-child(4) {
+  right: 0;
+  bottom: 0;
+}

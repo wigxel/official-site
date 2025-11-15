@@ -4,6 +4,8 @@ import type { Metadata } from 'next'
 import Image from 'next/image'
 import { getPayload } from 'payload'
 import { Container } from '@/components/container'
+import { Media } from '@/components/Media'
+import { ImageMedia } from '@/components/Media/ImageMedia'
 import type { Service, TeamMember } from '@/payload-types'
 
 export const metadata: Metadata = {
@@ -26,7 +28,7 @@ export default function StudioPage() {
       <Container className="wg-grid-1">
         <div className="col-span-5"></div>
         <div className="col-span-7">
-          <p className="flex max-w-[40ch] text-[calc(32rem/16)] leading-[2.2ex]">
+          <p className="flex max-w-[40ch] text-justify text-[calc(32rem/16)] leading-[2.2ex]">
             We develop UX focused software solutions on the Internet &amp; Mobile space for medium
             and large scale business looking to scale their business.
           </p>
@@ -101,7 +103,7 @@ async function Skils() {
 
 function SkillItem({ data }: { data: Service }) {
   return (
-    <section className="wg-grid-1 py-11">
+    <section className="wg-grid-1 px-4 py-11 md:px-0">
       <h4 className="col-span-5 text-[calc(42rem/16)] font-semibold">{data.title}</h4>
 
       <p className="col-span-7 flex-1 text-foreground opacity-70">
@@ -119,9 +121,13 @@ async function TeamSection() {
   })
 
   return (
-    <Container className="flex flex-col gap-10 py-24">
-      <h2 className="font-heading text-4xl font-medium">Meet The Team</h2>
-      <div className="grid grid-cols-3 gap-x-5 gap-y-12">
+    <Container className="flex flex-col gap-2 py-24">
+      <h2 className="heading-1 !mb-0 flex justify-between font-heading font-medium">
+        <span>Our</span>
+        <span>Team</span>
+      </h2>
+
+      <div className="grid-col-1 grid gap-x-5 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
         {teamMembers.docs.map((member) => {
           return <TeamMemberCard key={member.id} doc={member} />
         })}
@@ -133,19 +139,17 @@ async function TeamSection() {
 function TeamMemberCard(props: { doc: TeamMember }) {
   return (
     <div className="flex flex-col gap-4">
-      <figure className="relative aspect-[435/514] w-full flex-1 bg-gray-200">
-        <Image
-          fill
-          alt={props.doc.name}
-          className="object-cover"
-          // @ts-expect-error
-          src={props.doc.image?.url}
-        />
-      </figure>
+      <ImageMedia
+        fill
+        alt={props.doc.name}
+        pictureClassName="relative aspect-[435/514] w-full flex-1 overflow-hidden bg-gray-200"
+        imgClassName="object-cover"
+        resource={props.doc.image}
+      />
 
-      <div className="flex flex-col gap-3">
-        <h3 className="border text-[calc(32rem/16)] leading-[1ex]">{props.doc.name}</h3>
-        <p className="text-base uppercase leading-none opacity-75">{props.doc.role}</p>
+      <div className="flex flex-row justify-between gap-3 md:flex-col md:justify-start">
+        <h3 className="border text-xl leading-[1ex] md:text-[calc(32rem/16)]">{props.doc.name}</h3>
+        <p className="text-xs uppercase leading-none opacity-75 md:text-base">{props.doc.role}</p>
       </div>
     </div>
   )

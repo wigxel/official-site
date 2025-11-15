@@ -137,8 +137,8 @@ const config = {
       },
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
-        sans: ['Safiro'],
-        heading: ['Novela']
+        sans: ['var(--font-body)'],
+        heading: ['var(--font-display)']
       },
       keyframes: {
         'accordion-down': {

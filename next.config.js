@@ -14,7 +14,9 @@ const nextConfig = {
         NEXT_PUBLIC_SERVER_URL,
         'https://official-staging.wigxel.io',
         'https://wigxel.io',
-        'http://localhost'
+        'http://localhost',
+        'http://172.20.10.2',
+        'https://trycloudflare.com'
       ].map((item) => {
         const url = new URL(item)
 
