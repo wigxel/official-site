@@ -33,7 +33,8 @@ export const MobileMenu: React.FC<{ children?: ReactNode; defaultOpen?: boolean 
 export const MobileMenuTrigger: React.FC<
   React.ButtonHTMLAttributes<HTMLButtonElement> & { asChild?: boolean }
 > = ({ children, asChild = false, ...rest }) => {
-  const ctx = useContext(MenuContext)
+  const ctx = useContext(MenuContext);
+
   if (!ctx) {
     throw new Error('Trigger must be used within a MobileMenu')
   }
@@ -45,7 +46,9 @@ export const MobileMenuTrigger: React.FC<
       aria-expanded={ctx.open}
       aria-controls="mobile-menu-content"
       // @ts-expect-error Edese
-      onClick={() => ctx.toggle()}
+      onClick={() => {
+        ctx.toggle()
+      }}
       {...rest}
     >
       {children}

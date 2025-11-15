@@ -77,31 +77,39 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
   const author_names = formatAuthors(authors.map((e) => ({ name: e.name })))
   const hasAuthors = authors && authors.length > 0 && author_names !== ''
 
+  const avatarClassName = "aspect-square w-6 md:w-8 rounded-full border border-white/[0.16] bg-black/60 object-cover";
+
+  const author_images = pipe(
+    authors,
+    Arr.filterMap((user) => expectMedia(user.avatar)),
+    Arr.map((avatar) => {
+      return (
+        <Image
+          key={`${avatar.id}`}
+          alt={avatar?.alt ?? 'Author Image'}
+          unoptimized
+          src={avatar?.url ?? '/logo.svg'}
+          className={avatarClassName}
+          width={32}
+          height={32}
+        />
+      )
+    }),
+  )
+
   return (
     <div className="flex flex-col gap-4 md:flex-row md:gap-16">
       {hasAuthors && (
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2 md:gap-4">
           <div
             className={cn('flex', {
               'pl-2 *:-mx-2': authors.length > 1,
             })}
           >
-            {pipe(
-              authors,
-              Arr.filterMap((user) => expectMedia(user.avatar)),
-              Arr.map((avatar) => {
-                return (
-                  <Image
-                    key={`${avatar.id}`}
-                    alt={avatar?.alt ?? 'Author Image'}
-                    unoptimized
-                    src={avatar?.url ?? '/logo.svg'}
-                    className="aspect-square w-8 rounded-full border border-white/[0.16] bg-black/60 object-cover"
-                    width={32}
-                    height={32}
-                  />
-                )
-              }),
+            {author_images.length ? (
+              author_images
+            ) : (
+              <div className={avatarClassName} />
             )}
           </div>
 

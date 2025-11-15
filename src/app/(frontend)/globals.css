@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @layer base {
+
   h1,
   h2,
   h3,
@@ -118,6 +119,10 @@ body::selection {
   @apply grid grid-cols-4 gap-5 md:grid-cols-12;
 }
 
+.page-heading-1 {
+  @apply font-heading text-heading-2 leading-[2ex] md:text-[calc(64rem/16)];
+}
+
 .heading-1 {
   @apply font-heading text-heading-3 leading-[2ex] md:text-[calc(64rem/16)];
 }
@@ -127,11 +132,11 @@ body::selection {
 }
 
 .layout-form-grid {
-  form > div {
+  form>div {
     @apply grid grid-cols-2 gap-4 gap-y-0 md:gap-x-10;
   }
 
-  form > div > div:last-child {
+  form>div>div:last-child {
     @apply col-span-2;
   }
 }
@@ -186,6 +191,11 @@ body::selection {
   rotate: 45deg;
 }
 
+.icon-cross>* {
+  pointer-events: none;
+  user-select: none;
+}
+
 .icon-cross[aria-expanded='true'] {
   --ic-text-color: black;
 }
@@ -194,15 +204,15 @@ body::selection {
   @apply pointer-events-none transition-all duration-200 ease-in-out;
 }
 
-.icon-cross[aria-expanded='true'] > .cross-circ {
+.icon-cross[aria-expanded='true']>.cross-circ {
   width: 3px;
 }
 
-.icon-cross[aria-expanded='true'] > .cross-line {
+.icon-cross[aria-expanded='true']>.cross-line {
   @apply rotate-0;
 }
 
-.icon-cross > .cross-line {
+.icon-cross>.cross-line {
   @apply absolute inset-0 flex rotate-45 items-center justify-center;
 }
 
@@ -219,7 +229,7 @@ body::selection {
   rotate: 90deg;
 }
 
-.icon-cross > span.cross-circ {
+.icon-cross>span.cross-circ {
   width: calc(50% - 0.25rem);
   display: block;
   border-radius: 999px;
@@ -228,22 +238,22 @@ body::selection {
   background-color: var(--ic-text-color);
 }
 
-.icon-cross > span.cross-circ:nth-child(1) {
+.icon-cross>span.cross-circ:nth-child(1) {
   top: 0;
   right: 0;
 }
 
-.icon-cross > span.cross-circ:nth-child(2) {
+.icon-cross>span.cross-circ:nth-child(2) {
   left: 0;
   top: 0;
 }
 
-.icon-cross > span.cross-circ:nth-child(3) {
+.icon-cross>span.cross-circ:nth-child(3) {
   left: 0;
   bottom: 0;
 }
 
-.icon-cross > span.cross-circ:nth-child(4) {
+.icon-cross>span.cross-circ:nth-child(4) {
   right: 0;
   bottom: 0;
 }

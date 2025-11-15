@@ -16,7 +16,7 @@ export default function StudioPage() {
   return (
     <section>
       <Container className="absolute">
-        <h1 className="font-heading text-7xl">Studio</h1>
+        <h1 className="page-heading-1 font-heading">Studio</h1>
       </Container>
 
       <div className="-mt-24 aspect-[16/6] w-full bg-[#111]" />

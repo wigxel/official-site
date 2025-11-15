@@ -40,19 +40,22 @@ export const Card: React.FC<{
   return (
     <article
       ref={(ref) => card.register(ref)}
-      className={cn(
-        'overflow-hidden rounded-lg border-border bg-background hover:cursor-pointer',
-        className,
-      )}
+      className={cn('overflow-hidden border-border bg-background hover:cursor-pointer', className)}
     >
       <div className="relative w-full">
-        {!metaImage && <div className="">No image</div>}
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+        {!metaImage && (
+          <div className="flex aspect-square w-full items-center justify-center bg-gray-800 object-cover">
+            <span>No image</span>
+          </div>
+        )}
+        {metaImage && typeof metaImage !== 'string' && (
+          <Media resource={metaImage} size="33vw" imgClassName="aspect-square object-cover" />
+        )}
       </div>
 
       <div className="py-6">
         {props.doc && (
-          <div className="mb-2 text-xs">
+          <div className="mb-2 text-xs -mt-5 flex justify-end">
             <PostInfo post={props.doc} />
           </div>
         )}
@@ -68,7 +71,7 @@ export const Card: React.FC<{
         )}
 
         {description && (
-          <div className="mt-2 line-clamp-2 w-11/12 text-base font-normal opacity-70">
+          <div className="mt-2 line-clamp-2 w-11/12 text-sm md:text-base font-normal opacity-70">
             {description && <p>{sanitizedDescription}</p>}
           </div>
         )}
