@@ -138,7 +138,7 @@ const config = {
       fontFamily: {
         mono: ['var(--font-geist-mono)'],
         sans: ['var(--font-body)'],
-        heading: ['var(--font-display)']
+        heading: ['var(--font-display)'],
       },
       keyframes: {
         'accordion-down': {
@@ -156,12 +156,18 @@ const config = {
             {
               '--tw-prose-body': 'var(--text)',
               '--tw-prose-headings': 'var(--text)',
+              fontVariantNumeric: 'tabular-nums',
               h1: {
                 fontWeight: 'normal',
                 marginBottom: '0.25em',
+                fontFamily: 'var(--font-body)'
+              },
+              h2: {
+                fontFamily: 'var(--font-body)'
               },
               h3: {
                 lineHeight: '2.2ex',
+                fontFamily: 'var(--font-body)'
               },
             },
           ],

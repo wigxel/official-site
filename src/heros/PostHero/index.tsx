@@ -43,18 +43,18 @@ export const PostHero: React.FC<{
         <Media fill priority imgClassName="z-10 object-cover" resource={heroImage} />
       )}
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-1/2 bg-gradient-to-r from-black to-transparent" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-full bg-gradient-to-t from-black to-transparent md:w-1/2 md:bg-gradient-to-r" />
 
       <Container className="relative z-20">
-        <div className="flex aspect-[1340/500] w-full items-center p-[calc(115rem/16)] text-foreground">
-          <div className="flex flex-col gap-6 font-medium lg:w-1/2">
+        <div className="-mx-4 flex aspect-[405/541] items-end px-4 py-6 text-foreground md:mx-0 md:aspect-[1340/500] md:w-full md:items-center md:justify-start md:p-[calc(115rem/16)]">
+          <div className="flex w-full flex-col gap-2 font-medium md:gap-6 lg:w-1/2">
             <div className="text-xs">
               <PostInfo post={post} />
             </div>
 
             <div className="flex flex-col gap-4">
-              <hgroup className="mb-6 flex flex-col gap-3">
-                <h1 className="text-balance text-6xl tracking-tight">{title}</h1>
+              <hgroup className="flex flex-col gap-3 md:mb-6">
+                <h1 className="heading-1 text-balance">{title}</h1>
                 <p className="text-base">{description}</p>
               </hgroup>
 
@@ -77,7 +77,8 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
   const author_names = formatAuthors(authors.map((e) => ({ name: e.name })))
   const hasAuthors = authors && authors.length > 0 && author_names !== ''
 
-  const avatarClassName = "aspect-square w-6 md:w-8 rounded-full border border-white/[0.16] bg-black/60 object-cover";
+  const avatarClassName =
+    'aspect-square w-6 md:w-8 rounded-full border border-white/[0.16] bg-black/60 object-cover'
 
   const author_images = pipe(
     authors,
@@ -106,11 +107,7 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
               'pl-2 *:-mx-2': authors.length > 1,
             })}
           >
-            {author_images.length ? (
-              author_images
-            ) : (
-              <div className={avatarClassName} />
-            )}
+            {author_images.length ? author_images : <div className={avatarClassName} />}
           </div>
 
           <div className="flex flex-col gap-1 text-sm">

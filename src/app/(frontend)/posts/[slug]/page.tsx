@@ -41,7 +41,7 @@ type Args = {
   }>
 }
 
-export default async function Post({ params: paramsPromise }: Args) {
+export default async function PostPage({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { slug = '' } = await paramsPromise
   const url = `/posts/${slug}`
@@ -60,8 +60,8 @@ export default async function Post({ params: paramsPromise }: Args) {
 
       <PostHero post={post} />
 
-      <Container className="mt-[calc(72rem/16)] flex items-start lg:gap-12">
-        <aside className="sticky top-0 flex w-1/4 shrink flex-col gap-4">
+      <Container className="mt-12 items-start md:mt-[calc(72rem/16)] md:flex lg:gap-12">
+        <aside className="top-0 hidden w-1/4 shrink flex-col gap-4 md:sticky md:flex">
           <h4 className="pt-4 text-xs uppercase tracking-widest text-gray-300">Quick Glance</h4>
 
           <ul className="flex flex-col gap-3">
@@ -93,7 +93,7 @@ export default async function Post({ params: paramsPromise }: Args) {
           </ul>
         </aside>
 
-        <div className="w-full max-w-[70ch] flex-1 shrink-0 border-foreground">
+        <div className="w-full flex-1 shrink-0 border-foreground md:max-w-[70ch]">
           <div className="flex flex-col items-center gap-4">
             <RichText className="mx-auto max-w-3xl" data={post.content} enableGutter={false} />
           </div>

@@ -55,7 +55,7 @@ export const Card: React.FC<{
 
       <div className="py-6">
         {props.doc && (
-          <div className="mb-2 text-xs -mt-5 flex justify-end">
+          <div className="-mt-5 mb-2 flex justify-end text-xs">
             <PostInfo post={props.doc} />
           </div>
         )}
@@ -71,7 +71,7 @@ export const Card: React.FC<{
         )}
 
         {description && (
-          <div className="mt-2 line-clamp-2 w-11/12 text-sm md:text-base font-normal opacity-70">
+          <div className="mt-2 line-clamp-2 w-11/12 text-sm font-normal opacity-70 md:text-base">
             {description && <p>{sanitizedDescription}</p>}
           </div>
         )}
