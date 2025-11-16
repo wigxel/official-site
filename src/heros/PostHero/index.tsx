@@ -54,7 +54,7 @@ export const PostHero: React.FC<{
 
             <div className="flex flex-col gap-4">
               <hgroup className="flex flex-col gap-3 md:mb-6">
-                <h1 className="heading-1 text-balance">{title}</h1>
+                <h1 className="heading-1 text-balance !font-sans !font-medium">{title}</h1>
                 <p className="text-base">{description}</p>
               </hgroup>
 
@@ -131,7 +131,7 @@ export function PostInfo({ post }: { post: Pick<Post, 'postType' | 'publishedAt'
         </>
       ) : null}
 
-      <span>
+      <span className="text-muted-foreground">
         {O.fromNullable(publishedAt).pipe(
           O.flatMap((date) => DateParse.format(date, 'MMM do, yyyy')),
           O.map((e) => <span key={'date-content'}>{e}</span>),

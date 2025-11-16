@@ -1,8 +1,6 @@
 import type React from 'react'
 import { Card, type CardPostData } from '@/components/Card'
 
-import { Container } from '../container'
-
 export type Props = {
   posts: CardPostData[]
 }
@@ -11,20 +9,19 @@ export const CollectionArchive: React.FC<Props> = (props) => {
   const { posts } = props
 
   return (
-    <Container className="px-0 md:px-4 xl:px-8">
-      <div className="grid grid-cols-4 gap-8 sm:grid-cols-8 lg:grid-cols-12 lg:gap-8 xl:gap-x-8">
-        {posts?.map((result, index) => {
-          if (typeof result === 'object' && result !== null) {
-            return (
-              <div className="col-span-4" key={index}>
-                <Card className="h-full" doc={result} relationTo="posts" showCategories />
-              </div>
-            )
-          }
+    <div className="grid grid-cols-4 gap-8 sm:grid-cols-8 lg:grid-cols-12 lg:gap-8 xl:gap-x-8">
+      {posts?.map((result) => {
+        if (typeof result === 'object' && result !== null) {
+          return (
+            // @ts-expect-error Nothing really needs to know the way
+            <div className="col-span-4" key={result?.id}>
+              <Card className="h-full" doc={result} relationTo="posts" showCategories showAuthors />
+            </div>
+          )
+        }
 
-          return null
-        })}
-      </div>
-    </Container>
+        return null
+      })}
+    </div>
   )
 }

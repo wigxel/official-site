@@ -1,6 +1,8 @@
 import configPromise from '@payload-config'
+import { intersperse } from 'effect/Array'
 import type { Metadata } from 'next/types'
 import { getPayload } from 'payload'
+import { Card } from '@/components/Card'
 import { CollectionArchive } from '@/components/CollectionArchive'
 import { Container } from '@/components/container'
 import type { Category } from '@/payload-types'
@@ -27,8 +29,8 @@ export default async function Page() {
     <div className="md:py-24">
       <PageClient />
 
-      <Container className="grid grid-cols-1 grid-rows-1 gap-5 md:grid-cols-5 md:gap-0">
-        <section>
+      <Container className="wg-grid-1 md:gap-0">
+        <aside className="col-span-4">
           <div className="static mb-24 flex flex-col gap-6 md:sticky md:top-[var(--header-height)] md:mb-0">
             <h1 className="page-heading-1">Archives</h1>
 
@@ -48,10 +50,10 @@ export default async function Page() {
               })}
             </nav>
           </div>
-        </section>
+        </aside>
 
-        <section className="flex flex-col gap-24 border-foreground md:col-span-4">
-          <TopArticles />
+        <section className="col-span-full flex flex-col gap-24 border-foreground md:col-span-8 xl:max-w-screen-2xl">
+          <TopArticlesLayout1 />
           {categories_.map((e) => {
             return <CategoryCollectionArchive category={e} key={e.id} />
           })}
@@ -61,7 +63,7 @@ export default async function Page() {
   )
 }
 
-async function TopArticles() {
+async function TopArticlesLayout1() {
   const payload = await getPayload({ config: configPromise })
   const posts = await payload.find({
     collection: 'posts',
@@ -80,19 +82,55 @@ async function TopArticles() {
     },
   })
 
+  if (posts.docs.length === 0) {
+    return
+  }
+
+  const [first, ...rest] = posts.docs
+
   return (
     <div className="flex flex-col items-start gap-5">
-      <div className="w-full md:px-8">
-        <h2 className={articleHeadingClass}>Recent</h2>
+      <div className="">
+        <h2 className={articleHeadingClass}>
+          <span>Top</span>
+          <span>&nbsp;</span>
+          <span>Articles</span>
+        </h2>
       </div>
 
-      <CollectionArchive posts={posts.docs} />
+      <div className="px-0">
+        <div className="grid grid-cols-4 gap-8 sm:grid-cols-8 lg:grid-cols-12 lg:gap-8 xl:gap-x-8">
+          <div className="col-span-full md:col-span-6">
+            <Card className="h-full" doc={first} relationTo="posts" showCategories />
+          </div>
+
+          <div className="col-span-full flex flex-col gap-4 border-y border-white/[0.2] py-12 md:col-span-6 md:border-none md:py-0">
+            {rest.map((result) => {
+              if (typeof result === 'object' && result !== null) {
+                return (
+                  <div className="col-span-4" key={result.id}>
+                    <Card
+                      className="h-full"
+                      viewMode="landscape"
+                      doc={result}
+                      relationTo="posts"
+                      showCategories
+                    />
+                  </div>
+                )
+              }
+
+              return null
+            })}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
 
 const articleHeadingClass =
-  'w-full border-b text-end md:text-start border-white/[0.8] font-medium text-3xl font-heading md:border-none md:text-[calc(42rem/16)]'
+  'w-full text-end md:text-start border-white/[0.8] justify-between md:justify-start flex font-medium text-3xl font-sans md:border-none md:text-[calc(42rem/16)]'
 
 async function CategoryCollectionArchive({
   category,
@@ -127,9 +165,14 @@ async function CategoryCollectionArchive({
   }
 
   return (
-    <div className="flex flex-col items-start gap-5">
-      <div className="w-full px-0 md:px-8">
-        <h2 className={articleHeadingClass}>{category.title}</h2>
+    <div className="flex flex-col items-start gap-5 border-b border-white/[0.2] md:border-none">
+      <div className="w-full">
+        <h2 className={articleHeadingClass}>
+          {intersperse(
+            category.title.split(' ').map((e, index) => <span key={index}>{e}</span>),
+            <span>&nbsp;</span>,
+          )}
+        </h2>
       </div>
 
       <CollectionArchive posts={posts.docs} />
@@ -144,6 +187,7 @@ async function CategoryCollectionArchive({
 
 export function generateMetadata(): Metadata {
   return {
-    title: `Payload Website Template Posts`,
+    title: 'Archives',
+    description: 'Wigxel articles on principles on Design and Engineering for better UX',
   }
 }
