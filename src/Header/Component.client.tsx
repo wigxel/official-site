@@ -38,7 +38,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         <Container className="wg-grid-1 py-4 md:py-8">
           <Link href="/" className="col-span-3 flex justify-start md:relative md:col-span-4">
             <div className="text-white">
-              <Logo className="h-12 w-12 md:h-12 md:w-12" />
+              <SmartLogo />
             </div>
           </Link>
 
@@ -73,4 +73,33 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       </header>
     </MobileMenu>
   )
+}
+function SmartLogo() {
+  const [fillMode, setFillMode] = useState<'outline' | 'default'>('outline')
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const getHeaderHeight = () => {
+      const header = document.querySelector('header.sticky') ?? document.querySelector('header')
+      return (header as HTMLElement | null)?.offsetHeight ?? 0
+    }
+
+    const onScrollOrResize = () => {
+      const offset = window.pageYOffset ?? document.documentElement.scrollTop ?? 0
+      const headerHeight = getHeaderHeight()
+      // If the page offset is greater than the header height, use 'outline', otherwise 'default'
+      setFillMode(offset > headerHeight ? 'outline' : 'default')
+    }
+
+    onScrollOrResize()
+    window.addEventListener('scroll', onScrollOrResize, { passive: true })
+    window.addEventListener('resize', onScrollOrResize)
+    return () => {
+      window.removeEventListener('scroll', onScrollOrResize)
+      window.removeEventListener('resize', onScrollOrResize)
+    }
+  }, [])
+
+  return <Logo className="h-12 w-12 md:h-12 md:w-12" fillMode={fillMode} />
 }

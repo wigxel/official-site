@@ -13,6 +13,8 @@
     font-weight: unset;
   }
 
+  /*
+  --- Light Theme - Remove when designing for light mode
   :root {
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -49,9 +51,9 @@
     --error: 10 100% 86%;
 
     --header-height: 6.125rem;
-  }
+  }*/
 
-  [data-theme='dark'] {
+  :root {
     --background: 0 0 0;
     --foreground: 0.986 0.01 250;
 
@@ -231,7 +233,7 @@ body::selection {
 }
 
 .icon-cross > span.cross-circ {
-  width: calc(50% - 0.25rem);
+  width: calc(25%);
   display: block;
   border-radius: 999px;
   aspect-ratio: 1;
