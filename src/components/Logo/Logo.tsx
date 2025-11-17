@@ -2,7 +2,7 @@ import { cn } from '@/libs/utils'
 
 interface Props {
   className?: string
-  fillMode: 'outline' | 'default'
+  fillMode?: 'outline' | 'default'
 }
 
 export const Logo = (props: Props) => {
