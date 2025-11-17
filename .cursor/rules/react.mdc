@@ -1,0 +1,6 @@
+## React Patterns
+- Use Next.js Image component instead of HTML img tags
+- Prefer controlled components over uncontrolled ones
+- Implement proper error boundaries
+- Extract reusable hooks for shared logic
+- Prefer abortController.signal over removeEventListener

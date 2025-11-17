@@ -1,0 +1,5 @@
+## Convex Best Practices
+- Group related mutations and queries in the same file
+- Add descriptive comments for complex database operations
+- Validate all inputs with proper validators
+- Handle errors gracefully with appropriate messages

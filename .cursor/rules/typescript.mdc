@@ -1,0 +1,6 @@
+## TypeScript
+- Always type React components with explicit interfaces
+- Never use 'any' unless absolutely necessary
+- Use type instead of interface for simple type definitions
+- Ensure convex functions have proper type definitions
+- Prefer `type import` for Interfaces exported from modules
