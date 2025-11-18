@@ -1,3 +1,5 @@
+import { isNumber } from 'effect/Predicate'
+import { isNil } from 'lodash-es'
 import { safeObj } from '@/libs/data.helpers'
 import { O, pipe } from '@/libs/fp.helpers'
 import type { Media } from '@/payload-types'
@@ -32,6 +34,14 @@ export function expectMedia(value: unknown): O.Option<Media & { kind: 'media' }>
   }
 
   return O.fromNullable({ kind: 'media', ...value })
+}
+
+export function expectModel<T>(value: unknown): O.Option<T> {
+  if (isNil(value) || isNumber(value)) {
+    return O.none()
+  }
+
+  return O.fromNullable(value as T)
 }
 
 export function aspectRatio(value: unknown) {

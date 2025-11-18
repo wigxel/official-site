@@ -3,7 +3,6 @@
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { Autoplay, EffectCoverflow, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Media } from '@/components/Media'
 import type { Service } from '@/payload-types'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
@@ -12,7 +11,7 @@ import 'swiper/css'
 import 'swiper/css/effect-cards'
 import { ImageMedia } from '@/components/Media/ImageMedia'
 
-const Skiper47 = ({ images = [] }) => {
+const Skiper47 = ({ images = [] }: { images: Service[] }) => {
   return (
     <div className="flex h-full w-full items-center justify-center overflow-hidden">
       <Carousel_001 className="" images={images} loop autoplay />
@@ -20,11 +19,8 @@ const Skiper47 = ({ images = [] }) => {
   )
 }
 
-export { Skiper47 }
-
 const Carousel_001 = ({
   images,
-  className,
   showPagination = false,
   showNavigation = false,
   loop = true,
@@ -40,17 +36,23 @@ const Carousel_001 = ({
   spaceBetween?: number
 }) => {
   const css = `
+    .swiper-slide .group {
+      opacity: 0.35;
+    }
+
+    .swiper-slide.swiper-slide-active .group {
+      opacity: 1;
+    }
+
     .swiper-slide .group h3 + p {
-      visibility: hidden;
       transition-delay: 0;
       scale: 0.7;
     }
 
     .swiper-slide.swiper-slide-active .group h3 + p {
-      visibility: visible;
       transform: translateY(0);
       opacity: 100;
-      transition-delay: 500ms
+      transition-delay: 1000ms
       scale: 1;
       will-change: scale, opacity, transform;
     }
@@ -79,7 +81,7 @@ const Carousel_001 = ({
         loop={loop}
         slidesPerView={2.2}
         coverflowEffect={{
-          rotate: -16,
+          rotate: 0,
           stretch: 0,
           depth: 200,
           modifier: 1,
@@ -103,8 +105,8 @@ const Carousel_001 = ({
         className="Carousal_001"
         modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
       >
-        {images.map((image, index) => (
-          <SwiperSlide key={index} className="w-auto !overflow-visible md:!h-[100vw] md:!h-[680px]">
+        {images.map((image) => (
+          <SwiperSlide key={image.id} className="!h-[100vw] w-auto !overflow-visible md:!h-[680px]">
             <ServiceEntry entry={image} />
           </SwiperSlide>
         ))}
@@ -124,8 +126,6 @@ const Carousel_001 = ({
   )
 }
 
-export { Carousel_001 }
-
 function ServiceEntry({ entry }: { entry: Service }) {
   if (typeof entry.image === 'number') {
     console.warn('Expecting Media. Got number')
@@ -133,7 +133,7 @@ function ServiceEntry({ entry }: { entry: Service }) {
   }
 
   return (
-    <div className="group flex w-[80svw] flex-1 select-none flex-col items-center gap-8 md:w-full md:min-w-[25vw]">
+    <div className="transition-default group flex w-[80svw] flex-1 select-none flex-col items-center gap-8 md:w-full md:min-w-[25vw]">
       <div
         className="relative flex h-[calc(500rem/16)] w-full shrink-0 items-end justify-center overflow-hidden md:w-auto"
         style={{
@@ -152,3 +152,5 @@ function ServiceEntry({ entry }: { entry: Service }) {
     </div>
   )
 }
+
+export { Carousel_001, Skiper47 }

@@ -1,20 +1,15 @@
-import config from '@payload-config'
 import { range } from 'effect/Array'
-import { getPayload, RequiredDataFromCollectionSlug } from 'payload'
 import { Container } from '@/components/container'
-import { Media } from '@/components/Media'
 import { safeArray } from '@/libs/data.helpers'
-import { O, pipe } from '@/libs/fp.helpers'
-import { expectMedia } from '@/libs/payload/factories/media'
+import { Arr, O, pipe } from '@/libs/fp.helpers'
+import { expectModel } from '@/libs/payload/factories/media'
 import type { Service, WigxelCrafts } from '@/payload-types'
-import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { Skiper47 } from './carousel'
 
 export async function CraftsBlockComponent({
   subHeading,
   services: originalServices,
 }: WigxelCrafts) {
-  const payload = await getPayload({ config })
   const services = safeArray(originalServices)
     .map((e) => e.service)
     .filter((e) => e)
@@ -31,16 +26,13 @@ export async function CraftsBlockComponent({
 
       <div className="relative mt-[calc(60rem/16)] flex h-[680px] justify-between md:mt-[calc(120rem/16)]">
         <Skiper47
-          images={range(0, 2).flatMap(() => services)}
-          // .map((e) => expectMedia(e.image))
-          // .map((e) =>
-          //   pipe(
-          //     e,
-          //     O.map((e) => ({ src: getMediaUrl(e.url), alt: e.alt })),
-          //     O.getOrNull,
-          //   ),
-          // )
-          // .filter((e) => e)}
+          images={pipe(
+            range(0, 2),
+            Arr.flatMap(() => services),
+            Arr.map((e) => expectModel<Service>(e)),
+            O.all,
+            O.getOrElse(() => []),
+          )}
         />
       </div>
 
