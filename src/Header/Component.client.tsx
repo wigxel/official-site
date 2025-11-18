@@ -1,11 +1,15 @@
 'use client'
+import 'locomotive-scroll/dist/locomotive-scroll.css'
 import { useEffectEvent } from '@payloadcms/ui'
+import type LocomotiveScroll from 'locomotive-scroll'
+import { throttle } from 'lodash-es'
 import Link from 'next/link'
-import type React from 'react'
-import { startTransition, useEffect, useState } from 'react'
+import React, { startTransition, useEffect, useLayoutEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { createStore, useStore } from 'zustand'
 import { Container } from '@/components/container'
 import { Logo } from '@/components/Logo/Logo'
+import { cn } from '@/libs/utils'
 import type { Header } from '@/payload-types'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
 import { MobileMenu, MobileMenuTrigger } from './MobileMenu'
@@ -14,6 +18,10 @@ import { HeaderNav } from './Nav'
 interface HeaderClientProps {
   data: Header
 }
+
+const headerSharedState = createStore<{ sticky: boolean }>()(() => {
+  return { sticky: true }
+})
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   /* Storing the value in a useState to avoid hydration errors */
@@ -28,6 +36,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
       }
     })
   })
+
+  useObserveOffset()
+  useLocomotive()
+
   useEffect(() => {
     updateTheme()
   }, [])
@@ -35,12 +47,18 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   return (
     <MobileMenu>
       <header className="sticky top-0 z-20" {...(theme ? { 'data-theme': theme } : {})}>
-        <Container className="wg-grid-1 py-4 md:py-8">
-          <Link href="/" className="col-span-3 flex justify-start md:relative md:col-span-4">
-            <div className="text-white">
+        <BackgroundDrop />
+
+        <Container
+          className={cn('wg-grid-1 transition-default relative z-20 items-center', {
+            'py-4 md:py-4': true,
+          })}
+        >
+          <div className="col-span-3 flex justify-start text-white md:relative md:col-span-4">
+            <Link href="/" className="">
               <SmartLogo />
-            </div>
-          </Link>
+            </Link>
+          </div>
 
           <div className="col-span-3 hidden md:block"></div>
 
@@ -74,10 +92,36 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     </MobileMenu>
   )
 }
-function SmartLogo() {
-  const [fillMode, setFillMode] = useState<'outline' | 'default'>('outline')
 
-  useEffect(() => {
+function BackgroundDrop() {
+  const state = useStore(headerSharedState)
+
+  return (
+    <div
+      className={cn(
+        'transition-default not-sr-only absolute inset-x-0 bottom-full top-0 z-10 items-center bg-background',
+        {
+          'bottom-0': state.sticky,
+        },
+      )}
+    />
+  )
+}
+
+function SmartLogo() {
+  const store = useStore(headerSharedState)
+
+  return (
+    <Logo className="h-12 w-12 md:h-12 md:w-12" fillMode={store.sticky ? 'outline' : 'default'} />
+  )
+}
+
+function useObserveOffset() {
+  useLayoutEffect(() => {
+    const throttleUpdate = throttle((prop: { sticky: boolean }) => {
+      headerSharedState.setState(prop)
+    }, 500)
+
     if (typeof window === 'undefined') return
 
     const getHeaderHeight = () => {
@@ -88,8 +132,9 @@ function SmartLogo() {
     const onScrollOrResize = () => {
       const offset = window.pageYOffset ?? document.documentElement.scrollTop ?? 0
       const headerHeight = getHeaderHeight()
+
       // If the page offset is greater than the header height, use 'outline', otherwise 'default'
-      setFillMode(offset > headerHeight ? 'outline' : 'default')
+      throttleUpdate({ sticky: offset > headerHeight })
     }
 
     onScrollOrResize()
@@ -100,6 +145,47 @@ function SmartLogo() {
       window.removeEventListener('resize', onScrollOrResize)
     }
   }, [])
+}
 
-  return <Logo className="h-12 w-12 md:h-12 md:w-12" fillMode={fillMode} />
+function useLocomotive() {
+  const locoInstanceRef = React.useRef(null)
+
+  useEffect(() => {
+    const scrollRef = { current: document.body.querySelector('article') }
+
+    let scroll: LocomotiveScroll | null = null
+    ;(async () => {
+      if (!scrollRef.current) return
+      const LocomotiveScroll = (await import('locomotive-scroll')).default
+
+      // Initialize Locomotive( )Scroll
+      scroll = new LocomotiveScroll({
+        el: scrollRef.current,
+        smooth: true,
+        multiplier: 1, // scroll speed multiplier
+        class: 'is-reveal', // class added on elements when they enter viewport
+        smartphone: {
+          smooth: true,
+        },
+        tablet: {
+          smooth: true,
+          breakpoint: 1024,
+        },
+      })
+      // locoInstanceRef.current = scroll
+
+      // Example: listen to scroll events
+      scroll.on('scroll', (args) => {
+        console.log('Scrolling Jacked', args)
+        // args contains scroll direction, limit, current position, etc.
+        // console.log(args);
+      })
+    })()
+
+    // Important: clean up on unmount
+    return () => {
+      scroll?.destroy?.()
+      locoInstanceRef.current = null
+    }
+  }, [])
 }

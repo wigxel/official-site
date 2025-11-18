@@ -41,7 +41,7 @@ function ServiceEntry({ entry }: { entry: Service }) {
   }
 
   return (
-    <div className="border-debug flex w-[80svw] flex-1 flex-col items-center gap-8 md:w-full md:min-w-[25vw]">
+    <div className="flex w-[80svw] flex-1 flex-col items-center gap-8 md:w-full md:min-w-[25vw]">
       <div
         className="relative flex h-[calc(500rem/16)] w-full shrink-0 items-end justify-center overflow-hidden md:w-auto"
         style={{

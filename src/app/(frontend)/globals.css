@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --header-height: 6.125rem;
+}
+
 @layer base {
   h1,
   h2,

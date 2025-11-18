@@ -15,7 +15,7 @@ export async function PartnersBlockComponents() {
   return (
     <Container className="flex flex-col gap-10 py-[calc(160rem/16)]">
       <section className="wg-grid-1">
-        <div className="order-0 col-span-4 flex flex-col gap-6 md:col-span-3">
+        <div className="order-0 col-span-4 flex flex-col gap-6 md:col-span-5">
           <h2 className="heading-1 flex w-min flex-col whitespace-nowrap text-start">
             <span className="text-[0.6em] italic">The</span>
             <span>Great Wall</span>
@@ -28,7 +28,7 @@ export async function PartnersBlockComponents() {
           </h2>
         </div>
 
-        <div className="order-3 col-span-4 mt-24 md:order-1 md:col-span-6">
+        <div className="order-3 col-span-4 mt-24 md:order-1 md:col-span-6 md:mt-0">
           <div className="-mx-4 grid grid-cols-3 gap-px bg-white/10">
             {slots.map((index) => {
               const match = collabs.docs[index]
@@ -42,10 +42,7 @@ export async function PartnersBlockComponents() {
                   key={match.id}
                   className={`group relative aspect-square select-none overflow-hidden bg-background`}
                 >
-                  <div
-                    className="relative size-full transition-transform duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]"
-                    style={{ transformStyle: 'preserve-3d' }}
-                  >
+                  <div className="relative size-full transition-transform duration-500 [transform-style:preserve-3d]">
                     {/* Front */}
                     <div
                       className="absolute inset-0 flex items-center justify-center p-4"
@@ -74,12 +71,16 @@ export async function PartnersBlockComponents() {
           </div>
         </div>
 
-        <div className="order-1 col-span-4 flex flex-col items-start justify-end md:order-4 md:col-span-3">
-          <p className="me-0 ms-auto w-10/12 text-balance text-start text-xs opacity-70 md:w-full md:text-end md:text-base">
+        <div className="hidden md:order-3 md:col-span-2 md:block" />
+
+        <div className="order-1 col-span-4 flex flex-col items-start justify-end md:order-4 md:col-span-5">
+          <p className="me-0 ms-auto text-balance text-start text-xs opacity-70 md:w-full md:text-xl">
             We partner with executive brands and teams to transform brand strategy, positioning, and
             identity into a brand that aligns culture and accelerates growth.
           </p>
         </div>
+
+        {/*<div className="hidden md:order-6 md:col-span-2 md:block" />*/}
       </section>
     </Container>
   )
