@@ -127,7 +127,7 @@ async function TeamSection() {
         <span>Team</span>
       </h2>
 
-      <div className="grid-col-1 grid gap-x-5 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid-col-1 grid gap-x-5 gap-y-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {teamMembers.docs.map((member) => {
           return <TeamMemberCard key={member.id} doc={member} />
         })}
@@ -147,9 +147,9 @@ function TeamMemberCard(props: { doc: TeamMember }) {
         resource={props.doc.image}
       />
 
-      <div className="flex flex-row justify-between gap-3 md:flex-col md:justify-start">
-        <h3 className="border text-xl leading-[1ex] md:text-[calc(32rem/16)]">{props.doc.name}</h3>
-        <p className="text-xs uppercase leading-none opacity-75 md:text-base">{props.doc.role}</p>
+      <div className="flex flex-row justify-between -space-y-1 md:flex-col md:justify-start">
+        <h3 className="text-base">{props.doc.name}</h3>
+        <p className="text-xs leading-none opacity-50 md:text-base">{props.doc.role}</p>
       </div>
     </div>
   )

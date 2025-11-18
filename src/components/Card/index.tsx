@@ -104,11 +104,9 @@ export const Card: React.FC<{
           </div>
         )}
 
-        {description && (
-          <div className="mt-2 line-clamp-2 w-11/12 text-sm font-normal opacity-70 md:text-sm">
-            {description && <p>{sanitizedDescription}</p>}
-          </div>
-        )}
+        <div className="mt-2 line-clamp-2 min-h-[6ex] w-11/12 text-sm font-normal opacity-70 md:text-sm">
+          <p>{sanitizedDescription ?? ''}</p>
+        </div>
 
         {showAuthors && props.doc ? (
           <div className="mt-4">

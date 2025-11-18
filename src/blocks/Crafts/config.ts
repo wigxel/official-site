@@ -13,6 +13,12 @@ export const CraftsBlock: Block = {
   interfaceName: 'WigxelCrafts',
   fields: [
     {
+      type: 'text',
+      name: 'subHeading',
+      defaultValue: 'How we shape your vision into results.',
+      required: false,
+    },
+    {
       name: 'richText',
       type: 'richText',
       editor: lexicalEditor({
@@ -26,6 +32,18 @@ export const CraftsBlock: Block = {
         },
       }),
       label: false,
+    },
+    {
+      name: 'services',
+      type: 'array',
+      fields: [
+        {
+          name: 'service',
+          type: 'relationship',
+          relationTo: 'services',
+        },
+      ],
+      maxRows: 6,
     },
     linkGroup({
       appearances: ['default', 'outline'],

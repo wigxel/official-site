@@ -1,60 +1,62 @@
 import config from '@payload-config'
-import { getPayload } from 'payload'
+import { range } from 'effect/Array'
+import { getPayload, RequiredDataFromCollectionSlug } from 'payload'
 import { Container } from '@/components/container'
 import { Media } from '@/components/Media'
-import type { Service } from '@/payload-types'
+import { safeArray } from '@/libs/data.helpers'
+import { O, pipe } from '@/libs/fp.helpers'
+import { expectMedia } from '@/libs/payload/factories/media'
+import type { Service, WigxelCrafts } from '@/payload-types'
+import { getMediaUrl } from '@/utilities/getMediaUrl'
+import { Skiper47 } from './carousel'
 
-export async function CraftsBlockComponent() {
+export async function CraftsBlockComponent({
+  subHeading,
+  services: originalServices,
+}: WigxelCrafts) {
   const payload = await getPayload({ config })
-  const services = await payload.find({
-    collection: 'services',
-    limit: 4,
-  })
+  const services = safeArray(originalServices)
+    .map((e) => e.service)
+    .filter((e) => e)
 
   return (
-    <div className="max-w-full overflow-hidden">
+    <div data-scroll-target className="max-w-full overflow-hidden">
       <Container className="pt-[calc(160rem/16)]">
         <div className="flex flex-col md:w-min">
           <h2 className="heading-1 whitespace-nowrap">Our Crafts</h2>
 
-          <p className="text-start text-sm md:text-end md:text-base">
-            How we shape your vision into results.
-          </p>
+          <p className="text-start text-sm md:text-end md:text-base">{subHeading}</p>
         </div>
       </Container>
 
       <div className="relative mt-[calc(60rem/16)] flex h-[680px] justify-between md:mt-[calc(120rem/16)]">
-        <div className="left-0 top-0 flex gap-x-[10vw] md:absolute">
+        <Skiper47
+          images={range(0, 2).flatMap(() => services)}
+          // .map((e) => expectMedia(e.image))
+          // .map((e) =>
+          //   pipe(
+          //     e,
+          //     O.map((e) => ({ src: getMediaUrl(e.url), alt: e.alt })),
+          //     O.getOrNull,
+          //   ),
+          // )
+          // .filter((e) => e)}
+        />
+      </div>
+
+      {/*<div className="relative mt-[calc(60rem/16)] flex h-[680px] justify-between md:mt-[calc(120rem/16)]">
+        <div
+          data-scroll
+          data-scroll-direction="horizontal"
+          data-scroll-sticky
+          data-scroll-spped={0.6}
+          className="left-0 top-0 flex gap-x-[10vw] md:absolute"
+        >
           {services.docs.map((e) => {
             return <ServiceEntry key={e.id} entry={e} />
           })}
         </div>
-      </div>
-    </div>
-  )
-}
-
-function ServiceEntry({ entry }: { entry: Service }) {
-  if (typeof entry.image === 'number') {
-    console.warn('Expecting Media. Got number')
-    return
-  }
-
-  return (
-    <div className="flex w-[80svw] flex-1 flex-col items-center gap-8 md:w-full md:min-w-[25vw]">
-      <div
-        className="relative flex h-[calc(500rem/16)] w-full shrink-0 items-end justify-center overflow-hidden md:w-auto"
-        style={{
-          aspectRatio: (entry?.image?.width || 1) / (entry.image?.height || 1),
-        }}
-      >
-        <Media fill resource={entry.image} />
-      </div>
-
-      <div className="flex h-[calc(148rem/16)] w-full flex-col gap-3 text-center">
-        <h3 className="heading-2">{entry.title}</h3>
-        <p className="font-body text-sm opacity-70">{entry.sub_text}</p>
-      </div>
+      </div>*/}
     </div>
   )
 }

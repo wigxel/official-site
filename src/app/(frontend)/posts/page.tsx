@@ -188,7 +188,7 @@ async function TopArticlesLayout1() {
 }
 
 const articleHeadingClass =
-  'w-full text-end md:text-start border-white/[0.8] justify-between md:justify-start flex font-medium text-3xl font-sans md:border-none md:text-[calc(42rem/16)]'
+  'w-full text-end md:text-start border-white/[0.8] justify-between md:justify-start flex font-medium text-3xl font-sans md:border-none md:text-[calc(32rem/16)]'
 
 async function CategoryCollectionArchive({
   category,

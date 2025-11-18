@@ -459,6 +459,7 @@ export interface LandingHero {
  * via the `definition` "WigxelCrafts".
  */
 export interface WigxelCrafts {
+  subHeading?: string | null;
   richText?: {
     root: {
       type: string;
@@ -474,6 +475,12 @@ export interface WigxelCrafts {
     };
     [k: string]: unknown;
   } | null;
+  services?:
+    | {
+        service?: (number | null) | Service;
+        id?: string | null;
+      }[]
+    | null;
   links?:
     | {
         link: {
@@ -501,6 +508,34 @@ export interface WigxelCrafts {
   id?: string | null;
   blockName?: string | null;
   blockType: 'crafts';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  sub_text?: string | null;
+  description: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  image?: (number | null) | Media;
+  authors?: (number | User)[] | null;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -763,34 +798,6 @@ export interface ArchiveBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "services".
- */
-export interface Service {
-  id: number;
-  title: string;
-  sub_text?: string | null;
-  description: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
-  image?: (number | null) | Media;
-  authors?: (number | User)[] | null;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1288,7 +1295,14 @@ export interface LandingHeroSelect<T extends boolean = true> {
  * via the `definition` "WigxelCrafts_select".
  */
 export interface WigxelCraftsSelect<T extends boolean = true> {
+  subHeading?: T;
   richText?: T;
+  services?:
+    | T
+    | {
+        service?: T;
+        id?: T;
+      };
   links?:
     | T
     | {
