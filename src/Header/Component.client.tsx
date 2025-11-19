@@ -155,31 +155,13 @@ function useLocomotive() {
 
     let scroll: LocomotiveScroll | null = null
     ;(async () => {
-      if (!scrollRef.current) return
+      const el = scrollRef.current
+      if (!el) return
+
       const LocomotiveScroll = (await import('locomotive-scroll')).default
 
       // Initialize Locomotive( )Scroll
-      scroll = new LocomotiveScroll({
-        el: scrollRef.current,
-        smooth: true,
-        multiplier: 1, // scroll speed multiplier
-        class: 'is-reveal', // class added on elements when they enter viewport
-        smartphone: {
-          smooth: true,
-        },
-        tablet: {
-          smooth: true,
-          breakpoint: 1024,
-        },
-      })
-      // locoInstanceRef.current = scroll
-
-      // Example: listen to scroll events
-      scroll.on('scroll', (args) => {
-        console.log('Scrolling Jacked', args)
-        // args contains scroll direction, limit, current position, etc.
-        // console.log(args);
-      })
+      scroll = new LocomotiveScroll({})
     })()
 
     // Important: clean up on unmount
