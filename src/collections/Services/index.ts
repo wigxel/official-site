@@ -20,6 +20,12 @@ export const Services: CollectionConfig = {
       required: true,
     },
     {
+      name: 'caption',
+      type: 'textarea',
+      required: false,
+      maxLength: 70,
+    },
+    {
       name: 'sub_text',
       type: 'textarea',
       required: false,

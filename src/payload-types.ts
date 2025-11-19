@@ -516,6 +516,7 @@ export interface WigxelCrafts {
 export interface Service {
   id: number;
   title: string;
+  caption?: string | null;
   sub_text?: string | null;
   description: {
     root: {
@@ -1415,6 +1416,7 @@ export interface PostsSelect<T extends boolean = true> {
  */
 export interface ServicesSelect<T extends boolean = true> {
   title?: T;
+  caption?: T;
   sub_text?: T;
   description?: T;
   image?: T;

@@ -135,7 +135,7 @@ body::selection {
 }
 
 .heading-2 {
-  @apply font-heading text-[calc(46rem/16)] leading-[2ex];
+  @apply font-heading text-[calc(32rem/16)] leading-[2ex] md:text-[calc(46rem/16)];
 }
 
 .layout-form-grid {

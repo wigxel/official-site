@@ -15,16 +15,14 @@ export async function CraftsBlockComponent({
     .filter((e) => e)
 
   return (
-    <div data-scroll-target className="max-w-full overflow-hidden">
+    <div data-scroll-target className="max-w-full">
       <Container className="pt-[calc(160rem/16)]">
         <div className="flex flex-col md:w-min">
           <h2 className="heading-1 whitespace-nowrap">Our Crafts</h2>
-
-          <p className="text-start text-sm md:text-end md:text-base">{subHeading}</p>
         </div>
       </Container>
 
-      <div className="relative mt-[calc(60rem/16)] flex h-[680px] justify-between md:mt-[calc(120rem/16)]">
+      <div className="relative mt-[calc(60rem/16)] flex justify-between md:mt-[calc(120rem/16)]">
         <Skiper47
           images={pipe(
             range(0, 2),

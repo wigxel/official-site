@@ -1,15 +1,17 @@
 'use client'
-
 import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { Autoplay, EffectCoverflow, Navigation, Pagination } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, type SwiperRef, SwiperSlide } from 'swiper/react'
+import { useMediaQuery } from 'usehooks-ts'
 import type { Service } from '@/payload-types'
 import 'swiper/css/effect-coverflow'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 import 'swiper/css'
 import 'swiper/css/effect-cards'
+import React from 'react'
 import { ImageMedia } from '@/components/Media/ImageMedia'
+import { cn } from '@/libs/utils'
 
 const Skiper47 = ({ images = [] }: { images: Service[] }) => {
   return (
@@ -22,10 +24,9 @@ const Skiper47 = ({ images = [] }: { images: Service[] }) => {
 const Carousel_001 = ({
   images,
   showPagination = false,
-  showNavigation = false,
   loop = true,
-  autoplay = false,
   spaceBetween = 40,
+  autoplay = false,
 }: {
   images: Service[]
   className?: string
@@ -35,94 +36,71 @@ const Carousel_001 = ({
   autoplay?: boolean
   spaceBetween?: number
 }) => {
-  const css = `
-    .swiper-slide .group {
-      opacity: 0.35;
-    }
-
-    .swiper-slide.swiper-slide-active .group {
-      opacity: 1;
-    }
-
-    .swiper-slide .group h3 + p {
-      transition-delay: 0;
-      scale: 0.7;
-    }
-
-    .swiper-slide.swiper-slide-active .group h3 + p {
-      transform: translateY(0);
-      opacity: 100;
-      transition-delay: 1000ms
-      scale: 1;
-      will-change: scale, opacity, transform;
-    }
-  `
+  const isMobile = useMediaQuery('(max-width: 600px)', { defaultValue: true })
+  const swipeRef = React.useRef<SwiperRef>(null)
 
   return (
-    <>
-      <style jsx scoped>
-        {css}
-      </style>
-
-      <Swiper
-        spaceBetween={spaceBetween}
-        autoplay={
-          autoplay
-            ? {
+    <Swiper
+      spaceBetween={spaceBetween}
+      ref={swipeRef}
+      autoplay={
+        autoplay
+          ? {
               delay: 5000,
               disableOnInteraction: true,
               pauseOnMouseEnter: true,
             }
-            : false
-        }
-        effect="coverflow"
-        grabCursor={true}
-        centeredSlides={true}
-        loop={loop}
-        slidesPerView={2.2}
-        coverflowEffect={{
-          rotate: 0,
-          stretch: 0,
-          depth: 200,
-          modifier: 1,
-          slideShadows: false,
-        }}
-        pagination={
-          showPagination
-            ? {
+          : false
+      }
+      effect="coverflow"
+      grabCursor={true}
+      centeredSlides={true}
+      loop={loop}
+      slidesPerView={isMobile ? 2 : 2.2}
+      coverflowEffect={{
+        rotate: 0,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: false,
+      }}
+      pagination={
+        showPagination
+          ? {
               clickable: true,
             }
-            : false
-        }
-        navigation={
-          showNavigation
-            ? {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
+          : false
+      }
+      navigation={
+        isMobile
+          ? {
+              nextEl: '.swp-button-next',
+              prevEl: '.swp-button-prev',
             }
-            : false
-        }
-        className="Carousal_001"
-        modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
-      >
-        {images.map((image) => (
-          <SwiperSlide key={image.id} className="!h-[100vw] w-auto !overflow-visible md:!h-[680px]">
-            <ServiceEntry entry={image} />
-          </SwiperSlide>
-        ))}
+          : false
+      }
+      data-scroll-container
+      className="relative h-[60vh]"
+      modules={[EffectCoverflow, Autoplay, Pagination, Navigation]}
+    >
+      {images.map((image) => (
+        <SwiperSlide
+          key={image.id}
+          data-mobile={isMobile}
+          className="group !h-[100vw] w-auto !overflow-visible md:!h-[680px]"
+          onClick={() => {}}
+        >
+          <ServiceEntry entry={image} />
+        </SwiperSlide>
+      ))}
 
-        {showNavigation && (
-          <div>
-            <div className="swiper-button-next after:hidden">
-              <ChevronRightIcon className="h-6 w-6 text-white" />
-            </div>
-            <div className="swiper-button-prev after:hidden">
-              <ChevronLeftIcon className="h-6 w-6 text-white" />
-            </div>
-          </div>
-        )}
-      </Swiper>
-    </>
+      {isMobile && (
+        <div className="absolute inset-x-0 bottom-1/3 z-20 flex items-center justify-between overflow-visible">
+          <div className="swp-button-prev px-4 text-2xl text-white after:hidden">←</div>
+          <div className="swp-button-next px-4 text-2xl text-white after:hidden">→</div>
+        </div>
+      )}
+    </Swiper>
   )
 }
 
@@ -133,20 +111,31 @@ function ServiceEntry({ entry }: { entry: Service }) {
   }
 
   return (
-    <div className="transition-default group flex w-[80svw] flex-1 select-none flex-col items-center gap-8 md:w-full md:min-w-[25vw]">
+    <div
+      className={cn(
+        'transition-default flex flex-1 select-none flex-col items-center gap-8 md:w-full md:min-w-[25vw]',
+      )}
+    >
       <div
-        className="relative flex h-[calc(500rem/16)] w-full shrink-0 items-end justify-center overflow-hidden md:w-auto"
-        style={{
-          aspectRatio: (entry?.image?.width || 1) / (entry.image?.height || 1),
-        }}
+        className={cn(
+          'transtion-default relative flex aspect-square w-[100vw] shrink-0 scale-[0.40] items-end justify-center opacity-[0.35] md:h-[calc(500rem/16)] md:w-auto md:scale-[0.85]',
+          'group-[.swiper-slide-active]:scale-100 group-[.swiper-slide-active]:opacity-100 md:group-[.swiper-slide-active]:scale-110',
+        )}
       >
         <ImageMedia fill resource={entry.image} blurDataURL={null} />
       </div>
 
-      <div className="flex h-[calc(148rem/16)] w-full flex-col items-center gap-4 text-center">
-        <h3 className="heading-2">{entry.title}</h3>
-        <p className="transition-default font-body max-w-lg translate-y-1/2 text-pretty text-center text-base opacity-0">
-          {entry.sub_text}
+      <div className="h-[calc(148rem/16)] w-[100vw] flex-col items-center gap-4 text-center group-[.swiper-slide-active]:flex data-[mobile=true]:hidden md:relative md:!flex md:w-full md:scale-100">
+        <h3 className={cn('heading-2 opacity-0', 'group-[.swiper-slide-active]:opacity-100')}>
+          {entry.title}
+        </h3>
+        <p
+          className={cn(
+            'transition-default font-body max-w-xs translate-y-1/2 text-pretty text-center text-base opacity-0 delay-0',
+            'group-[.swiper-slide-active]:delay-[2000ms] group-[.swiper-slide-active]:delay-[2000ms] group-[.swiper-slide-active]:translate-y-0 group-[.swiper-slide-active]:opacity-100',
+          )}
+        >
+          {entry.caption}
         </p>
       </div>
     </div>

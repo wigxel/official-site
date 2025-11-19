@@ -147,9 +147,9 @@ function TeamMemberCard(props: { doc: TeamMember }) {
         resource={props.doc.image}
       />
 
-      <div className="flex flex-row justify-between -space-y-1 md:flex-col md:justify-start">
+      <div className="flex flex-row justify-between md:flex-col md:justify-start md:-space-y-1">
         <h3 className="text-base">{props.doc.name}</h3>
-        <p className="text-xs leading-none opacity-50 md:text-base">{props.doc.role}</p>
+        <p className="text-base opacity-50">{props.doc.role}</p>
       </div>
     </div>
   )
