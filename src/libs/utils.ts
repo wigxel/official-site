@@ -90,7 +90,7 @@ export const getCssVarInPx = (document: Document, varName: string): number => {
 }
 
 export function scrollTo({ offset }: { offset: number }) {
-  const headerHeight = getCssVarInPx(document, '--header-height');
+  const headerHeight = getCssVarInPx(document, '--header-height')
   const targetOffset = offset - headerHeight
 
   animate(window.scrollY, targetOffset, {

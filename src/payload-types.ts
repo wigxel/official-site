@@ -251,6 +251,7 @@ export interface Post {
   };
   publishedAt?: string | null;
   postType?: ('article' | 'video') | null;
+  readTime?: string | null;
   authors?: (number | User)[] | null;
   populatedAuthors?:
     | {
@@ -1396,6 +1397,7 @@ export interface PostsSelect<T extends boolean = true> {
       };
   publishedAt?: T;
   postType?: T;
+  readTime?: T;
   authors?: T;
   populatedAuthors?:
     | T

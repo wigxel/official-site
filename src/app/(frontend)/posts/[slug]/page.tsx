@@ -120,7 +120,7 @@ function* readHeadings(content: Post['content']) {
 
       yield {
         id: crypto.randomUUID(),
-        title: safeStr(first.value)
+        title: safeStr(first.value),
       }
     }
   }

@@ -9,6 +9,8 @@ import { safeReference } from '@/libs/utils'
 import type { Post } from '@/payload-types'
 import { formatAuthors } from '@/utilities/formatAuthors'
 import { cn } from '@/utilities/ui'
+import { intersperse } from 'effect/Array'
+import { isNil } from 'lodash-es'
 
 export const PostHero: React.FC<{
   post: Post
@@ -118,18 +120,13 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
   )
 }
 
-export function PostInfo({ post }: { post: Pick<Post, 'postType' | 'publishedAt'> }) {
-  const { postType, publishedAt } = post
+export function PostInfo({ post }: { post: Pick<Post, 'postType' | 'publishedAt' | 'readTime'> }) {
+  const { postType, publishedAt, readTime } = post
 
   return (
     <div className="flex gap-2">
-      {postType ? (
-        <>
-          <span className="capitalize text-brand-yellow-500">{postType ?? 'No Post Type'}</span>
-          <span className="h-4 w-px bg-white/[0.5]" />
-        </>
-      ) : null}
-
+      <span className="capitalize text-brand-yellow-500">{postType ?? 'No Post Type'}</span>
+      <span className="h-4 w-px bg-white/[0.5]" />
       <span className="text-muted-foreground">
         {O.fromNullable(publishedAt).pipe(
           O.flatMap((date) => DateParse.format(date, 'MMM do, yyyy')),
@@ -137,6 +134,8 @@ export function PostInfo({ post }: { post: Pick<Post, 'postType' | 'publishedAt'
           O.getOrNull,
         )}
       </span>
+      <span className="h-4 w-px bg-white/[0.5]" />
+      <span className="text-muted-foreground">{readTime}</span>
     </div>
   )
 }

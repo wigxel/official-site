@@ -201,6 +201,16 @@ export const Posts: CollectionConfig<'posts'> = {
       ],
     },
     {
+      name: 'readTime',
+      type: 'text',
+      label: 'Estimated read duration',
+      admin: {
+        position: 'sidebar',
+      },
+      required: false,
+      defaultValue: '-- mins',
+    },
+    {
       name: 'authors',
       type: 'relationship',
       admin: {
