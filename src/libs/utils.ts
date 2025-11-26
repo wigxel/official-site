@@ -1,6 +1,7 @@
 import clsx, { type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 import { O } from './fp.helpers'
+import { animate } from 'motion/react'
 
 export const cn = (...args: ClassValue[]) => twMerge(clsx(...args))
 
@@ -72,6 +73,7 @@ export function slugify(
 export const getCssVarInPx = (document: Document, varName: string): number => {
   const rootStyle = getComputedStyle(document.documentElement)
   const rawValue = rootStyle.getPropertyValue(varName)?.trim() || ''
+
   if (!rawValue) return 0
 
   if (rawValue.endsWith('px')) {
@@ -85,4 +87,18 @@ export const getCssVarInPx = (document: Document, varName: string): number => {
 
   // fallback: try to parse whatever value is provided (e.g., number)
   return parseFloat(rawValue) || 0
+}
+
+export function scrollTo({ offset }: { offset: number }) {
+  const headerHeight = getCssVarInPx(document, '--header-height');
+  const targetOffset = offset - headerHeight
+
+  animate(window.scrollY, targetOffset, {
+    type: 'tween',
+    duration: 0.6,
+    ease: [0.22, 1, 0.36, 1],
+    onUpdate: (v) => {
+      window.scrollTo(0, v)
+    },
+  })
 }

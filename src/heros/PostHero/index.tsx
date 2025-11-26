@@ -43,7 +43,7 @@ export const PostHero: React.FC<{
         <Media fill priority imgClassName="z-10 object-cover" resource={heroImage} />
       )}
 
-      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-full bg-gradient-to-t from-black to-transparent md:w-1/2 md:bg-gradient-to-r" />
+      <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-full bg-gradient-to-t from-black to-transparent md:w-10/12 md:bg-gradient-to-r" />
 
       <Container className="relative z-20">
         <div className="-mx-4 flex aspect-[405/541] items-end px-4 py-6 text-foreground md:mx-0 md:aspect-[1340/500] md:w-full md:items-center md:justify-start md:p-[calc(115rem/16)]">
@@ -77,8 +77,7 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
   const author_names = formatAuthors(authors.map((e) => ({ name: e.name })))
   const hasAuthors = authors && authors.length > 0 && author_names !== ''
 
-  const avatarClassName =
-    'aspect-square w-6 md:w-8 rounded-full border border-white/[0.16] bg-black/60 object-cover'
+  const avatarClassName = 'aspect-square w-6 md:w-8 rounded-full bg-black/60 object-cover'
 
   const author_images = pipe(
     authors,

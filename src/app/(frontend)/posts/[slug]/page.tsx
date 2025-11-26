@@ -9,11 +9,12 @@ import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { PayloadRedirects } from '@/components/PayloadRedirects'
 import RichText from '@/components/RichText'
 import { PostHero } from '@/heros/PostHero'
-import { serialNo } from '@/libs/data.helpers'
+import { safeStr, serialNo } from '@/libs/data.helpers'
 import type { Post } from '@/payload-types'
 import { generateMeta } from '@/utilities/generateMeta'
 import { cn } from '@/utilities/ui'
 import PageClient from './page.client'
+import { ArticleContext } from './quick-glance'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -61,37 +62,7 @@ export default async function PostPage({ params: paramsPromise }: Args) {
       <PostHero post={post} />
 
       <Container className="mt-12 items-start md:mt-[calc(72rem/16)] md:flex lg:gap-12">
-        <aside className="top-0 hidden w-1/4 shrink flex-col gap-4 md:sticky md:flex">
-          <h4 className="pt-4 text-xs uppercase tracking-widest text-gray-300">Quick Glance</h4>
-
-          <ul className="flex flex-col gap-3">
-            {Array.from(readHeadings(post.content)).map((e, index) => {
-              return (
-                <li
-                  key={e.id}
-                  className={cn('group flex flex-col gap-px', {
-                    'text-foreground opacity-60': index > 0,
-                  })}
-                  data-active={index === 0}
-                >
-                  <span className="flex items-center gap-1 tabular-nums">
-                    <span className="inline-block border-b-2 border-accent-foreground group-data-[active=true]:w-[48px]" />
-                    <span className="group-data-[active=true]:text-accent-foreground">
-                      {serialNo(index + 1)}.&nbsp;
-                    </span>
-                  </span>
-                  <span
-                    className={cn(
-                      'cursor-pointer text-base hover:underline group-data-[active=true]:text-gray-200',
-                    )}
-                  >
-                    {e.title ?? 'No Content'}
-                  </span>
-                </li>
-              )
-            })}
-          </ul>
-        </aside>
+        <ArticleContext headings={Array.from(readHeadings(post.content))} />
 
         <div className="w-full flex-1 shrink-0 border-foreground md:max-w-[70ch]">
           <div className="flex flex-col items-center gap-4">
@@ -149,8 +120,7 @@ function* readHeadings(content: Post['content']) {
 
       yield {
         id: crypto.randomUUID(),
-        title: first.value,
-        we: 'mo',
+        title: safeStr(first.value)
       }
     }
   }

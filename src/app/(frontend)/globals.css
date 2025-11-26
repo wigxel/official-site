@@ -7,6 +7,7 @@
 }
 
 @layer base {
+
   h1,
   h2,
   h3,
@@ -139,11 +140,11 @@ body::selection {
 }
 
 .layout-form-grid {
-  form > div {
+  form>div {
     @apply grid grid-cols-2 gap-4 gap-y-0 md:gap-x-10;
   }
 
-  form > div > div:last-child {
+  form>div>div:last-child {
     @apply col-span-2;
   }
 }
@@ -198,7 +199,7 @@ body::selection {
   rotate: 45deg;
 }
 
-.icon-cross > * {
+.icon-cross>* {
   pointer-events: none;
   user-select: none;
 }
@@ -211,15 +212,15 @@ body::selection {
   @apply pointer-events-none transition-all duration-200 ease-in-out;
 }
 
-.icon-cross[aria-expanded='true'] > .cross-circ {
+.icon-cross[aria-expanded='true']>.cross-circ {
   width: 3px;
 }
 
-.icon-cross[aria-expanded='true'] > .cross-line {
+.icon-cross[aria-expanded='true']>.cross-line {
   @apply rotate-0;
 }
 
-.icon-cross > .cross-line {
+.icon-cross>.cross-line {
   @apply absolute inset-0 flex rotate-45 items-center justify-center;
 }
 
@@ -236,7 +237,7 @@ body::selection {
   rotate: 90deg;
 }
 
-.icon-cross > span.cross-circ {
+.icon-cross>span.cross-circ {
   width: calc(25%);
   display: block;
   border-radius: 999px;
@@ -245,26 +246,42 @@ body::selection {
   background-color: var(--ic-text-color);
 }
 
-.icon-cross > span.cross-circ:nth-child(1) {
+.icon-cross>span.cross-circ:nth-child(1) {
   top: 0;
   right: 0;
 }
 
-.icon-cross > span.cross-circ:nth-child(2) {
+.icon-cross>span.cross-circ:nth-child(2) {
   left: 0;
   top: 0;
 }
 
-.icon-cross > span.cross-circ:nth-child(3) {
+.icon-cross>span.cross-circ:nth-child(3) {
   left: 0;
   bottom: 0;
 }
 
-.icon-cross > span.cross-circ:nth-child(4) {
+.icon-cross>span.cross-circ:nth-child(4) {
   right: 0;
   bottom: 0;
 }
 
 .transition-default {
   @apply transition-all duration-200 ease-in-out;
+}
+
+.article-image-block {
+  @apply flex flex-col items-start text-end;
+}
+
+.article-image-block>div {
+  @apply mt-0 w-full;
+}
+
+.article-image-block>div p {
+  @apply text-[0.8em] !italic;
+}
+
+.article-image-block>div>picture {
+  @apply mb-0;
 }

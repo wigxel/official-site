@@ -7,7 +7,8 @@ export function LandingContactBlockComponent(props: RequiredDataFromCollectionSl
 
   return (
     <Container
-      className="relative flex flex-col gap-10 overflow-hidden bg-[#F7F7F7] pb-[14vw] pt-[calc(96rem/16)] text-gray-950"
+      id="contact-form"
+      className="relative flex flex-col gap-10 bg-[#F7F7F7] pb-[14vw] pt-[calc(96rem/16)] text-gray-950"
       style={{
         '--heading-color': '#DFDFDF',
       }}
@@ -19,12 +20,29 @@ export function LandingContactBlockComponent(props: RequiredDataFromCollectionSl
               CONTACT
             </h2>
 
-            <h2 className="z-2 not-sr-only absolute inset-0 z-0 flex flex-col justify-between font-heading text-[19.5vw] leading-[1.4ex] text-black md:hidden">
-              <span className="self-start">REACH</span>
-              <span className="self-end">OUT</span>
+            <h2
+              data-scroll-section
+              className="z-2 not-sr-only pointer-events-none absolute inset-0 z-0 flex flex-col justify-between font-heading text-[19.5vw] leading-[1.4ex] text-blue-500 md:hidden"
+            >
+              <span
+                data-scroll
+                data-scroll-direction="horizontal"
+                data-scroll-speed={-0.01}
+                className="-ml-2 self-start"
+              >
+                Reach
+              </span>
+              <span
+                data-scroll
+                data-scroll-direction="horizontal"
+                data-scroll-speed={0.01}
+                className="self-end"
+              >
+                Out
+              </span>
             </h2>
 
-            <p className="text-balance text-xl md:text-2xl">
+            <p className="text-pretty text-sm md:text-2xl">
               We work with a limited number of brands each season to ensure deep creative focus and
               full immersion.
             </p>

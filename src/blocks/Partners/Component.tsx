@@ -16,15 +16,30 @@ export async function PartnersBlockComponents() {
     <Container className="flex flex-col gap-10 py-[calc(160rem/16)]">
       <section className="wg-grid-1">
         <div className="order-0 col-span-4 flex flex-col gap-6 md:col-span-5">
-          <h2 className="heading-1 flex w-min flex-col whitespace-nowrap text-start">
-            <span className="text-[0.6em] italic">The</span>
-            <span>Great Wall</span>
+          <h2 className="heading-1 hidden w-min flex-col whitespace-nowrap text-start md:flex">
+            <span className="translate-x-[24%] text-[0.6em] italic">Our</span>
+            <span className="relative leading-none">
+              Great <span className="opacity-0">Wall</span>
+              <span className="absolute bottom-0 translate-x-[-160%] translate-y-[-29%] align-super text-[0.6em] italic">
+                Wall
+              </span>
+            </span>
             <span className="text-end">
               <span className="text-center align-text-top text-[0.6em] font-thin italic">
                 of&nbsp;&nbsp;
               </span>
               Clients
             </span>
+          </h2>
+
+          <h2 className="heading-1 flex flex-col gap-2 whitespace-nowrap text-start leading-none md:hidden">
+            <span className="relative col-span-2 text-[20.4svw] leading-[1ex]">awesome</span>
+            <div className="flex justify-between font-sans">
+              <span className="text-start text-[0.45em] font-light tracking-tight">Partners</span>
+              <span className="flex flex-col text-end text-[0.45em] font-light tracking-tight">
+                Clients
+              </span>
+            </div>
           </h2>
         </div>
 
@@ -74,7 +89,7 @@ export async function PartnersBlockComponents() {
         <div className="hidden md:order-3 md:col-span-2 md:block" />
 
         <div className="order-1 col-span-4 flex flex-col items-start justify-end md:order-4 md:col-span-5">
-          <p className="me-0 ms-auto text-balance text-start text-xs opacity-70 md:w-full md:text-xl">
+          <p className="me-0 ms-auto text-pretty text-start text-xs opacity-70 md:w-full md:text-xl">
             We partner with executive brands and teams to transform brand strategy, positioning, and
             identity into a brand that aligns culture and accelerates growth.
           </p>
