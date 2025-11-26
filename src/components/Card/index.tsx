@@ -73,7 +73,7 @@ export const Card: React.FC<{
           <Media
             resource={metaImage}
             size="33vw"
-            imgClassName="aspect-[318/250] group-hover:scale-110 group-hover:rotate-[3deg] transition-default object-cover"
+            imgClassName="aspect-[318/250] group-hover:scale-110 transition-default object-cover"
           />
         )}
       </div>

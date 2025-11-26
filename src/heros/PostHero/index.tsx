@@ -1,3 +1,4 @@
+import { intersperse } from 'effect/Array'
 import Image from 'next/image'
 import type React from 'react'
 import { Container } from '@/components/container'
@@ -9,13 +10,11 @@ import { safeReference } from '@/libs/utils'
 import type { Post } from '@/payload-types'
 import { formatAuthors } from '@/utilities/formatAuthors'
 import { cn } from '@/utilities/ui'
-import { intersperse } from 'effect/Array'
-import { isNil } from 'lodash-es'
 
 export const PostHero: React.FC<{
   post: Post
 }> = ({ post }) => {
-  const { heroImage, description, title } = post
+  const { heroImage, title } = post
 
   return (
     <div className="relative flex items-end bg-gray-500">
@@ -57,7 +56,6 @@ export const PostHero: React.FC<{
             <div className="flex flex-col gap-4">
               <hgroup className="flex flex-col gap-3 md:mb-6">
                 <h1 className="heading-1 text-balance !font-sans !font-medium">{title}</h1>
-                <p className="text-base">{description}</p>
               </hgroup>
 
               {/*Authors*/}
@@ -123,19 +121,28 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
 export function PostInfo({ post }: { post: Pick<Post, 'postType' | 'publishedAt' | 'readTime'> }) {
   const { postType, publishedAt, readTime } = post
 
-  return (
-    <div className="flex gap-2">
-      <span className="capitalize text-brand-yellow-500">{postType ?? 'No Post Type'}</span>
-      <span className="h-4 w-px bg-white/[0.5]" />
-      <span className="text-muted-foreground">
+  const entries = intersperse(
+    [
+      postType && (
+        <span key="post-type" className="capitalize text-brand-yellow-500">
+          {postType ?? 'No Post Type'}
+        </span>
+      ),
+      <span key="date" className="text-muted-foreground">
         {O.fromNullable(publishedAt).pipe(
           O.flatMap((date) => DateParse.format(date, 'MMM do, yyyy')),
           O.map((e) => <span key={'date-content'}>{e}</span>),
           O.getOrNull,
         )}
-      </span>
-      <span className="h-4 w-px bg-white/[0.5]" />
-      <span className="text-muted-foreground">{readTime}</span>
-    </div>
+      </span>,
+      readTime && (
+        <span key="readTime" className="text-muted-foreground">
+          {readTime}
+        </span>
+      ),
+    ],
+    <span className="h-4 w-px bg-white/[0.5]" />,
   )
+
+  return <div className="flex gap-2">{entries}</div>
 }
