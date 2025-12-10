@@ -849,6 +849,14 @@ export interface Portfolio {
     url?: string | null;
   };
   layout?: (CaseStudyBriefBlock | ImageGroupBlock | CenterContentBlock)[] | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (number | null) | Media;
+    description?: string | null;
+  };
   slug?: string | null;
   slugLock?: boolean | null;
   next?: (number | null) | Portfolio;
@@ -1615,6 +1623,13 @@ export interface PortfoliosSelect<T extends boolean = true> {
         caseStudyBrief?: T | CaseStudyBriefBlockSelect<T>;
         imageGroup?: T | ImageGroupBlockSelect<T>;
         centerContent?: T | CenterContentBlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
       };
   slug?: T;
   slugLock?: T;

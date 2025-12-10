@@ -3,7 +3,7 @@ import RichText from '@/components/RichText'
 import type { CenterContentBlock } from '@/payload-types'
 import { ComponentTag } from '../ComponentTag'
 
-export async function CenterContentComponent(props: CenterContentBlock) {
+export function CenterContentComponent(props: CenterContentBlock) {
   return (
     <>
       <ComponentTag>#CenterContent</ComponentTag>

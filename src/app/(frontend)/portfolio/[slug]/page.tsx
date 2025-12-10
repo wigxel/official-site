@@ -2,6 +2,7 @@
 import configPromise from '@payload-config'
 import { intersperse } from 'effect/Array'
 import { capitalize } from 'effect/String'
+import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -16,6 +17,7 @@ import { safeArray, safeStr } from '@/libs/data.helpers'
 import { O, pipe } from '@/libs/fp.helpers'
 import { expectMedia } from '@/libs/payload/factories/media'
 import { safeReference } from '@/libs/utils'
+import { generateMeta } from '@/utilities/generateMeta'
 
 type Props = {
   params: Promise<{
@@ -237,4 +239,14 @@ export default async function CaseStudy({ params: paramsPromise }: Props) {
       )}
     </section>
   )
+}
+
+export async function generateMetadata({ params: paramsPromise }: Props): Promise<Metadata> {
+  const { slug = 'portfolio' } = await paramsPromise
+
+  const page = await queryPageBySlug({
+    slug,
+  })
+
+  return generateMeta({ doc: page })
 }

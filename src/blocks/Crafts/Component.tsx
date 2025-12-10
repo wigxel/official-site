@@ -6,7 +6,7 @@ import { expectModel } from '@/libs/payload/factories/media'
 import type { Service, WigxelCrafts } from '@/payload-types'
 import { Skiper47 } from './carousel'
 
-export async function CraftsBlockComponent({
+export function CraftsBlockComponent({
   subHeading,
   services: originalServices,
 }: WigxelCrafts) {

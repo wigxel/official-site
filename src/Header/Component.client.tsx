@@ -65,22 +65,22 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           <div className="flex justify-end md:col-span-5 md:hidden">
             {typeof window !== 'undefined'
               ? createPortal(
-                  <div className="fixed right-4 top-4 z-[11100] md:hidden">
-                    <MobileMenuTrigger asChild>
-                      <button type="button" className="icon-cross">
-                        <span className="cross-circ"></span>
-                        <span className="cross-circ"></span>
-                        <span className="cross-circ"></span>
-                        <span className="cross-circ"></span>
-                        <span className="cross-line">
-                          <span className="cross-line-1"></span>
-                          <span className="cross-line-2"></span>
-                        </span>
-                      </button>
-                    </MobileMenuTrigger>
-                  </div>,
-                  document.body,
-                )
+                <div className="fixed right-4 top-4 z-[11100] md:hidden">
+                  <MobileMenuTrigger asChild>
+                    <button type="button" className="icon-cross">
+                      <span className="cross-circ"></span>
+                      <span className="cross-circ"></span>
+                      <span className="cross-circ"></span>
+                      <span className="cross-circ"></span>
+                      <span className="cross-line">
+                        <span className="cross-line-1"></span>
+                        <span className="cross-line-2"></span>
+                      </span>
+                    </button>
+                  </MobileMenuTrigger>
+                </div>,
+                document.body,
+              )
               : null}
           </div>
 
@@ -154,15 +154,15 @@ function useLocomotive() {
     const scrollRef = { current: document.body.querySelector('article') }
 
     let scroll: LocomotiveScroll | null = null
-    ;(async () => {
-      const el = scrollRef.current
-      if (!el) return
+      ; (async () => {
+        const el = scrollRef.current
+        if (!el) return
 
-      const LocomotiveScroll = (await import('locomotive-scroll')).default
+        const LocomotiveScroll = (await import('locomotive-scroll')).default
 
-      // Initialize Locomotive( )Scroll
-      scroll = new LocomotiveScroll({})
-    })()
+        // Initialize Locomotive( )Scroll
+        scroll = new LocomotiveScroll({})
+      })()
 
     // Important: clean up on unmount
     return () => {
