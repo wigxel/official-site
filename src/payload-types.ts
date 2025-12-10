@@ -832,6 +832,7 @@ export interface Collaboration {
  */
 export interface Portfolio {
   id: number;
+  kind?: string | null;
   name: string;
   basic: {
     short_description: string;
@@ -1599,6 +1600,7 @@ export interface CollaborationsSelect<T extends boolean = true> {
  * via the `definition` "portfolios_select".
  */
 export interface PortfoliosSelect<T extends boolean = true> {
+  kind?: T;
   name?: T;
   basic?:
     | T

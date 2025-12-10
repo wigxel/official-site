@@ -38,6 +38,17 @@ export const Portofolios: CollectionConfig = {
   },
   fields: [
     {
+      name: "kind",
+      type: "text",
+      defaultValue: "portfolio",
+      required: false,
+      access: {
+        create: () => true,
+        read: () => true,
+        update: () => false
+      }
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,

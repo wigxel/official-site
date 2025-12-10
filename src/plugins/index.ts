@@ -8,7 +8,7 @@ import type { GenerateTitle, GenerateURL } from '@payloadcms/plugin-seo/types'
 import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import type { Plugin } from 'payload'
 import { revalidateRedirects } from '@/hooks/revalidateRedirects'
-import type { Page, Post } from '@/payload-types'
+import type { Page, Portfolio, Post } from '@/payload-types'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 import { searchFields } from '@/search/fieldOverrides'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -17,8 +17,12 @@ const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Wigxel Design Agency` : 'Wigxel Design Agency'
 }
 
-const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
+const generateURL: GenerateURL<Post | Page | Portfolio> = ({ doc }) => {
   const url = getServerSideURL()
+
+  if ('kind' in doc && doc.kind === 'portfolio' && doc?.slug) {
+    return `${url}/portfolio/${doc.slug}`;
+  }
 
   return doc?.slug ? `${url}/${doc.slug}` : url
 }
