@@ -6,10 +6,7 @@ import { expectModel } from '@/libs/payload/factories/media'
 import type { Service, WigxelCrafts } from '@/payload-types'
 import { Skiper47 } from './carousel'
 
-export function CraftsBlockComponent({
-  subHeading,
-  services: originalServices,
-}: WigxelCrafts) {
+export function CraftsBlockComponent({ subHeading, services: originalServices }: WigxelCrafts) {
   const services = safeArray(originalServices)
     .map((e) => e.service)
     .filter((e) => e)

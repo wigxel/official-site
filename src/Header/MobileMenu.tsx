@@ -1,7 +1,15 @@
 import { Slot } from '@radix-ui/react-slot'
-import type React from 'react'
-import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from 'react'
+import { useEffectEvent } from '@radix-ui/react-use-effect-event'
+import React, {
+  createContext,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import { createPortal } from 'react-dom'
+import { cn } from '@/libs/utils'
 
 type MenuContextValue = {
   open: boolean
@@ -9,7 +17,11 @@ type MenuContextValue = {
   toggle: () => void
 }
 
-const MenuContext = createContext<MenuContextValue | null>(null)
+export const MenuContext = createContext<MenuContextValue>({
+  open: true,
+  setOpen: () => {},
+  toggle: () => {},
+})
 
 /**
  * MobileMenu
@@ -45,7 +57,7 @@ export const MobileMenuTrigger: React.FC<
     <Component
       aria-expanded={ctx.open}
       aria-controls="mobile-menu-content"
-      // @ts-expect-error Edese
+      // @ts-expect-error Not a problem
       onClick={() => {
         ctx.toggle()
       }}
@@ -67,16 +79,38 @@ export const MobileMenuContent: React.FC<{
   style?: React.CSSProperties
 }> = ({ children, id = 'mobile-menu-content', className, style }) => {
   const ctx = useContext(MenuContext)
-  if (!ctx) {
-    throw new Error('Content must be used within a MobileMenu')
-  }
 
   const containerRef = useRef<HTMLDivElement | null>(null)
   const previouslyFocusedRef = useRef<HTMLElement | null>(null)
 
-  useEffect(() => {
-    if (!ctx.open) return
+  const onKeyDown = useEffectEvent((e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      ctx.setOpen(false)
+    } else if (e.key === 'Tab') {
+      // Basic focus trap
+      if (!containerRef.current) return
+      const focusables = Array.from(
+        containerRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
+        ),
+      ).filter(Boolean)
+      if (focusables.length === 0) {
+        e.preventDefault()
+        return
+      }
+      const first = focusables[0]
+      const last = focusables[focusables.length - 1]
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault()
+        last.focus()
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault()
+        first.focus()
+      }
+    }
+  })
 
+  useEffect(() => {
     // Save previously focused element
     previouslyFocusedRef.current = document.activeElement as HTMLElement | null
 
@@ -94,46 +128,10 @@ export const MobileMenuContent: React.FC<{
       }
     }
 
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        ctx.setOpen(false)
-      } else if (e.key === 'Tab') {
-        // Basic focus trap
-        if (!containerRef.current) return
-        const focusables = Array.from(
-          containerRef.current.querySelectorAll<HTMLElement>(
-            'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])',
-          ),
-        ).filter(Boolean)
-        if (focusables.length === 0) {
-          e.preventDefault()
-          return
-        }
-        const first = focusables[0]
-        const last = focusables[focusables.length - 1]
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault()
-          last.focus()
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault()
-          first.focus()
-        }
-      }
-    }
-
-    const onPointerDown = (e: PointerEvent) => {
-      if (!containerRef.current) return
-      if (!containerRef.current.contains(e.target as Node)) {
-        ctx.setOpen(false)
-      }
-    }
-
     document.addEventListener('keydown', onKeyDown)
-    document.addEventListener('pointerdown', onPointerDown)
 
     return () => {
       document.removeEventListener('keydown', onKeyDown)
-      document.removeEventListener('pointerdown', onPointerDown)
       // restore focus
       try {
         previouslyFocusedRef.current?.focus()
@@ -141,9 +139,17 @@ export const MobileMenuContent: React.FC<{
         // ignore
       }
     }
-  }, [ctx, ctx.open])
+  }, [])
 
-  if (!ctx.open) return null
+  useEffect(() => {
+    if (ctx.open) {
+      document.body.style.overflow = 'hidden'
+      document.body.style.height = '100vh'
+    } else {
+      document.body.style.overflow = 'unset'
+      document.body.style.height = 'auto'
+    }
+  }, [ctx.open])
 
   // Create a simple portal target
   const portalRoot = typeof document !== 'undefined' ? document.body : null
@@ -153,9 +159,14 @@ export const MobileMenuContent: React.FC<{
     <div
       role="dialog"
       aria-modal="true"
+      data-show={ctx.open}
       id={id}
       ref={containerRef}
-      className={className}
+      className={cn(
+        className,
+        'transition-default',
+        'translate-x-full data-[show=true]:translate-x-0',
+      )}
       style={{
         position: 'fixed',
         inset: 0,

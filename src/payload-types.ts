@@ -553,9 +553,27 @@ export interface WigxelProjects {
  * via the `definition` "WigxelPartners".
  */
 export interface WigxelPartners {
+  items?:
+    | {
+        item?: (number | null) | Collaboration;
+        id?: string | null;
+      }[]
+    | null;
   id?: string | null;
   blockName?: string | null;
   blockType: 'partners';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collaborations".
+ */
+export interface Collaboration {
+  id: number;
+  name: string;
+  collab_type?: ('Client' | 'Partners') | null;
+  logo?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -811,18 +829,6 @@ export interface TeamMember {
   role: string;
   image?: (number | null) | Media;
   image_landscape?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "collaborations".
- */
-export interface Collaboration {
-  id: number;
-  name: string;
-  collab_type?: ('Client' | 'Partners') | null;
-  logo?: (number | null) | Media;
   updatedAt: string;
   createdAt: string;
 }
@@ -1345,6 +1351,12 @@ export interface WigxelProjectsSelect<T extends boolean = true> {
  * via the `definition` "WigxelPartners_select".
  */
 export interface WigxelPartnersSelect<T extends boolean = true> {
+  items?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

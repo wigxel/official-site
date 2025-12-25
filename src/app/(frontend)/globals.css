@@ -114,7 +114,7 @@ html[data-theme='light'] {
 }
 
 body::selection {
-  background-color: oklch(from cyan l c h / 0.8);
+  background-color: white;
   color: #111;
 }
 
@@ -154,13 +154,28 @@ body::selection {
   transition-timing-function: ease-in-out;
 }
 
+.line-pattern {
+  height: 4vh;
+  background-image: url('/assets/line-pattern.png');
+  background-size: auto 4vh;
+  background-repeat: repeat-x;
+}
+
 .patterned-bg {
+  background-repeat: repeat;
+  background-color: #0b0b0b;
+  background-size: 140px 140px;
+  background-image: url('/assets/repeat-bg-01.png');
+  background-blend-mode: darken;
+}
+
+/*.patterned-bg {
   background-repeat: repeat;
   background-color: #0b0b0b;
   background-size: 1696px 608px;
   background-image: url('/assets/repeat-bg.png');
   background-blend-mode: darken;
-}
+}*/
 
 .next-project-button {
   --next-color: hsl(var(--foreground));

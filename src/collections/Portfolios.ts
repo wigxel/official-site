@@ -1,4 +1,10 @@
-import { MetaDescriptionField, MetaImageField, MetaTitleField, OverviewField, PreviewField } from '@payloadcms/plugin-seo/fields'
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
 import type { CollectionConfig } from 'payload'
 import { BriefBlock } from '@/blocks/CaseStudy/Brief/config'
 import { CenterContentBlock } from '@/blocks/CaseStudy/CenterParagraph/config'
@@ -38,15 +44,15 @@ export const Portofolios: CollectionConfig = {
   },
   fields: [
     {
-      name: "kind",
-      type: "text",
-      defaultValue: "portfolio",
+      name: 'kind',
+      type: 'text',
+      defaultValue: 'portfolio',
       required: false,
       access: {
         create: () => true,
         read: () => true,
-        update: () => false
-      }
+        update: () => false,
+      },
     },
     {
       name: 'name',

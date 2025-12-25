@@ -1,31 +1,37 @@
-import config from '@payload-config'
 import { range } from 'effect/Array'
-import { getPayload } from 'payload'
 import { Container } from '@/components/container'
 import { Media } from '@/components/Media'
+import { safeArray } from '@/libs/data.helpers'
+import { O } from '@/libs/fp.helpers'
+import { expectModel } from '@/libs/payload/factories/media'
+import type { Collaboration, WigxelPartners } from '@/payload-types'
 
-export async function PartnersBlockComponents() {
-  const payload = await getPayload({ config })
-
-  const collabs = await payload.find({
-    collection: 'collaborations',
-    limit: 4,
-  })
+export async function PartnersBlockComponents(props: WigxelPartners) {
+  const collabs = safeArray(props.items).map((e) => expectModel<Collaboration>(e.item))
 
   return (
     <Container className="flex flex-col gap-10 py-[calc(160rem/16)]">
       <section className="wg-grid-1">
         <div className="order-0 col-span-4 flex flex-col gap-6 md:col-span-5">
           <h2 className="heading-1 hidden w-min flex-col whitespace-nowrap text-start md:flex">
-            <span className="translate-x-[24%] text-[0.6em] italic">Our</span>
+            <span
+              className="translate-x-[24%] text-[0.6em] italic"
+              style={{
+                top: '28px',
+                position: 'relative',
+              }}
+            >
+              Our
+            </span>
             <span className="relative leading-none">
               Great <span className="opacity-0">Wall</span>
-              <span className="absolute bottom-0 translate-x-[-160%] translate-y-[-29%] align-super text-[0.6em] italic">
+              <span className="absolute bottom-0 translate-x-[-174%] translate-y-[16%] align-super text-[0.6em] italic">
                 Wall
               </span>
             </span>
+
             <span className="text-end">
-              <span className="text-center align-text-top text-[0.6em] font-thin italic">
+              <span className="relative top-[-20%] text-center align-text-top text-[0.6em] font-thin italic">
                 of&nbsp;&nbsp;
               </span>
               Clients
@@ -43,14 +49,16 @@ export async function PartnersBlockComponents() {
           </h2>
         </div>
 
-        <div className="order-3 col-span-4 mt-24 md:order-1 md:col-span-6 md:mt-0">
+        <div className="order-3 col-span-4 mt-24 md:order-2 md:col-span-12 md:mt-0">
           <div className="-mx-4 grid grid-cols-3 gap-px bg-white/10">
             {slots.map((index) => {
-              const match = collabs.docs[index]
+              const safeMatch = collabs[index]
 
-              if (!match) {
+              if (O.isNone(safeMatch)) {
                 return <section key={index} className={`aspect-square bg-background`} />
               }
+
+              const match = safeMatch.value
 
               return (
                 <section
@@ -63,7 +71,11 @@ export async function PartnersBlockComponents() {
                       className="absolute inset-0 flex items-center justify-center p-4"
                       style={{ WebkitBackfaceVisibility: 'hidden', backfaceVisibility: 'hidden' }}
                     >
-                      <Media resource={match.logo} imgClassName="object-contain" />
+                      <Media
+                        resource={match.logo}
+                        blurDataURL={null}
+                        imgClassName="object-contain md:max-w-[14rem]"
+                      />
                     </div>
 
                     {/* Back */}
@@ -86,10 +98,10 @@ export async function PartnersBlockComponents() {
           </div>
         </div>
 
-        <div className="hidden md:order-3 md:col-span-2 md:block" />
+        <div className="hidden md:order-3 md:col-span-5 md:block" />
 
-        <div className="order-1 col-span-4 flex flex-col items-start justify-end md:order-4 md:col-span-5">
-          <p className="me-0 ms-auto text-pretty text-start text-xs opacity-70 md:w-full md:text-xl">
+        <div className="order-1 col-span-4 flex flex-col items-start justify-end md:order-1 md:col-span-4">
+          <p className="me-0 ms-auto text-pretty text-start text-xs md:w-full md:text-sm">
             We partner with executive brands and teams to transform brand strategy, positioning, and
             identity into a brand that aligns culture and accelerates growth.
           </p>

@@ -1,5 +1,4 @@
 'use client'
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
 import { Autoplay, EffectCoverflow, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, type SwiperRef, SwiperSlide } from 'swiper/react'
 import { useMediaQuery } from 'usehooks-ts'
@@ -16,7 +15,7 @@ import { cn } from '@/libs/utils'
 const Skiper47 = ({ images = [] }: { images: Service[] }) => {
   return (
     <div className="flex h-full w-full items-center justify-center overflow-hidden">
-      <Carousel_001 className="" images={images} loop autoplay />
+      <Carousel_001 className="" images={images} loop autoplay={true} />
     </div>
   )
 }
@@ -46,7 +45,7 @@ const Carousel_001 = ({
       autoplay={
         autoplay
           ? {
-              delay: 5000,
+              delay: 2000,
               disableOnInteraction: true,
               pauseOnMouseEnter: true,
             }

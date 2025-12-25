@@ -21,7 +21,7 @@ const generateURL: GenerateURL<Post | Page | Portfolio> = ({ doc }) => {
   const url = getServerSideURL()
 
   if ('kind' in doc && doc.kind === 'portfolio' && doc?.slug) {
-    return `${url}/portfolio/${doc.slug}`;
+    return `${url}/portfolio/${doc.slug}`
   }
 
   return doc?.slug ? `${url}/${doc.slug}` : url

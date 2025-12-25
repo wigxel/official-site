@@ -1,0 +1,50 @@
+{
+  "$schema": "./node_modules/turbo/schema.json",
+  "globalEnv": [
+    "!VERCEL_*"
+  ],
+  "tasks": {
+    "build": {
+      "inputs": [
+        "$TURBO_DEFAULT$"
+      ],
+      "env": [],
+      "outputs": [
+        ".next/**"
+      ],
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "type-check": {
+      "dependsOn": [
+        "^type-check"
+      ]
+    },
+    "lint": {
+      "dependsOn": [
+        "^lint"
+      ]
+    },
+    "format": {
+      "cache": true
+    },
+    "no:cyclic": {
+      "cache": true,
+      "persistent": false
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
+    },
+    "test": {
+      "cache": true,
+      "persistent": false
+    },
+    "e2e": {}
+  },
+  "envMode": "loose"
+}
