@@ -56,9 +56,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           })}
         >
           <div className="col-span-3 flex justify-start text-white md:relative md:col-span-4">
-            <Link href="/" className="">
-              <SmartLogo />
-            </Link>
+            <MainLogo />
           </div>
 
           <div className="col-span-3 hidden md:block"></div>
@@ -73,6 +71,16 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         </Container>
       </header>
     </MobileMenu>
+  )
+}
+
+function MainLogo() {
+  const state = useStore(headerSharedState)
+
+  return (
+    <Link href="/" className="">
+      <SmartLogo className={cn('delay-0', { '!h-12 !w-12 delay-200': !state.sticky })} />
+    </Link>
   )
 }
 
@@ -123,11 +131,14 @@ function BackgroundDrop() {
   )
 }
 
-function SmartLogo() {
+function SmartLogo({ className }: { className: string }) {
   const store = useStore(headerSharedState)
 
   return (
-    <Logo className="h-12 w-12 md:h-12 md:w-12" fillMode={store.sticky ? 'outline' : 'default'} />
+    <Logo
+      className={cn('transition-default h-6 w-6 md:h-12 md:w-12', className)}
+      fillMode={store.sticky ? 'outline' : 'default'}
+    />
   )
 }
 
