@@ -82,17 +82,7 @@ const ToggleButtonMemo = React.memo(function ToggleButton() {
   return createPortal(
     <div className="fixed z-[11100] md:hidden">
       <MobileMenuTrigger asChild>
-        {/*<button type="button" className="icon-cross">
-          <span className="cross-circ"></span>
-          <span className="cross-circ"></span>
-          <span className="cross-circ"></span>
-          <span className="cross-circ"></span>
-          <span className="cross-line">
-            <span className="cross-line-1"></span>
-            <span className="cross-line-2"></span>
-          </span>
-        </button>*/}
-        <button type="button" className="fixed right-6 top-7 group self-center text-white">
+        <button type="button" className="group fixed right-6 top-7 self-center text-white">
           <span className="sr-only">Menu</span>
           <span className="not-sr-only flex h-[2ch] gap-0 overflow-hidden font-sans text-sm uppercase">
             {range(0, 3).map((_, index) => {
@@ -100,7 +90,7 @@ const ToggleButtonMemo = React.memo(function ToggleButton() {
                 <span
                   key={menu_text[0][index]}
                   className={cn(
-                    'transition-default flex flex-col font-semibold gap-1 text-center *:h-[1.5ch] *:w-[1.5ch]',
+                    'transition-default flex flex-col gap-1 text-center *:h-[1.5ch] *:w-[1.5ch]',
                     'group-aria-expanded:-translate-y-full group-aria-expanded:text-black',
                   )}
                   style={{ transitionDelay: `${index * 50}ms` }}
@@ -179,15 +169,15 @@ function useLocomotive() {
     const scrollRef = { current: document.body.querySelector('article') }
 
     let scroll: LocomotiveScroll | null = null
-      ; (async () => {
-        const el = scrollRef.current
-        if (!el) return
+    ;(async () => {
+      const el = scrollRef.current
+      if (!el) return
 
-        const LocomotiveScroll = (await import('locomotive-scroll')).default
+      const LocomotiveScroll = (await import('locomotive-scroll')).default
 
-        // Initialize Locomotive( )Scroll
-        scroll = new LocomotiveScroll({})
-      })()
+      // Initialize Locomotive( )Scroll
+      scroll = new LocomotiveScroll({})
+    })()
 
     // Important: clean up on unmount
     return () => {

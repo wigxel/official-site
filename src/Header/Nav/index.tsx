@@ -1,10 +1,12 @@
 'use client'
 import { init, last } from 'effect/Array'
 import { pipe } from 'effect/Function'
-import { motion } from 'motion/react'
+import { isNil } from 'lodash-es'
+import { motion, stagger, type Variants } from 'motion/react'
 import Link from 'next/link'
-import React from 'react'
-import { CMSLink } from '@/components/Link'
+import { usePathname } from 'next/navigation'
+import React, { useContext } from 'react'
+import { CMSLink, useLink } from '@/components/Link'
 import { O } from '@/libs/fp.helpers'
 import { cn } from '@/libs/utils'
 import type { Header as HeaderType } from '@/payload-types'
@@ -58,46 +60,27 @@ export const HeaderNav = ({ data }: { data: HeaderType }) => {
 }
 
 function MobileNav({ items: initial_items }: { items: any[] }) {
-  const ctx = React.useContext(MenuContext)
+  const ctx = useContext(MenuContext)
 
   return (
-    <MobileMenuContent className="text-black">
-      <div className="absolute start-4 top-4 flex items-center justify-center text-sm font-semibold text-black">
+    <MobileMenuContent className="overflow-hidden text-black">
+      <div className="absolute start-4 top-4 flex items-center justify-center text-sm tracking-[0.2ch] text-black">
         WIGXEL STUDIO
       </div>
 
       <nav className="flex flex-1 flex-col justify-center p-4 pt-[var(--header-height)]">
-        <ul className="flex flex-col gap-4">
-          <MobileMenuTrigger asChild>
-            <motion.li className="odd:text-">
-              <Link
-                href="/"
-                className="font-heading text-7xl font-thin focus:outline-none focus-visible:underline focus-visible:outline-none sm:text-7xl dark:text-background"
-              >
-                Home
-              </Link>
-            </motion.li>
-          </MobileMenuTrigger>
+        <motion.ul
+          variants={menuListVariant}
+          initial="hide"
+          whileInView={'show'}
+          className="flex flex-col gap-4"
+        >
+          <MenuLink index={0} label="Home" url="/" />
 
           {initial_items.map(({ link }, index) => {
-            return (
-              <MobileMenuTrigger key={link.label} asChild>
-                <motion.li
-                  className={cn('odd:text-en opacity-20', {
-                    '': ctx.open,
-                  })}
-                  style={{ textIndent: (index + 1) * 20 }}
-                >
-                  <CMSLink
-                    {...link}
-                    className="font-heading text-7xl font-thin focus:outline-none focus-visible:underline focus-visible:outline-none sm:text-7xl dark:text-background"
-                    appearance="inline"
-                  />
-                </motion.li>
-              </MobileMenuTrigger>
-            )
+            return <MenuLink {...link} index={index + 1} key={link.label} />
           })}
-        </ul>
+        </motion.ul>
       </nav>
 
       <div className="flex items-end justify-between p-4 text-sm">
@@ -108,6 +91,80 @@ function MobileNav({ items: initial_items }: { items: any[] }) {
           <span>4.844938, 6.974811</span>
         </p>
       </div>
+
+      <div className="wavyline">
+        <div className="wavyline-content" />
+      </div>
     </MobileMenuContent>
   )
 }
+
+const menuListVariant: Variants = {
+  show: {
+    transition: { delayChildren: stagger(0.02) },
+  },
+  hide: {
+    transition: { delayChildren: 0 },
+  },
+}
+
+const menuItemVariant: Variants = {
+  hide: {
+    x: `var(--indent)`,
+    opacity: 0,
+    transition: {
+      delay: 0,
+    },
+  },
+  show: {
+    x: 0,
+    opacity: 100,
+    transition: {
+      ease: 'easeIn',
+    },
+  },
+}
+
+const MenuLink = React.forwardRef<
+  React.ComponentRef<'a'>,
+  { index: number; label: string } & React.ComponentProps<typeof CMSLink>
+>(function MenuLink_({ index, ...link }, ref) {
+  const pathname = usePathname()
+  const link_props = useLink(link)
+
+  const isActive = (path?: `/${string}`) => {
+    if (isNil(path)) return false
+
+    if (path.length > 1) {
+      return pathname.startsWith(path) && pathname.includes(path)
+    }
+
+    return pathname === path
+  }
+
+  const link_is_active = isActive(`${link_props?.href}` as `/${string}`);
+
+  return (
+    <MobileMenuTrigger asChild>
+      <motion.li
+        variants={menuItemVariant}
+        data-active={link_is_active}
+        className={'odd:text-en mobile-nav-menu-item select-none'}
+        style={{
+          '--indent': `${index * 8}vw`,
+        }}
+      >
+        <Link
+          ref={ref}
+          className={cn(
+            'font-heading text-7xl font-thin focus:outline-none focus-visible:underline focus-visible:outline-none sm:text-7xl dark:text-background',
+          )}
+          href={link_props?.href ?? ''}
+          {...link_props?.newTabProps}
+        >
+          {link_props?.label}
+        </Link>
+      </motion.li>
+    </MobileMenuTrigger>
+  )
+})
