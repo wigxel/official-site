@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { GeistMono } from 'geist/font/mono'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
           <Footer />
         </Providers>
+        <GoogleAnalytics gaId="G-DQ56T121F9" />
       </body>
     </html>
   )
