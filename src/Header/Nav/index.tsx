@@ -86,9 +86,11 @@ function MobileNav({ items: initial_items }: { items: any[] }) {
       <div className="flex items-end justify-between p-4 text-sm">
         <span>&copy; {new Date().getFullYear()}</span>
 
-        <p className="flex flex-col items-end text-end">
-          <span>Lagos, Nigeria</span>
-          <span>4.844938, 6.974811</span>
+        <p className="flex flex-col items-end text-end text-xs uppercase tracking-[0.2ch]">
+          <span>PH, Nigeria</span>
+          <a href="https://maps.app.goo.gl/JqjS85YWRMQoNYRL9" target="_blank" rel="noreferrer">
+            <span className="underline">4.85021, 6.97786</span>
+          </a>
         </p>
       </div>
 
@@ -101,7 +103,7 @@ function MobileNav({ items: initial_items }: { items: any[] }) {
 
 const menuListVariant: Variants = {
   show: {
-    transition: { delayChildren: stagger(0.02) },
+    transition: { delayChildren: stagger(0.2) },
   },
   hide: {
     transition: { delayChildren: 0 },
@@ -110,17 +112,18 @@ const menuListVariant: Variants = {
 
 const menuItemVariant: Variants = {
   hide: {
-    x: `var(--indent)`,
-    opacity: 0,
+    x: 0,
+    opacity: 100,
     transition: {
       delay: 0,
     },
   },
   show: {
-    x: 0,
-    opacity: 100,
+    x: `var(--indent)`,
+    // opacity: 100,
     transition: {
       ease: 'easeIn',
+      delay: 0.4,
     },
   },
 }
@@ -142,7 +145,7 @@ const MenuLink = React.forwardRef<
     return pathname === path
   }
 
-  const link_is_active = isActive(`${link_props?.href}` as `/${string}`);
+  const link_is_active = isActive(`${link_props?.href}` as `/${string}`)
 
   return (
     <MobileMenuTrigger asChild>
