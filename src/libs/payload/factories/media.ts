@@ -1,6 +1,6 @@
 import { isNumber } from 'effect/Predicate'
 import { isNil } from 'lodash-es'
-import { safeObj } from '@/libs/data.helpers'
+import { safeArray, safeObj } from '@/libs/data.helpers'
 import { O, pipe } from '@/libs/fp.helpers'
 import type { Media } from '@/payload-types'
 
@@ -42,6 +42,14 @@ export function expectModel<T>(value: unknown): O.Option<T> {
   }
 
   return O.fromNullable(value as T)
+}
+
+export function expectList<T>(arr: unknown[] | undefined | null): O.Option<T[]> {
+  return O.all(
+    safeArray(arr as unknown[])
+      .map((e) => expectModel<T>(e))
+      .filter((e) => O.isSome(e)),
+  )
 }
 
 export function aspectRatio(value: unknown) {

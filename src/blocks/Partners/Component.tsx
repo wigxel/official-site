@@ -2,7 +2,7 @@ import { range } from 'effect/Array'
 import { Container } from '@/components/container'
 import { Media } from '@/components/Media'
 import { safeArray } from '@/libs/data.helpers'
-import { O } from '@/libs/fp.helpers'
+import { O, pipe } from '@/libs/fp.helpers'
 import { expectModel } from '@/libs/payload/factories/media'
 import type { Collaboration, WigxelPartners } from '@/payload-types'
 
@@ -52,7 +52,7 @@ export async function PartnersBlockComponents(props: WigxelPartners) {
         <div className="order-3 col-span-4 mt-24 md:order-2 md:col-span-12 md:mt-0">
           <div className="-mx-4 grid grid-cols-3 gap-px bg-white/10">
             {slots.map((index) => {
-              const safeMatch = collabs[index]
+              const safeMatch = pipe(O.fromNullable(collabs[index]), O.flatten)
 
               if (O.isNone(safeMatch)) {
                 return <section key={index} className={`aspect-square bg-background`} />

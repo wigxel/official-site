@@ -40,10 +40,10 @@ export const Card: React.FC<{
   } = props
 
   const { slug, meta, title } = doc || {}
-  const { description, image: metaImage } = meta || {}
+  const { image: metaImage } = meta || {}
 
   const titleToUse = titleFromProps || title
-  const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
+  // const sanitizedDescription = description?.replace(/\s/g, ' ') // replace non-breaking space with white space
   const href = `/${relationTo}/${slug}`
 
   return (
@@ -104,9 +104,9 @@ export const Card: React.FC<{
           </div>
         )}
 
-        <div className="mt-2 line-clamp-2 min-h-[6ex] w-11/12 text-sm font-normal opacity-70 md:text-sm">
+        {/*<div className="mt-2 line-clamp-2 min-h-[6ex] w-11/12 text-sm font-normal opacity-70 md:text-sm">
           <p>{sanitizedDescription ?? ''}</p>
-        </div>
+        </div>*/}
 
         {showAuthors && props.doc ? (
           <div className="mt-4">

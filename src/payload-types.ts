@@ -199,7 +199,15 @@ export interface Page {
       | null;
     media?: (number | null) | Media;
   };
-  layout: (LandingHero | WigxelCrafts | WigxelProjects | WigxelPartners | WigxelContactForm | ArchiveBlock)[];
+  layout: (
+    | LandingHero
+    | WigxelCrafts
+    | WigxelProjects
+    | StudioHero
+    | WigxelPartners
+    | WigxelContactForm
+    | ArchiveBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -550,6 +558,40 @@ export interface WigxelProjects {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StudioHero".
+ */
+export interface StudioHero {
+  teamMembers?:
+    | {
+        member?: (number | null) | TeamMember;
+        id?: string | null;
+      }[]
+    | null;
+  slideImages?:
+    | {
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'studioHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-member".
+ */
+export interface TeamMember {
+  id: number;
+  name: string;
+  role: string;
+  image?: (number | null) | Media;
+  image_landscape?: (number | null) | Media;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "WigxelPartners".
  */
 export interface WigxelPartners {
@@ -818,19 +860,6 @@ export interface ArchiveBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "team-member".
- */
-export interface TeamMember {
-  id: number;
-  name: string;
-  role: string;
-  image?: (number | null) | Media;
-  image_landscape?: (number | null) | Media;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1263,6 +1292,7 @@ export interface PagesSelect<T extends boolean = true> {
         landingHero?: T | LandingHeroSelect<T>;
         crafts?: T | WigxelCraftsSelect<T>;
         projects?: T | WigxelProjectsSelect<T>;
+        studioHero?: T | StudioHeroSelect<T>;
         partners?: T | WigxelPartnersSelect<T>;
         landingContact?: T | WigxelContactFormSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
@@ -1343,6 +1373,26 @@ export interface WigxelCraftsSelect<T extends boolean = true> {
  * via the `definition` "WigxelProjects_select".
  */
 export interface WigxelProjectsSelect<T extends boolean = true> {
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "StudioHero_select".
+ */
+export interface StudioHeroSelect<T extends boolean = true> {
+  teamMembers?:
+    | T
+    | {
+        member?: T;
+        id?: T;
+      };
+  slideImages?:
+    | T
+    | {
+        image?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

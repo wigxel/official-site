@@ -13,6 +13,7 @@ import { CraftsBlockComponent } from './Crafts/Component'
 import { LandingHeroBlockComponent } from './LandingHero/Component'
 import { PartnersBlockComponents } from './Partners/Component'
 import { LandingProjectsBlockComponents } from './Projects/Component'
+import { StudioHeroComponent_ } from './Studio/StudioHero'
 
 export const blockComponents = {
   archive: ArchiveBlock,
@@ -27,6 +28,7 @@ export const blockComponents = {
   imageGroupEntry: ImageEntryComponent,
   imageGroup: ImageGroupComponent,
   centerContent: CenterContentComponent,
+  studioHero: StudioHeroComponent_,
 }
 
 export const RenderBlocks: React.FC<{

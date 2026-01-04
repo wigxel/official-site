@@ -11,6 +11,7 @@ import { LandingContactBlock } from '@/blocks/Contact/config'
 import { CraftsBlock } from '@/blocks/Crafts/config'
 import { PartnersBlock } from '@/blocks/Partners/config'
 import { LandingProjectBlock } from '@/blocks/Projects/config'
+import { StudioPageConfig } from '@/blocks/Studio/config'
 import { slugField } from '@/fields/slug'
 import { hero } from '@/heros/config'
 import { authenticated } from '../../access/authenticated'
@@ -78,6 +79,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 LandingHero,
                 CraftsBlock,
                 LandingProjectBlock,
+                StudioPageConfig,
                 PartnersBlock,
                 LandingContactBlock,
                 Archive,

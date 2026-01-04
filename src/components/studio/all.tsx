@@ -1,53 +1,21 @@
+'use server'
 import config from '@payload-config'
-import { RichText } from '@payloadcms/richtext-lexical/react'
-import type { Metadata } from 'next'
-import Image from 'next/image'
+import { motion } from 'motion/react'
 import { getPayload } from 'payload'
 import { Container } from '@/components/container'
-import { Media } from '@/components/Media'
-import { ImageMedia } from '@/components/Media/ImageMedia'
 import type { Service, TeamMember } from '@/payload-types'
+import { ImageMedia } from '../Media/ImageMedia'
+import RichText from '../RichText'
+import { SplitHeading } from './all.client'
 
-export const metadata: Metadata = {
-  title: 'Studio | Wigxel',
-}
-
-export default function StudioPage() {
-  return (
-    <section>
-      <Container className="absolute">
-        <h1 className="page-heading-1 font-heading">Studio</h1>
-      </Container>
-
-      <div className="-mt-24 aspect-[16/6] w-full bg-[#111]" />
-
-      <StudioPurpose />
-
-      <Skils />
-
-      <Container className="wg-grid-1">
-        <div className="col-span-5"></div>
-        <div className="col-span-7">
-          <p className="flex max-w-[40ch] text-justify text-[calc(32rem/16)] leading-[2.2ex]">
-            We develop UX focused software solutions on the Internet &amp; Mobile space for medium
-            and large scale business looking to scale their business.
-          </p>
-        </div>
-      </Container>
-
-      <TeamSection />
-    </section>
-  )
-}
-
-function StudioPurpose() {
+export async function StudioPurpose() {
   return (
     <Container className="flex flex-col gap-[calc(111rem/16)] pb-[calc(140rem/16)] pt-24">
       <div className="wg-grid-1 text-[calc(18rem/16)]">
         <h1 className="col-span-5 pr-12 text-left text-accent-foreground">WHO ARE WE?</h1>
 
         <div className="col-span-7 flex max-w-2xl flex-1 flex-col gap-6 text-[1.1em]">
-          <p className="">
+          <p>
             We develop UX focused software solutions on the Internet & Mobile space for medium and
             large scale business looking to scale their business.
           </p>
@@ -59,7 +27,7 @@ function StudioPurpose() {
 
         <div className="col-span-7 flex max-w-2xl flex-1 flex-col gap-6 text-[1.1em]">
           <p className="">
-            We see business struggling create an impact on the internet everyday. Most think they
+            We see businesses struggling to create an impact on the internet everyday. Most think they
             are doing it right and we can blame them since they don’t know better.
           </p>
 
@@ -83,7 +51,7 @@ function StudioPurpose() {
   )
 }
 
-async function Skils() {
+export async function Skils() {
   const payload = await getPayload({ config: config })
 
   const entries = await payload.find({
@@ -106,29 +74,22 @@ function SkillItem({ data }: { data: Service }) {
     <section className="wg-grid-1 px-4 py-11 md:px-0">
       <h4 className="col-span-5 text-[calc(42rem/16)] font-semibold">{data.title}</h4>
 
-      <p className="col-span-7 flex-1 text-foreground opacity-70">
+      <div className="col-span-7 flex-1 text-foreground opacity-70">
         <RichText data={data.description} />
-      </p>
+      </div>
     </section>
   )
 }
 
-async function TeamSection() {
-  const payload = await getPayload({ config: config })
-  const teamMembers = await payload.find({
-    collection: 'team-member',
-    sort: ['-id'],
-  })
-
+export async function TeamSection({ team: teamMembers }: { team: TeamMember[] }) {
   return (
     <Container className="flex flex-col gap-2 py-24">
-      <h2 className="heading-1 !mb-0 flex justify-between font-heading font-medium">
-        <span>Our</span>
-        <span>Team</span>
-      </h2>
+      <SplitHeading>
+        {[<>Our&nbsp;</>, 'Team']}
+      </SplitHeading>
 
       <div className="grid-col-1 grid gap-x-5 gap-y-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {teamMembers.docs.map((member) => {
+        {teamMembers.map((member) => {
           return <TeamMemberCard key={member.id} doc={member} />
         })}
       </div>

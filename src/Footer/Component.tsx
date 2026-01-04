@@ -27,7 +27,7 @@ export async function Footer() {
           </div>
 
           <div className="flex-1 shrink">
-            <nav className="hidden md:grid grid-cols-2 gap-x-4 gap-y-2 md:grid-cols-4">
+            <nav className="hidden grid-cols-2 gap-x-4 gap-y-2 md:grid md:grid-cols-4">
               {navItems.map(({ link }, i) => {
                 return (
                   <CMSLink
@@ -40,19 +40,19 @@ export async function Footer() {
             </nav>
             <nav className="grid grid-cols-2 gap-x-4 gap-y-2">
               {pipe(
-                Object.groupBy(navItems, e => e.link.newTab ? "internal" : "external"),
-                e => {
-                  const arr = [];
-                  const inner = safeArray(e.internal);
-                  const outer = safeArray(e.external);
-                  const longest = Math.max(inner.length, outer.length);
+                Object.groupBy(navItems, (e) => (e.link.newTab ? 'internal' : 'external')),
+                (e) => {
+                  const arr = []
+                  const inner = safeArray(e.internal)
+                  const outer = safeArray(e.external)
+                  const longest = Math.max(inner.length, outer.length)
 
                   for (let x = 0; x < longest; x++) {
                     if (x in outer) arr.push(outer[x])
                     if (x in inner) arr.push(inner[x])
                   }
 
-                  return arr;
+                  return arr
                 },
                 Arr.map(({ link }, i) => {
                   return (
@@ -62,12 +62,12 @@ export async function Footer() {
                       {...link}
                     />
                   )
-                }))
-              }
+                }),
+              )}
             </nav>
           </div>
 
-          <div className="flex gap-2 md:grid gap-y-2">
+          <div className="flex gap-2 gap-y-2 md:grid">
             <div className="text-foreground/60 text-xs font-thin uppercase tracking-wider hover:text-accent-foreground">
               &copy;
             </div>

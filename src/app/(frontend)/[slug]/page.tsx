@@ -49,7 +49,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug,
   })
 
-  if (!page) {
+  if (!page || page?._status !== 'published') {
     return <PayloadRedirects url={url} />
   }
 

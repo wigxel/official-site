@@ -79,7 +79,7 @@ function MainLogo() {
 
   return (
     <Link href="/" className="">
-      <SmartLogo className={cn('delay-0', { '!h-12 !w-12 delay-200': !state.sticky })} />
+      <SmartLogo className={cn('delay-0', { '!h-12 !w-12 delay-100': !state.sticky })} />
     </Link>
   )
 }
