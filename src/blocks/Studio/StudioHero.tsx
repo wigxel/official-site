@@ -27,15 +27,15 @@ export function StudioHeroComponent_(props: StudioHero) {
 
       <Container className="flex aspect-[16/6] min-h-[90svh] w-full flex-col justify-end">
         <p
-          className="text-justify indent-[20svw] text-[2.2rem] leading-[2ex] tracking-[-0.3px] md:tracking-normal md:text-end md:text-6xl"
+          className="rivera indent-[20svw] text-[2.2rem] leading-[2ex] tracking-[-0.3px] md:text-end md:text-5xl md:tracking-normal"
           style={{
             textAlignLast: 'start',
           }}
         >
           <span className="align-text-top text-xs">(INTRO)</span>
           <>
-            We offer a wide range of creative and technical services that covers every step of a
-            production and production pipeline
+            We offer a wide range of creative & technical services that covers every step of a
+            production & production pipeline
           </>
         </p>
       </Container>
@@ -56,8 +56,7 @@ export function StudioHeroComponent_(props: StudioHero) {
         <div className="col-span-5"></div>
         <div className="col-span-7">
           <p className="flex max-w-[40ch] text-justify text-[calc(32rem/16)] leading-[2.2ex]">
-            We develop UX focused software solutions on the Internet &amp; Mobile space for medium
-            and large scale businesses looking for growth.
+            eeagead
           </p>
         </div>
       </Container>

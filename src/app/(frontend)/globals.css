@@ -377,7 +377,9 @@ body::selection {
   }
 }
 
-
-.aaaa {
-  line-height: 2ex;
+.rivera {
+  overflow-wrap: break-word;
+  hyphens: auto;
+  overflow: hidden;
+  text-wrap: auto;
 }

@@ -1,9 +1,11 @@
 'use client'
-import { Effect } from 'effect'
+import { Effect, Exit } from 'effect'
+import { range } from 'effect/Array'
+import type { Cause } from 'effect/Cause'
 import { animate } from 'motion/react'
 import React from 'react'
 import { Container } from '@/components/container'
-import { safeStr } from '@/libs/data.helpers'
+import { safeArray, safeStr } from '@/libs/data.helpers'
 import { Arr, pipe } from '@/libs/fp.helpers'
 import type { Media } from '@/payload-types'
 
@@ -13,6 +15,8 @@ export function GridSlides({ slideImages }: { slideImages: Media[] }) {
   React.useEffect(() => {
     if (!ref.current) return
     const entries = ref.current?.querySelectorAll('[data-box]')
+
+    console.assert(slideImages.length > 0, '[GridSlides] Atleast one slide image needed');
 
     const containers = Array.from(entries)
 
@@ -33,32 +37,80 @@ export function GridSlides({ slideImages }: { slideImages: Media[] }) {
       return currentContainer
     }
 
-    const slider = new SlideOne({
-      root: get_container,
-      images: slideImages,
-    })
+    async function* save_loop(size: number) {
+      while (true) {
+        await delay(1000);
+        yield Math.floor(Math.random() * size)
+      }
+    }
+
+    const slideImagesGroup: Media[][] = [];
+    let temp = [];
+    for (const i in slideImages) {
+      const _index = +i;
+      const entry = slideImages[_index];
+
+
+      temp.push(entry);
+
+      if (_index === slideImages.length - 1) {
+        slideImagesGroup.push(temp);
+        break;
+      }
+
+      if (temp.length === 3) {
+        slideImagesGroup.push(temp)
+        temp = [];
+      }
+    }
+
+    const SIZE = 3;
 
     const startTransition = Effect.promise(async (signal) => {
-      while (true) {
+      let change = get_container();
+
+      const slide_containers = range(0, SIZE - 1).map(index => {
+        return new SlideOne({
+          root: () => change,
+          transitionDelay: 0,
+          enterDuration: 0.5,
+          images: safeArray(slideImagesGroup[index])
+        })
+      })
+
+      for await (const index of save_loop(SIZE)) {
         if (signal.aborted) {
           break
         }
-
-        slider.params.root = get_container
+        const slider = slide_containers[index]
         await slider.start()
         await slider.close()
+        change = get_container();
       }
     })
 
     const a = new AbortController()
 
-    Effect.runPromise(startTransition, { signal: a.signal })
+    Effect.runPromiseExit(startTransition, { signal: a.signal })
+      .then((exit) => {
+        return pipe(
+          exit,
+          Exit.match({
+            onFailure: (cause: Cause<unknown>) => {
+              console.error("Stream failed", cause);
+            },
+            onSuccess: (_: unknown) => {
+            }
+          })
+        )
+      })
+
 
     return () => a.abort()
   }, [slideImages])
 
   return (
-    <Container className="absolute pointer-events-none">
+    <Container className="pointer-events-none absolute">
       <div
         ref={ref}
         id="image-anchors"
@@ -91,12 +143,24 @@ export function GridSlides({ slideImages }: { slideImages: Media[] }) {
 }
 
 class SlideOne {
+  enterDuration: number = 1;
+
   constructor(
-    public params: { root: () => Element; images: Pick<Media, 'url' | 'width' | 'height'>[] },
-  ) { }
+    public params: {
+      root: () => Element;
+      images: Pick<Media, 'url' | 'width' | 'height'>[],
+      transitionDelay?: number;
+      enterDuration?: number
+    },
+  ) {
+    console.assert(params.images.length > 0, '[SlideOne] At least one image must be provided');
+    this.enterDuration = params.enterDuration ?? 1;
+  }
 
   make(entry: { url: string }) {
     const img_el = document.createElement('img')
+
+    const enterDuration = this.enterDuration;
 
     const HIDE = 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)'
     const SHOW = 'polygon(0% 100%, 100% 100%, 100% 0%, 0% 0%)'
@@ -119,7 +183,7 @@ class SlideOne {
             clipPath: SHOW,
           },
           {
-            duration: 1,
+            duration: enterDuration,
             // delay: index * 0.15,
             ease: 'backOut',
             ...option,
@@ -135,7 +199,7 @@ class SlideOne {
             clipPath: HIDE_UP,
           },
           {
-            duration: 1,
+            duration: enterDuration,
             onComplete: () => {
               img_el.style.clipPath = HIDE
             },
@@ -168,20 +232,23 @@ class SlideOne {
   }
 
   async start() {
+    const { transitionDelay = 1000, root } = this.params;
     const mms = await this.loadImages()
 
     for await (const m of mms) {
-      if (!m) continue
+      if (!m) {
+        continue
+      }
 
-      this.params.root().appendChild(m.el)
+      root().appendChild(m.el)
+      await delay(transitionDelay)
       await m.enter()
-      await delay(3000)
-      await m.exit()
     }
   }
 
   async close() {
     const images = this.params.root().querySelectorAll('img')
+
     if (!images) return
     if (images.length < 1) return
 
