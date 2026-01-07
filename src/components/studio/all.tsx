@@ -27,8 +27,8 @@ export async function StudioPurpose() {
 
         <div className="col-span-7 flex max-w-2xl flex-1 flex-col gap-6 text-[1.1em]">
           <p className="">
-            We see businesses struggling to create an impact on the internet everyday. Most think they
-            are doing it right and we can blame them since they don’t know better.
+            We see businesses struggling to create an impact on the internet everyday. Most think
+            they are doing it right and we can blame them since they don’t know better.
           </p>
 
           <p className="opacity-70">
@@ -84,9 +84,7 @@ function SkillItem({ data }: { data: Service }) {
 export async function TeamSection({ team: teamMembers }: { team: TeamMember[] }) {
   return (
     <Container className="flex flex-col gap-2 py-24">
-      <SplitHeading>
-        {[<>Our&nbsp;</>, 'Team']}
-      </SplitHeading>
+      <SplitHeading>{[<>Our&nbsp;</>, 'Team']}</SplitHeading>
 
       <div className="grid-col-1 grid gap-x-5 gap-y-12 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {teamMembers.map((member) => {

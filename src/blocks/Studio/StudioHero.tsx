@@ -9,7 +9,7 @@ import { GridSlides } from './studio-hero.client'
 export function StudioHeroComponent_(props: StudioHero) {
   const { teamMembers, slideImages } = props
   const safeImages = safeArray(slideImages)
-    ?.map((e) => expectMedia(e.image))
+    .map((e) => expectMedia(e.image))
     .filter((e) => O.isSome(e))
 
   return (
@@ -27,7 +27,7 @@ export function StudioHeroComponent_(props: StudioHero) {
 
       <Container className="flex aspect-[16/6] min-h-[90svh] w-full flex-col justify-end">
         <p
-          className="rivera indent-[20svw] text-[2.2rem] leading-[2ex] tracking-[-0.3px] md:text-end md:text-5xl md:tracking-normal"
+          className="rivera indent-[20svw] text-[7.9vw] leading-[2ex] tracking-[-0.3px] md:text-end md:text-5xl md:tracking-normal"
           style={{
             textAlignLast: 'start',
           }}
