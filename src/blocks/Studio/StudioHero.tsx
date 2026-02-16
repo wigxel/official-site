@@ -27,7 +27,7 @@ export function StudioHeroComponent_(props: StudioHero) {
 
       <Container className="flex aspect-[16/6] min-h-[90svh] w-full flex-col justify-end">
         <p
-          className="rivera indent-[20svw] text-[7.9vw] leading-[2ex] tracking-[-0.3px] md:text-end md:text-5xl md:tracking-normal"
+          className="rivera mb-[1ch] indent-[20svw] text-[7.9vw] leading-[2ex] tracking-[-0.3px] md:text-end md:text-5xl md:tracking-normal xl:text-7xl"
           style={{
             textAlignLast: 'start',
           }}

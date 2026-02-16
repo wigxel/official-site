@@ -75,7 +75,7 @@ function SkillItem({ data }: { data: Service }) {
       <h4 className="col-span-5 text-[calc(42rem/16)] font-semibold">{data.title}</h4>
 
       <div className="col-span-7 flex-1 text-foreground opacity-70">
-        <RichText data={data.description} />
+        <RichText data={data.description} className="mx-0 px-0" />
       </div>
     </section>
   )
