@@ -27,18 +27,7 @@ export async function Footer() {
           </div>
 
           <div className="flex-1 shrink">
-            <nav className="hidden grid-cols-2 gap-x-4 gap-y-2 md:grid md:grid-cols-4">
-              {navItems.map(({ link }, i) => {
-                return (
-                  <CMSLink
-                    className="text-foreground/60 text-xs font-thin uppercase tracking-wider hover:text-accent-foreground"
-                    key={i}
-                    {...link}
-                  />
-                )
-              })}
-            </nav>
-            <nav className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <nav className="grid grid-cols-2 gap-x-4 gap-y-2 md:grid md:grid-cols-4">
               {pipe(
                 Object.groupBy(navItems, (e) => (e.link.newTab ? 'internal' : 'external')),
                 (e) => {
@@ -54,11 +43,11 @@ export async function Footer() {
 
                   return arr
                 },
-                Arr.map(({ link }, i) => {
+                Arr.map(({ link }) => {
                   return (
                     <CMSLink
                       className="text-foreground/60 text-xs font-thin uppercase tracking-wider hover:text-accent-foreground"
-                      key={i}
+                      key={link.label}
                       {...link}
                     />
                   )
