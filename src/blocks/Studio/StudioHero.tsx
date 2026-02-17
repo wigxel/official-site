@@ -51,15 +51,6 @@ export function StudioHeroComponent_(props: StudioHero) {
           O.getOrElse(() => [] as TeamMember[]),
         )}
       />
-
-      <Container className="wg-grid-1">
-        <div className="col-span-5"></div>
-        <div className="col-span-7">
-          <p className="flex max-w-[40ch] text-justify text-[calc(32rem/16)] leading-[2.2ex]">
-            eeagead
-          </p>
-        </div>
-      </Container>
     </section>
   )
 }

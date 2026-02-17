@@ -5,12 +5,12 @@ import { isNil } from 'lodash-es'
 import { motion, stagger, type Variants } from 'motion/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useContext } from 'react'
+import React from 'react'
 import { CMSLink, useLink } from '@/components/Link'
 import { O } from '@/libs/fp.helpers'
 import { cn } from '@/libs/utils'
 import type { Header as HeaderType } from '@/payload-types'
-import { MenuContext, MobileMenuContent, MobileMenuTrigger } from '../MobileMenu'
+import { MobileMenuContent, MobileMenuTrigger } from '../MobileMenu'
 
 export const HeaderNav = ({ data }: { data: HeaderType }) => {
   const navItems = data?.navItems || []
@@ -25,18 +25,11 @@ export const HeaderNav = ({ data }: { data: HeaderType }) => {
       <MobileNav items={initial_items} />
 
       <nav className="flex items-center gap-5">
-        <div className="flex flex-1 gap-6">
+        <ul className="flex flex-1 gap-6">
           {initial_items.map(({ link }) => {
-            return (
-              <CMSLink
-                key={link.label}
-                {...link}
-                className="text-base font-thin"
-                appearance="link"
-              />
-            )
+            return <DesktopNavItem key={link.label} link={link} />
           })}
-        </div>
+        </ul>
 
         {pipe(
           last(navItems),
@@ -59,9 +52,43 @@ export const HeaderNav = ({ data }: { data: HeaderType }) => {
   )
 }
 
-function MobileNav({ items: initial_items }: { items: any[] }) {
-  const ctx = useContext(MenuContext)
+function DesktopNavItem({ link }: { link: React.ComponentProps<typeof CMSLink> }) {
+  const pathname = usePathname()
+  const link_props = useLink(link)
 
+  const isActive = (path?: `/${string}`) => {
+    if (isNil(path)) return false
+
+    if (path.length > 1) {
+      return pathname.startsWith(path) && pathname.includes(path)
+    }
+
+    return pathname === path
+  }
+
+  const link_is_active = isActive(`${link_props?.href}` as `/${string}`)
+
+  return (
+    <li
+      data-active={link_is_active}
+      className="group flex flex-col items-center [--offset:8rem] data-[active=true]:[--offset:0rem]"
+    >
+      <CMSLink {...link} appearance="link" className="text-base font-thin hover:no-underline" />
+      <svg width="49" height="7" viewBox="0 0 49 7" fill="none">
+        <title>--</title>
+        <path
+          d="M0 0.5H48.2656L6.3982 6.3151H36.6364"
+          stroke="#E7AB54"
+          className="transition-default"
+          strokeDasharray={'8rem'}
+          strokeDashoffset={'var(--offset)'}
+        />
+      </svg>
+    </li>
+  )
+}
+
+function MobileNav({ items: initial_items }: { items: any[] }) {
   return (
     <MobileMenuContent className="overflow-hidden text-black">
       <div className="absolute start-4 top-4 flex items-center justify-center text-sm tracking-[0.2ch] text-black">
