@@ -1,6 +1,7 @@
 import { intersperse } from 'effect/Array'
 import Image from 'next/image'
 import type React from 'react'
+import { Balancer } from 'react-wrap-balancer'
 import { Container } from '@/components/container'
 import { Media } from '@/components/Media'
 import { DateParse } from '@/libs/date.helpers'
@@ -55,7 +56,9 @@ export const PostHero: React.FC<{
 
             <div className="flex flex-col gap-4">
               <hgroup className="flex flex-col gap-3 md:mb-6">
-                <h1 className="heading-1 text-balance !font-sans !font-medium">{title}</h1>
+                <h1 className="heading-1 !font-sans !font-medium">
+                  <Balancer>{title}</Balancer>
+                </h1>
               </hgroup>
 
               {/*Authors*/}
@@ -77,7 +80,7 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
   const author_names = formatAuthors(authors.map((e) => ({ name: e.name })))
   const hasAuthors = authors && authors.length > 0 && author_names !== ''
 
-  const avatarClassName = 'aspect-square w-6 md:w-8 rounded-full bg-black/60 object-cover'
+  const avatarClassName = 'aspect-square w-6 md:w-10 rounded-full bg-black/60 object-cover'
 
   const author_images = pipe(
     authors,
@@ -103,7 +106,7 @@ export function AuthorInfo({ post }: { post: Pick<Post, 'authors'> }) {
         <div className="flex items-center gap-2 md:gap-4">
           <div
             className={cn('flex', {
-              'pl-2 *:-mx-2': authors.length > 1,
+              'ps-2 *:-ms-2': authors.length > 1,
             })}
           >
             {author_images.length ? author_images : <div className={avatarClassName} />}

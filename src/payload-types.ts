@@ -258,7 +258,7 @@ export interface Post {
     description?: string | null;
   };
   publishedAt?: string | null;
-  postType?: ('article' | 'video') | null;
+  postType: 'article' | 'video';
   readTime?: string | null;
   authors?: (number | User)[] | null;
   populatedAuthors?:

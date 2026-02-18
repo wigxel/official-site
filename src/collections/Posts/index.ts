@@ -13,6 +13,8 @@ import {
   HorizontalRuleFeature,
   InlineToolbarFeature,
   lexicalEditor,
+  OrderedListFeature,
+  UnorderedListFeature,
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 import { slugField } from '@/fields/slug'
@@ -97,6 +99,8 @@ export const Posts: CollectionConfig<'posts'> = {
                     HeadingFeature({
                       enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'],
                     }),
+                    UnorderedListFeature(),
+                    OrderedListFeature(),
                     BlocksFeature({ blocks: [Banner, Code, MediaBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
@@ -199,6 +203,8 @@ export const Posts: CollectionConfig<'posts'> = {
         { label: 'Article', value: 'article' },
         { label: 'Video', value: 'video' },
       ],
+      required: true,
+      defaultValue: 'article',
     },
     {
       name: 'readTime',

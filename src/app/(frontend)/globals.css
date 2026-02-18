@@ -384,3 +384,9 @@ body::selection {
   overflow: hidden;
   text-wrap: auto;
 }
+
+.prose {
+  a {
+    --tw-prose-links: oklch(0.78 0.13 74.96);
+  }
+}
